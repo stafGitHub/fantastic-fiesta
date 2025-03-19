@@ -1,6 +1,6 @@
-package ru_shift.validationData;
+package ru.shift.validationData;
 
-import ru_shift.dto.UserInput;
+import ru.shift.dto.UserInput;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,7 +8,7 @@ import java.util.List;
 public class ValidationStrategyController {
     private final List<Validation<UserInput>> validations = new ArrayList<>();
 
-    public void registerValidation(Validation validation) {
+    public void registerValidation(Validation<UserInput> validation) {
         validations.add(validation);
     }
 

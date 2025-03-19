@@ -1,20 +1,14 @@
-package ru_shift;
+package ru.shift;
 
-import ru_shift.dto.UserInput;
-import ru_shift.Table.Table;
-import ru_shift.util.PropertiesData;
-import ru_shift.validationData.ValidationStrategyController;
-import ru_shift.validationData.validationStrategy.InputCountStrategy;
+import ru.shift.dto.UserInput;
+import ru.shift.Table.Table;
+import ru.shift.validationData.ValidationStrategyController;
+import ru.shift.validationData.validationStrategy.InputCountStrategy;
 
 public class Main {
     public static void main(String[] args) {
-        PropertiesData propertiesData = new PropertiesData();
-        int minNumber = Integer.parseInt((String) propertiesData.getProperties().get("min_number"));
-        int maxNumber = Integer.parseInt((String) propertiesData.getProperties().get("max_number"));
-
-
         ValidationStrategyController validationStrategyController = new ValidationStrategyController();
-        InputCountStrategy inputCountStrategy = new InputCountStrategy(minNumber, maxNumber);
+        InputCountStrategy inputCountStrategy = new InputCountStrategy();
         validationStrategyController.registerValidation(inputCountStrategy);
 
         UserInput userInput = new UserInput();
@@ -22,7 +16,7 @@ public class Main {
 
         if (userInput.isValid()) {
             Table table = new Table(userInput.getUserNumber());
-            System.out.println(table.createTable());
+            table.createTable();
         }else {
             System.out.println("""
                     Не прошли валидацию данных.
