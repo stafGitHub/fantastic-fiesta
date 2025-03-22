@@ -15,6 +15,7 @@ public class Table {
         StringBuilder tableBuilder = new StringBuilder();
         String line = createLine();
 
+        //Создание заголовка таблицы
         tableBuilder.append(createColumn("", firstColumnLength, true));
         for (int i = 1; i <= size; i++) {
             tableBuilder.append(createColumn(String.valueOf(i), maxValueLength, i != size));
