@@ -19,8 +19,8 @@ public class ApplicationArgumentParser {
                 try {
                     applicationArgsMap.put(arg[0].substring(1), arg[1]);
                 }catch (IndexOutOfBoundsException e){
-                    log.error("Ошибка чтения консольных аргументов программы {}", argument);
-                    log.error("Подробности {} ", e.getMessage());
+                    log.warn("Ошибка чтения консольных аргументов программы {}", argument);
+                    log.warn("Подробности {} ", e.getMessage());
                     throw e;
                 }
 

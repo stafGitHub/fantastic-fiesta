@@ -22,7 +22,7 @@ public class UserFileSaveStrategy implements SaveStrategy<AbstractFigure> {
         try(BufferedWriter writer = Files.newBufferedWriter(Path.of(applicationData.getSaveFilePath()), StandardOpenOption.APPEND)) {
             writer.write(input.getDescription());
         } catch (IOException e) {
-            log.error("Ошибка сохранения в файл {}", applicationData.getSaveFilePath());
+            log.warn("Ошибка сохранения в файл {}", applicationData.getSaveFilePath());
 
             throw new RuntimeException(e);
         }

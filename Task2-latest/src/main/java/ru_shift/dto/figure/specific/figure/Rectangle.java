@@ -16,16 +16,18 @@ public class Rectangle extends AbstractFigure {
         this.width = width;
     }
 
-    public static AbstractFigure readFile(BufferedReader reader) {
-        var parseParamsFigure = readParamsFigure(reader, 2, Rectangle.class.getSimpleName().toUpperCase());
+    public static AbstractFigure readFile(BufferedReader reader) throws IllegalArgumentException{
+        try {
+            var parseParamsFigure = readParamsFigure(reader, 2, Rectangle.class.getSimpleName().toUpperCase());
 
-        if (parseParamsFigure != null) {
             return new Rectangle(
-              parseParamsFigure[0],
-              parseParamsFigure[1]
+                    parseParamsFigure[0],
+                    parseParamsFigure[1]
             );
-        }else {
-            return null;
+
+        }catch (IllegalArgumentException e){
+            log.warn(e.getMessage());
+            throw new IllegalArgumentException("Параметры некорректны - " + Rectangle.class.getSimpleName().toUpperCase());
         }
     }
 

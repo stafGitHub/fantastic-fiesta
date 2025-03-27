@@ -23,21 +23,22 @@ public class SaveStrategyController {
         var strategy = saveStrategyFactory.createStrategy(applicationData.getSaveFilePath());
 
         String line;
-        try(fileBufferedReader) {
+        try (fileBufferedReader) {
             while ((line = fileBufferedReader.readLine()) != null) {
 
                 if (figureNameMap.getFigureNameMap().containsKey(line)) {
-                    var figure = figureFactory.createFigure(line, fileBufferedReader);
-
-                    if (figure != null) {
+                    try {
+                        var figure = figureFactory.createFigure(line, fileBufferedReader);
                         strategy.save(figure);
                         log.info("Фигура сохранена {}", figure.getName());
+                    } catch (IllegalArgumentException e) {
+                        log.warn("Ошибка создания фигуры");
                     }
                 }
 
             }
         } catch (IOException e) {
-            log.error("Ошибка сохранения фигуры {} " ,e.getMessage());
+            log.error("Ошибка сохранения фигуры {} ", e.getMessage());
             throw new RuntimeException(e);
         }
     }

@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import ru_shift.dto.figure.AbstractFigure;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 
 @Slf4j
 public class Circle extends AbstractFigure {
@@ -14,13 +15,13 @@ public class Circle extends AbstractFigure {
         this.radius = radius;
     }
 
-    public static AbstractFigure readFile(BufferedReader reader) {
-        var parseParamsFigure = readParamsFigure(reader,1, Circle.class.getSimpleName().toUpperCase());
-
-        if (parseParamsFigure != null) {
+    public static AbstractFigure readFile(BufferedReader reader) throws IllegalArgumentException {
+        try {
+            var parseParamsFigure = readParamsFigure(reader, 1, Circle.class.getSimpleName().toUpperCase());
             return new Circle(parseParamsFigure[0]);
-        }else {
-            return null;
+        }catch (IllegalArgumentException e){
+            log.warn(e.getMessage());
+            throw new IllegalArgumentException("Параметры некорректны - " + Circle.class.getSimpleName().toUpperCase());
         }
     }
 

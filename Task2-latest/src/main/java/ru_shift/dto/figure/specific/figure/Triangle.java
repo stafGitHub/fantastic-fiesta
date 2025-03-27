@@ -17,18 +17,18 @@ public class Triangle extends AbstractFigure {
         this.sideC = sideC;
     }
 
-    public static AbstractFigure readFile(BufferedReader reader) {
-        var paramsParseDouble = readParamsFigure(reader, 3 , Triangle.class.getSimpleName().toUpperCase());
-        if (paramsParseDouble != null) {
+    public static AbstractFigure readFile(BufferedReader reader) throws IllegalArgumentException {
+        try {
+            var paramsParseDouble = readParamsFigure(reader, 3, Triangle.class.getSimpleName().toUpperCase());
             return new Triangle(
                     paramsParseDouble[0],
                     paramsParseDouble[1],
                     paramsParseDouble[2]
             );
-        }else {
-            return null;
+        }catch (IllegalArgumentException e){
+            log.warn(e.getMessage());
+            throw new IllegalArgumentException("Параметры некорректны - " + Triangle.class.getSimpleName().toUpperCase());
         }
-
     }
 
     @Override

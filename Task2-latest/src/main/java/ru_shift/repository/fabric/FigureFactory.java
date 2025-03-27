@@ -14,7 +14,7 @@ import java.util.Map;
 public class FigureFactory {
     private final Map<String, AbstractFigure> figures = new HashMap<>();
     public AbstractFigure createFigure(String figureName ,
-                                       BufferedReader reader) {
+                                       BufferedReader reader) throws IllegalArgumentException {
         try {
             return switch (figureName) {
                 case "CIRCLE" -> Circle.readFile(reader);
@@ -23,10 +23,10 @@ public class FigureFactory {
                 default -> null;
             };
 
-        }catch (IllegalStateException e){
-            log.error("Ошибка обработки фигуры {}", figureName);
-            log.error("Подробности {}", e.getMessage());
+        }catch (IllegalArgumentException e){
+            log.warn("Ошибка обработки фигуры: {}", figureName);
+            log.warn("Подробности: {}", e.getMessage());
+            throw new IllegalArgumentException();
         }
-        return null;
     }
 }

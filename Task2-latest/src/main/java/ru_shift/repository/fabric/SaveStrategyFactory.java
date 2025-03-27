@@ -26,7 +26,7 @@ public class SaveStrategyFactory {
         }else if (!saveFilePath.isEmpty()) {
             strategy = new UserFileSaveStrategy(applicationData);
         }else {
-            log.error("Укажите путь для сохранения [-s::?]");
+            log.warn("Укажите путь для сохранения [-s::?]");
             throw new IllegalArgumentException();
         }
 
