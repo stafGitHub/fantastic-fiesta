@@ -23,11 +23,8 @@ public class SaveStrategyFactory {
             strategy = new ConsoleSaveStrategy();
         }else if(applicationData.getSaveFilePath().equals(".")) {
             strategy = new CurrentDirectorySaveFileStrategy(applicationData);
-        }else if (!saveFilePath.isEmpty()) {
-            strategy = new UserFileSaveStrategy(applicationData);
         }else {
-            log.warn("Укажите путь для сохранения [-s::?]");
-            throw new IllegalArgumentException();
+            strategy = new UserFileSaveStrategy(applicationData);
         }
 
         log.info("Сохранение - {}" , strategy.getClass().getSimpleName());
