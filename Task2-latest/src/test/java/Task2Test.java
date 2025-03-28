@@ -3,48 +3,27 @@ import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.io.TempDir;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru_shift.args.ApplicationArgumentParser;
-import ru_shift.dto.ApplicationData;
-import ru_shift.dto.figure.AbstractFigure;
-import ru_shift.dto.figure.FigureNameMap;
-import ru_shift.dto.figure.specific.figure.Circle;
-import ru_shift.dto.figure.specific.figure.Rectangle;
-import ru_shift.dto.figure.specific.figure.Triangle;
-import ru_shift.exception.NotFileReadPath;
-import ru_shift.file.SystemFileReader;
-import ru_shift.repository.application.args.repo.ApplicationArgsRepoController;
-import ru_shift.repository.application.args.repo.operations.ReadFilePathOperation;
-import ru_shift.repository.application.args.repo.operations.SaveFilePathOperation;
-import ru_shift.repository.conservation.strategy.specific.strategy.ConsoleSaveStrategy;
-import ru_shift.repository.conservation.strategy.specific.strategy.CurrentDirectorySaveFileStrategy;
-import ru_shift.repository.conservation.strategy.specific.strategy.UserFileSaveStrategy;
-import ru_shift.repository.fabric.FigureFactory;
-import ru_shift.repository.fabric.SaveStrategyFactory;
+import ru.shift.args.Parser;
+import ru.shift.factory.figure.FigureFactory;
+import ru.shift.factory.figure.TriangleFactory;
+import ru.shift.factory.output.WriterFactory;
+import ru.shift.figures.specific.figures.Circle;
+import ru.shift.figures.specific.figures.Rectangle;
+import ru.shift.figures.specific.figures.Triangle;
+import ru.shift.args.NotFileReadPath;
+import ru.shift.file.SystemFileReader;
+import ru.shift.output.specific.writer.ConsoleFigureWriter;
+import ru.shift.output.specific.writer.UserFileFigureWriter;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class Task2Test {
     private static final Logger log = LoggerFactory.getLogger(Task2Test.class);
-    // Создание команд для cоздания dto
-    static ApplicationArgsRepoController applicationArgsRepoController = new ApplicationArgsRepoController();
-    static ReadFilePathOperation readFilePathOperation = new ReadFilePathOperation();
-    static SaveFilePathOperation saveFilePathOperation = new SaveFilePathOperation();
-
-    // Создание map с именами фигур
-    static FigureNameMap figureNameMap = new FigureNameMap();
-
-    //Создание объектов для работы с файлом
-    static FigureFactory figureFactory = new FigureFactory();
-    static ApplicationArgumentParser applicationArgumentParser = new ApplicationArgumentParser();
     static SystemFileReader systemFileReader = new SystemFileReader();
 
     // Тестовые файлы
@@ -55,11 +34,6 @@ public class Task2Test {
 
     @BeforeAll
     static void init() throws IOException {
-        figureNameMap.addFigure(Rectangle.class);
-        figureNameMap.addFigure(Triangle.class);
-        figureNameMap.addFigure(Circle.class);
-        applicationArgsRepoController.addOperation(readFilePathOperation, saveFilePathOperation);
-
         testReadFile = tempDir.resolve("test_input.txt" + RandomUtil.getPositiveInt());
         Files.createFile(testReadFile);
         testSaveFile = tempDir.resolve("test_output.txt" + RandomUtil.getPositiveInt());
@@ -77,7 +51,7 @@ public class Task2Test {
     @Test
     void parseArgsReadFilePathAndSaveFilePath() {
         String[] args = {"-r::s", "-s::s"};
-        var parseArgs = applicationArgumentParser.argumentConfigure(args);
+        var parseArgs = Parser.parseApplicationArgs(args);
 
         assertAll(
                 () -> assertTrue(parseArgs.containsKey("r")),
@@ -88,80 +62,13 @@ public class Task2Test {
     @Test
     void parseArgsErrorSaveFilePathAndErrorReadFilePath() {
         String[] args = {"-r::", "-s::"};
-        assertThrows(IndexOutOfBoundsException.class, () -> applicationArgumentParser.argumentConfigure(args));
+        assertThrows(IndexOutOfBoundsException.class, () -> Parser.parseApplicationArgs(args));
     }
 
     @Test
     void notReadFilePath() {
         String[] args = {"-s::s"};
-        assertThrows(NotFileReadPath.class, () -> applicationArgumentParser.argumentConfigure(args));
-    }
-
-    @Test
-    void applicationDataСontainsReadFilePathAndNotSaveFilePath() {
-        String readFilePath = "-r::" + testReadFile.toString();
-        String[] args = {readFilePath};
-
-        var parseConsoleArgs = applicationArgumentParser.argumentConfigure(args);
-        var builder = ApplicationData.builder();
-
-        var applicationData = applicationArgsRepoController.operationsExecute(parseConsoleArgs, builder);
-
-        assertAll(
-                () -> assertEquals(testReadFile.toString(), applicationData.getReadFilePath()),
-                () -> assertEquals("console", applicationData.getSaveFilePath())
-        );
-
-
-    }
-
-    @Test
-    void applicationDataContainsCurrentDirectory() {
-        String readFilePath = "-r::" + testReadFile.toString();
-        String saveFilePath = "-s::errorSaveFilePath";
-        String[] args = {readFilePath, saveFilePath};
-        var parseConsoleArgs = applicationArgumentParser.argumentConfigure(args);
-
-        var builder = ApplicationData.builder();
-
-        var applicationData = applicationArgsRepoController.operationsExecute(parseConsoleArgs, builder);
-
-        assertAll(
-                () -> assertEquals(testReadFile.toString(), applicationData.getReadFilePath()),
-                () -> assertEquals(".", applicationData.getSaveFilePath())
-        );
-
-    }
-
-    @Test
-    void applicationDataContainsSaveFilePath() {
-        String readFilePath = "-r::" + testReadFile.toString();
-        String saveFilePath = "-s::" + testSaveFile.toString();
-        String[] args = {readFilePath, saveFilePath};
-        var parseConsoleArgs = applicationArgumentParser.argumentConfigure(args);
-
-        var builder = ApplicationData.builder();
-
-        var applicationData = applicationArgsRepoController.operationsExecute(parseConsoleArgs, builder);
-
-        assertAll(
-                () -> assertEquals(testReadFile.toString(), applicationData.getReadFilePath()),
-                () -> assertEquals(testSaveFile.toString(), applicationData.getSaveFilePath())
-        );
-
-    }
-
-    @Test
-    void readingFileByReadFilePath() {
-        String readFilePath = "-r::" + testReadFile.toString();
-        String[] args = {readFilePath};
-        var parseConsoleArgs = applicationArgumentParser.argumentConfigure(args);
-
-        var builder = ApplicationData.builder();
-
-        var applicationData = applicationArgsRepoController.operationsExecute(parseConsoleArgs, builder);
-
-        assertEquals(testReadFile.toString(), applicationData.getReadFilePath());
+        assertThrows(NotFileReadPath.class, () -> Parser.parseApplicationArgs(args));
     }
 
     @Test
@@ -169,16 +76,12 @@ public class Task2Test {
         writeFileFigureCircle();
         String readFilePath = "-r::" + testReadFile.toString();
         String[] args = {readFilePath};
-        var parseConsoleArgs = applicationArgumentParser.argumentConfigure(args);
+        var parseConsoleArgs = Parser.parseApplicationArgs(args);
 
-        var builder = ApplicationData.builder();
-
-        var applicationData = applicationArgsRepoController.operationsExecute(parseConsoleArgs, builder);
-        var bufferedReader = systemFileReader.readComputerFile(applicationData.getReadFilePath());
+        var bufferedReader = systemFileReader.readComputerFile(parseConsoleArgs.get("r"));
         try(bufferedReader) {
-            bufferedReader.readLine();
-            var figure = figureFactory.createFigure(figureNameMap.getFigureNameMap().get(Circle.class.getSimpleName().toUpperCase()), bufferedReader);
-            assertEquals(Circle.class, figure.getClass());
+            var abstractFigure = FigureFactory.create(bufferedReader);
+            assertEquals(Circle.class, abstractFigure.getClass());
         }
 
 
@@ -189,19 +92,13 @@ public class Task2Test {
         writeFileFigureRectangle();
         String readFilePath = "-r::" + testReadFile.toString();
         String[] args = {readFilePath};
-        var parseConsoleArgs = applicationArgumentParser.argumentConfigure(args);
+        var parseConsoleArgs = Parser.parseApplicationArgs(args);
 
-        var builder = ApplicationData.builder();
-
-        var applicationData = applicationArgsRepoController.operationsExecute(parseConsoleArgs, builder);
-        var bufferedReader = systemFileReader.readComputerFile(applicationData.getReadFilePath());
+        var bufferedReader = systemFileReader.readComputerFile(parseConsoleArgs.get("r"));
         try(bufferedReader) {
-            bufferedReader.readLine();
-            var figure = figureFactory.createFigure(figureNameMap.getFigureNameMap().get(Rectangle.class.getSimpleName().toUpperCase()), bufferedReader);
-            assertEquals(Rectangle.class, figure.getClass());
+            var abstractFigure = FigureFactory.create(bufferedReader);
+            assertEquals(Rectangle.class, abstractFigure.getClass());
         }
-
-
     }
 
     @Test
@@ -209,70 +106,24 @@ public class Task2Test {
         writeFileFigureTriangle();
         String readFilePath = "-r::" + testReadFile.toString();
         String[] args = {readFilePath};
-        var parseConsoleArgs = applicationArgumentParser.argumentConfigure(args);
+        var parseConsoleArgs = Parser.parseApplicationArgs(args);
 
-        var builder = ApplicationData.builder();
-
-        var applicationData = applicationArgsRepoController.operationsExecute(parseConsoleArgs, builder);
-        var bufferedReader = systemFileReader.readComputerFile(applicationData.getReadFilePath());
+        var bufferedReader = systemFileReader.readComputerFile(parseConsoleArgs.get("r"));
         try(bufferedReader) {
-            bufferedReader.readLine();
-            var figure = figureFactory.createFigure(figureNameMap.getFigureNameMap().get(Triangle.class.getSimpleName().toUpperCase()), bufferedReader);
-            assertEquals(Triangle.class, figure.getClass());
+            var abstractFigure = FigureFactory.create(bufferedReader);
+            assertEquals(Triangle.class, abstractFigure.getClass());
         }
-
-
-    }
-
-    @Test
-    void checkCreateFigureAll() throws IOException {
-        writeFileFigureTriangle();
-        writeFileFigureRectangle();
-        writeFileFigureCircle();
-
-        String readFilePath = "-r::" + testReadFile.toString();
-        String[] args = {readFilePath};
-        var parseConsoleArgs = applicationArgumentParser.argumentConfigure(args);
-
-        var builder = ApplicationData.builder();
-
-        var applicationData = applicationArgsRepoController.operationsExecute(parseConsoleArgs, builder);
-        var bufferedReader = systemFileReader.readComputerFile(applicationData.getReadFilePath());
-        try(bufferedReader) {
-            bufferedReader.readLine();
-            var triangle = figureFactory.createFigure(figureNameMap.getFigureNameMap().get(Triangle.class.getSimpleName().toUpperCase()), bufferedReader);
-
-            bufferedReader.readLine();
-            var rectangle = figureFactory.createFigure(figureNameMap.getFigureNameMap().get(Rectangle.class.getSimpleName().toUpperCase()), bufferedReader);
-
-            bufferedReader.readLine();
-            var circle = figureFactory.createFigure(figureNameMap.getFigureNameMap().get(Circle.class.getSimpleName().toUpperCase()), bufferedReader);
-
-
-            assertAll(
-                    () -> assertEquals(Triangle.class, triangle.getClass()),
-                    () -> assertEquals(Rectangle.class, rectangle.getClass()),
-                    () -> assertEquals(Circle.class, circle.getClass())
-            );
-        }
-
-
     }
 
     @Test
     void checkCreateConsoleSaveStrategy() {
         String readFilePath = "-r::" + testReadFile.toString();
         String[] args = {readFilePath};
-        var parseConsoleArgs = applicationArgumentParser.argumentConfigure(args);
+        var parseConsoleArgs = Parser.parseApplicationArgs(args);
 
-        var builder = ApplicationData.builder();
+        var abstractFigureFigureWriter = WriterFactory.create(parseConsoleArgs);
 
-        var applicationData = applicationArgsRepoController.operationsExecute(parseConsoleArgs, builder);
-
-        var saveStrategyFactory = new SaveStrategyFactory(applicationData);
-        var strategy = saveStrategyFactory.createStrategy(applicationData.getSaveFilePath());
-
-        assertEquals(ConsoleSaveStrategy.class, strategy.getClass());
+        assertEquals(ConsoleFigureWriter.class, abstractFigureFigureWriter.getClass());
 
     }
 
@@ -280,75 +131,26 @@ public class Task2Test {
     void checkCreateFileSaveStrategy() {
         String readFilePath = "-r::" + testReadFile.toString();
         String saveFilePath = "-s::" + testSaveFile.toString();
-        String[] args = {readFilePath, saveFilePath};
-        var parseConsoleArgs = applicationArgumentParser.argumentConfigure(args);
+        String[] args = {readFilePath , saveFilePath};
+        var parseConsoleArgs = Parser.parseApplicationArgs(args);
 
-        var builder = ApplicationData.builder();
+        var abstractFigureFigureWriter = WriterFactory.create(parseConsoleArgs);
 
-        var applicationData = applicationArgsRepoController.operationsExecute(parseConsoleArgs, builder);
+        assertEquals(UserFileFigureWriter.class, abstractFigureFigureWriter.getClass());
 
-        var saveStrategyFactory = new SaveStrategyFactory(applicationData);
-        var strategy = saveStrategyFactory.createStrategy(applicationData.getSaveFilePath());
-
-        assertEquals(UserFileSaveStrategy.class, strategy.getClass());
     }
-
-    @Test
-    void checkCreateCurrentSaveStrategy() {
-        String readFilePath = "-r::" + testReadFile.toString();
-        String saveFilePath = "-s::errorFilePath";
-        String[] args = {readFilePath, saveFilePath};
-        var parseConsoleArgs = applicationArgumentParser.argumentConfigure(args);
-
-        var builder = ApplicationData.builder();
-
-        var applicationData = applicationArgsRepoController.operationsExecute(parseConsoleArgs, builder);
-        var saveStrategyFactory = new SaveStrategyFactory(applicationData);
-        var strategy = saveStrategyFactory.createStrategy(applicationData.getSaveFilePath());
-
-        assertEquals(CurrentDirectorySaveFileStrategy.class, strategy.getClass());
-    }
-
-    @Test
-    void checkExecuteCurrentDirectorySaveStrategy() throws IOException {
-        var circle = new Circle(10);
-
-        String readFilePath = "-r::" + testReadFile.toString();
-        String saveFilePath = "-s::errorFilePath";
-        String[] args = {readFilePath, saveFilePath};
-        var parseConsoleArgs = applicationArgumentParser.argumentConfigure(args);
-        var builder = ApplicationData.builder();
-        var applicationData = applicationArgsRepoController.operationsExecute(parseConsoleArgs, builder);
-
-        var currentDirectorySaveFile = new CurrentDirectorySaveFileStrategy(applicationData);
-
-        currentDirectorySaveFile.save(circle);
-
-        Path savePath = Paths.get(applicationData.getSaveFilePath()).toAbsolutePath().normalize();
-        savePath = savePath.resolve(CurrentDirectorySaveFileStrategy.FILE_NAME);
-
-
-        var lineFile = String.join(" ", Files.readAllLines(savePath));
-        var lineApplication = String.join(" ", circle.getDescription().split("\n"));
-
-        assertEquals(lineApplication, lineFile);
-    }
-
     @Test
     void checkExecuteFileSaveStrategy() throws IOException {
         String readFilePath = "-r::" + testReadFile.toString();
         String saveFilePath = "-s::" + testSaveFile.toString();
         String[] args = {readFilePath, saveFilePath};
-        var parseConsoleArgs = applicationArgumentParser.argumentConfigure(args);
-        var builder = ApplicationData.builder();
-        var applicationData = applicationArgsRepoController.operationsExecute(parseConsoleArgs, builder);
-
+        var parseConsoleArgs = Parser.parseApplicationArgs(args);
         var circle = new Circle(10);
+        var abstractFigureFigureWriter = WriterFactory.create(parseConsoleArgs);
 
-        var userFileSaveStrategy = new UserFileSaveStrategy(applicationData);
-        userFileSaveStrategy.save(circle);
+        abstractFigureFigureWriter.write(circle,parseConsoleArgs);
 
-        var lineFile = String.join(" ", Files.readAllLines(Path.of(applicationData.getSaveFilePath())));
+        var lineFile = String.join(" ", Files.readAllLines(Path.of(parseConsoleArgs.get("s"))));
         var lineApplication = String.join(" ", circle.getDescription().split("\n"));
 
         assertEquals(lineFile, lineApplication);
@@ -361,15 +163,12 @@ public class Task2Test {
         String saveFilePath = "-s::" + testSaveFile.toString();
         String[] args = {readFilePath, saveFilePath};
 
-        var parseConsoleArgs = applicationArgumentParser.argumentConfigure(args);
-        var builder = ApplicationData.builder();
-        var applicationData = applicationArgsRepoController.operationsExecute(parseConsoleArgs, builder);
-
-        var fileBr = systemFileReader.readComputerFile(applicationData.getReadFilePath());
-
+        var parseConsoleArgs = Parser.parseApplicationArgs(args);
+        var fileBr = systemFileReader.readComputerFile(parseConsoleArgs.get("r"));
+        var triangleFactory = new TriangleFactory();
         try(fileBr) {
             fileBr.readLine();
-            assertThrows(IllegalArgumentException.class,()->Triangle.readFile(fileBr));
+            assertThrows(IllegalArgumentException.class,()-> triangleFactory.read(fileBr));
         }
 
 
@@ -402,7 +201,7 @@ public class Task2Test {
 
     private void writeErrorFileFigureTriangle() {
         try {
-            Files.writeString(testReadFile, "TRIANGLE\n100 100 \n", StandardOpenOption.APPEND);
+            Files.writeString(testReadFile, "TRIANGLE\n100 100  \n", StandardOpenOption.APPEND);
         } catch (IOException e) {
             log.error("writeErrorFileFigureTriangle ошибка записи в файл чтения {} ", "TRIANGLE");
         }
