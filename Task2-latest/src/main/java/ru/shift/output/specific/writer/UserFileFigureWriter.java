@@ -13,7 +13,6 @@ import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 import java.util.Map;
 
-@RequiredArgsConstructor
 @Slf4j
 public class UserFileFigureWriter implements FigureWriter<AbstractFigure> {
 
