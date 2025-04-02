@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 
 public interface FigureFactory<T extends AbstractFigure> {
     Logger log = LoggerFactory.getLogger(FigureFactory.class);
+
     NameOfTheFigure getNameOfTheFigure();
 
     T read(BufferedReader reader) throws IOException;
@@ -21,22 +22,29 @@ public interface FigureFactory<T extends AbstractFigure> {
             .map(ServiceLoader.Provider::get)
             .collect(Collectors.toMap(FigureFactory::getNameOfTheFigure, f -> (FigureFactory<?>) f));
 
-    static AbstractFigure create(BufferedReader reader) throws IOException {
+    static AbstractFigure create(BufferedReader reader) throws IOException, IllegalArgumentException {
         NameOfTheFigure figureName;
+
         try {
             figureName = NameOfTheFigure.valueOf(reader.readLine().toUpperCase());
-        }
-        catch (IllegalArgumentException e){
-            log.warn("Ошибка чтения фигуры из файл - {}" , e.getMessage());
+        } catch (IllegalArgumentException e) {
+            log.warn("Ошибка чтения фигуры из файл - {}", e.getMessage());
             throw e;
         }
 
-        try (reader) {
-            var factory = factures.get(figureName);
-            AbstractFigure figure = factory.read(reader);
-            log.info("Фигура создана - {}", figureName);
-            return figure;
+        var factory = factures.get(figureName);
+        AbstractFigure figure;
+
+        try {
+            figure = factory.read(reader);
+        } catch (IllegalArgumentException e) {
+            log.warn("Ошибка создания фигуры - {}", figureName);
+            throw e;
         }
+
+        log.info("Фигура создана - {}", figureName);
+        return figure;
+
     }
 
 }

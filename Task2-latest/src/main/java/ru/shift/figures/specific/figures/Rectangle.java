@@ -4,8 +4,6 @@ import lombok.extern.slf4j.Slf4j;
 import ru.shift.figures.AbstractFigure;
 import ru.shift.figures.NameOfTheFigure;
 
-import java.io.BufferedReader;
-
 @Slf4j
 public class Rectangle extends AbstractFigure {
     private final double length;

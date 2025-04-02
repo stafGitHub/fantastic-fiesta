@@ -1,8 +1,7 @@
 package ru.shift.factory.output;
 
+import ru.shift.args.ApplicationArgs;
 import ru.shift.figures.AbstractFigure;
-import ru.shift.args.NameConsoleArgs;
-import ru.shift.figures.NameOfTheFigure;
 import ru.shift.output.FigureWriter;
 
 import java.util.Map;
@@ -10,23 +9,18 @@ import java.util.ServiceLoader;
 import java.util.stream.Collectors;
 
 public interface WriterFactory<F extends FigureWriter<AbstractFigure>> {
-    String getNameOfTheFigureWriter();
+    OutputTypes getNameOfTheFigureWriter();
 
-    Map<String, WriterFactory<?>> figureWriters = ServiceLoader.load(WriterFactory.class).stream()
+    Map<OutputTypes, WriterFactory<?>> figureWriters = ServiceLoader.load(WriterFactory.class).stream()
             .map(ServiceLoader.Provider::get)
             .collect(Collectors.toMap(WriterFactory::getNameOfTheFigureWriter, w -> (WriterFactory<?>) w));
 
     F createWriter();
 
-    static FigureWriter<AbstractFigure> create(Map<String, String> args) {
-        WriterFactory<?> writerFactory;
+    static FigureWriter<AbstractFigure> create(ApplicationArgs args) {
+        OutputTypes outputType = args.getFileWritePath() != null ? OutputTypes.saveToUserFile : OutputTypes.consoleOutput;
 
-        if (args.containsKey(NameConsoleArgs.s.name())) {
-            writerFactory = figureWriters.get(NameConsoleArgs.s.name());
-        } else {
-            writerFactory = figureWriters.get(NameConsoleArgs.console.name());
-        }
-
+        WriterFactory<?> writerFactory = figureWriters.get(outputType);
         return writerFactory.createWriter();
     }
 }
