@@ -1,4 +1,4 @@
-package ru.shift.output;
+package ru.shift.factory.output;
 
 public enum OutputTypes {
     saveToUserFile, consoleOutput

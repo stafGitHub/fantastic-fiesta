@@ -1,7 +1,9 @@
 package ru.shift.output;
 
-import java.util.Map;
+import ru.shift.args.ApplicationArgs;
+
+import java.io.IOException;
 
 public interface FigureWriter<F> {
-    void write(F figure , Map<String,String> applicationArgs);
+    void write(F figure , ApplicationArgs applicationArgs) throws IOException;
 }

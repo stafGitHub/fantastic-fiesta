@@ -2,34 +2,38 @@ package ru.shift.args;
 
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.nio.file.Path;
+import java.util.Arrays;
 
 @Slf4j
 public class Parser {
 
-    public static Map<String, String> parseApplicationArgs(String[] arguments) {
-        var applicationArgsMap = new HashMap<String, String>();
+    public static ApplicationArgs parseApplicationArgs(String[] arguments) {
+        var applicationArgs = new ApplicationArgs();
 
-        for (String argument : arguments) {
-            if (argument.startsWith("-")) {
-                String[] arg = argument.split("::");
+        var it = Arrays.stream(arguments).iterator();
+        while (it.hasNext()) {
+            var arg = it.next();
+            if (!arg.startsWith("-")) break;
 
-                try {
-                    applicationArgsMap.put(arg[0].substring(1), arg[1]);
-                }catch (IndexOutOfBoundsException e){
-                    log.warn("Ошибка чтения консольных аргументов программы {} - {}", argument , e.getMessage());
-                    throw e;
+            switch (arg) {
+                case "-r" -> {
+                    if (!it.hasNext()) throw new IllegalArgumentException("Отсутствует аргумент '-f'");
+                    applicationArgs.setFileReadPath(Path.of(it.next()));
                 }
-
+                case "-s" -> {
+                    if (!it.hasNext()) throw new IllegalArgumentException("Отсутствует аргумент '-s'");
+                    applicationArgs.setFileWritePath(Path.of(it.next()));
+                }
             }
         }
 
-        if (!applicationArgsMap.containsKey("r")){
+        if (applicationArgs.getFileReadPath() == null) {
             throw new NotFileReadPath();
         }
 
         log.info("Консольные аргументы прочитаны");
-        return applicationArgsMap;
+
+        return applicationArgs;
     }
 }
