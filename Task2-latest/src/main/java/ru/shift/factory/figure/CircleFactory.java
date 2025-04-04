@@ -17,13 +17,14 @@ public class CircleFactory implements FigureFactory<Circle> {
     }
 
     @Override
-    public Circle read(BufferedReader reader) throws IOException {
-        log.info("Создание фигуры {}" ,getNameOfTheFigure());
+    public Circle read(BufferedReader reader) throws IOException, FigureException {
+        log.info("Создание фигуры {}", getNameOfTheFigure());
+        var figureParams = reader.readLine();
         try {
-            return new Circle(ArgumentsParsing.parseDouble(reader.readLine()));
+            return new Circle(ArgumentsParsing.parseDouble(figureParams));
         } catch (IllegalArgumentException e) {
-            log.warn("Ошибка создания {} - {}", CircleFactory.class.getSimpleName(), e.getMessage());
-            throw e;
+            log.warn("Ошибка создания {}", getNameOfTheFigure());
+            throw new FigureException(getNameOfTheFigure(), figureParams, e);
         }
     }
 }

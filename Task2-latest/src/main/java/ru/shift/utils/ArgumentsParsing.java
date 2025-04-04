@@ -2,9 +2,6 @@ package ru.shift.utils;
 
 import lombok.extern.slf4j.Slf4j;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-
 @Slf4j
 public final class ArgumentsParsing {
     private static final String SPLIT_ARGUMENTS = " ";
@@ -13,14 +10,20 @@ public final class ArgumentsParsing {
         throw new IllegalStateException("Utility class");
     }
 
-    public static String[] parseArguments(BufferedReader br, int totalArgs) throws IOException, IllegalArgumentException {
+    public static String[] parseArguments(String br, int totalArgs) throws IllegalArgumentException {
         log.info("Парсинг аргументов фигуры");
+        String[] args;
 
-        var args = br.readLine().split(SPLIT_ARGUMENTS);
+        try {
+            args = br.split(SPLIT_ARGUMENTS);
+        }catch (NullPointerException e) {
+            log.warn("Параметры фигуры отсутствуют");
+            throw new IllegalArgumentException("Параметры фигуры не могут быть пустыми");
+        }
 
         if (totalArgs != args.length) {
-            log.warn("Количество аргументов несоответствует фигуре {} --> {}", args.length, totalArgs);
-            throw new IllegalArgumentException("Количество аргументов несоответствует фигуре");
+            log.warn("Количество аргументов несоответствует фигуре");
+            throw new IllegalArgumentException("Количество аргументов несоответствует фигуре %s --> %s".formatted(args.length, totalArgs));
         } else {
             return args;
         }

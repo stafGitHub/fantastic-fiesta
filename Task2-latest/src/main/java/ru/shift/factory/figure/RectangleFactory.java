@@ -7,9 +7,11 @@ import ru.shift.utils.ArgumentsParsing;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+
 @Slf4j
 public class RectangleFactory implements FigureFactory<Rectangle> {
     private final static int ARGUMENTS_NECESSARY_FOR_THE_FIGURE = 2;
+
     @Override
     public NameOfTheFigure getNameOfTheFigure() {
         return NameOfTheFigure.RECTANGLE;
@@ -17,9 +19,10 @@ public class RectangleFactory implements FigureFactory<Rectangle> {
 
     @Override
     public Rectangle read(BufferedReader reader) throws IOException {
-        log.info("Создание фигуры {}" ,getNameOfTheFigure());
+        log.info("Создание фигуры {}", getNameOfTheFigure());
+        var figureParams = reader.readLine();
         try {
-            var parseArguments = ArgumentsParsing.parseArguments(reader, ARGUMENTS_NECESSARY_FOR_THE_FIGURE);
+            var parseArguments = ArgumentsParsing.parseArguments(figureParams, ARGUMENTS_NECESSARY_FOR_THE_FIGURE);
             var parseArgumentsDouble = new Double[parseArguments.length];
 
             for (int i = 0; i < parseArguments.length; i++) {
@@ -27,9 +30,9 @@ public class RectangleFactory implements FigureFactory<Rectangle> {
             }
 
             return new Rectangle(parseArgumentsDouble[0], parseArgumentsDouble[1]);
-        }catch (IllegalArgumentException e){
-            log.warn("Ошибка создания {} - {}",TriangleFactory.class.getSimpleName(), e.getMessage());
-            throw e;
+        } catch (IllegalArgumentException e) {
+            log.warn("Ошибка создания {}", getNameOfTheFigure());
+            throw new FigureException(getNameOfTheFigure(), figureParams, e);
         }
 
 

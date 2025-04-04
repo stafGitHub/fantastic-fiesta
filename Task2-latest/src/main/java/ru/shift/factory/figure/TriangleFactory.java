@@ -9,6 +9,7 @@ import java.io.IOException;
 
 public class TriangleFactory implements FigureFactory<Triangle> {
     private final static int ARGUMENTS_NECESSARY_FOR_THE_FIGURE = 3;
+
     @Override
     public NameOfTheFigure getNameOfTheFigure() {
         return NameOfTheFigure.TRIANGLE;
@@ -16,17 +17,18 @@ public class TriangleFactory implements FigureFactory<Triangle> {
 
     @Override
     public Triangle read(BufferedReader reader) throws IOException {
-        log.info("Создание фигуры {}" ,getNameOfTheFigure());
+        log.info("Создание фигуры {}", getNameOfTheFigure());
+        var figureParams = reader.readLine();
         try {
-            var parseArguments = ArgumentsParsing.parseArguments(reader, ARGUMENTS_NECESSARY_FOR_THE_FIGURE);
+            var parseArguments = ArgumentsParsing.parseArguments(figureParams, ARGUMENTS_NECESSARY_FOR_THE_FIGURE);
             var parseArgumentsDouble = new Double[parseArguments.length];
             for (int i = 0; i < parseArguments.length; i++) {
                 parseArgumentsDouble[i] = ArgumentsParsing.parseDouble(parseArguments[i]);
             }
             return new Triangle(parseArgumentsDouble[0], parseArgumentsDouble[1], parseArgumentsDouble[2]);
-        }catch (IllegalArgumentException e){
-            log.warn("Ошибка создания {} - {}",TriangleFactory.class.getSimpleName(), e.getMessage());
-            throw e;
+        } catch (IllegalArgumentException e) {
+            log.warn("Ошибка создания {}", getNameOfTheFigure());
+            throw new FigureException(getNameOfTheFigure(), figureParams, e);
         }
 
 
