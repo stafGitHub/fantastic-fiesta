@@ -1,2 +1,3 @@
 rootProject.name = 'repos_2025_01_stafievskii'
 include 'Task1'
+include 'Task2-latest'
