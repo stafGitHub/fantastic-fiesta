@@ -2,7 +2,7 @@ package ru.shift.model;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import ru.shift.model.listners.ViewModelListener;
+import ru.shift.view.ViewModelListener;
 
 import java.util.concurrent.atomic.AtomicInteger;
 

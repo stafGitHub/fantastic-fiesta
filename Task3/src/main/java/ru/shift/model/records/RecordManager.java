@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import ru.shift.model.GameType;
+import ru.shift.view.windows.HighScoresWindow;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -15,13 +16,16 @@ import java.nio.file.Paths;
 public class RecordManager {
     private static final String FILE_NAME = "stafievskiy_application_record.ser";
     private static final Path RECORDS_FILE_PATH = Paths.get(System.getProperty("user.home"), FILE_NAME);
+    private final HighScoresWindow highScoresWindow;
     @Setter
     private String recordName;
     private GameType gameType;
     private Record currentRecord;
 
-    public RecordManager() {
+    public RecordManager(HighScoresWindow highScoresWindow) {
+        this.highScoresWindow = highScoresWindow;
         loadRecords();
+        updateRecordWindow();
     }
 
     public void updateRecord(int time) {
@@ -30,16 +34,22 @@ public class RecordManager {
                 currentRecord.setNoviceTime(time);
                 currentRecord.setNoviceRecordName(recordName);
                 saveRecords();
+                loadRecords();
+                updateRecordWindow();
             }
             case MEDIUM -> {
                 currentRecord.setMediumTime(time);
                 currentRecord.setMediumRecordName(recordName);
                 saveRecords();
+                loadRecords();
+                updateRecordWindow();
             }
             case EXPERT -> {
                 currentRecord.setExpertTime(time);
                 currentRecord.setExpertRecordName(recordName);
                 saveRecords();
+                loadRecords();
+                updateRecordWindow();
             }
         }
     }
@@ -94,6 +104,12 @@ public class RecordManager {
         } catch (IOException e) {
             log.error("Ошибка сохранения рекордов", e);
         }
+    }
+
+    private void updateRecordWindow(){
+        highScoresWindow.setNoviceRecord(currentRecord.getNoviceRecordName(),currentRecord.getNoviceTime());
+        highScoresWindow.setMediumRecord(currentRecord.getMediumRecordName(),currentRecord.getMediumTime());
+        highScoresWindow.setExpertRecord(currentRecord.getExpertRecordName(),currentRecord.getExpertTime());
     }
 
 }

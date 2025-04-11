@@ -4,11 +4,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import ru.shift.controller.NewGameController;
 import ru.shift.model.GameType;
-import ru.shift.model.records.Record;
-import ru.shift.model.records.RecordController;
-import ru.shift.model.records.RecordManager;
 import ru.shift.model.dto.ClickResult;
-import ru.shift.model.listners.ViewModelListener;
+import ru.shift.model.records.RecordController;
 import ru.shift.view.windows.LoseWindow;
 import ru.shift.view.windows.MainWindow;
 import ru.shift.view.windows.RecordsWindow;
@@ -19,7 +16,6 @@ public class ViewObserver implements ViewModelListener {
     private final MainWindow mainWindow;
     @Setter
     private NewGameController newGameController;
-    private final RecordManager recordManager;
     private final RecordController recordController;
 
     @Override

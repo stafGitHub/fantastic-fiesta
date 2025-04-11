@@ -1,4 +1,4 @@
-package ru.shift.model.listners;
+package ru.shift.view;
 
 import ru.shift.model.GameType;
 import ru.shift.model.dto.ClickResult;
@@ -13,4 +13,5 @@ public interface ViewModelListener {
     void winGame();
     void timeUpdate(int time);
     void updateRecord(int time);
+
 }

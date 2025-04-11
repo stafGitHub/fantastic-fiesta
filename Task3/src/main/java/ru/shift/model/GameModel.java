@@ -2,7 +2,7 @@ package ru.shift.model;
 
 import ru.shift.model.listners.ControllerModelListener;
 import ru.shift.model.dto.ClickResult;
-import ru.shift.model.listners.ViewModelListener;
+import ru.shift.view.ViewModelListener;
 import ru.shift.model.records.RecordManager;
 
 import java.util.Random;
@@ -63,6 +63,11 @@ public class GameModel implements ControllerModelListener {
         updateTheCellView(clickResult);
 
         checkGameWinner();
+    }
+
+    @Override
+    public void openCellWithMouseCell(int row, int col) {
+
     }
 
     @Override
