@@ -1,4 +1,8 @@
-package ru.shift.view;
+package ru.shift.view.windows;
+
+import ru.shift.controller.listners.CellEventListener;
+import ru.shift.view.ButtonType;
+import ru.shift.view.GameImage;
 
 import javax.swing.*;
 import java.awt.*;
@@ -125,7 +129,6 @@ public class MainWindow extends JFrame {
                                 listener.onMouseClick(x, y, ButtonType.MIDDLE_BUTTON);
                                 break;
                             default:
-                                // Other mouse buttons are ignored
                         }
                     }
                 });

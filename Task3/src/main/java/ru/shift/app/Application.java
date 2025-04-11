@@ -1,40 +1,45 @@
 package ru.shift.app;
 
-import ru.shift.view.GameImage;
-import ru.shift.view.HighScoresWindow;
-import ru.shift.view.MainWindow;
-import ru.shift.view.SettingsWindow;
+import ru.shift.controller.NewGameController;
+import ru.shift.controller.SettingsController;
+import ru.shift.model.GameType;
+import ru.shift.model.records.RecordController;
+import ru.shift.model.records.RecordManager;
+import ru.shift.model.Timer;
+import ru.shift.view.ViewObserver;
+
+import ru.shift.controller.MouseController;
+import ru.shift.model.GameModel;
+import ru.shift.view.windows.HighScoresWindow;
+import ru.shift.view.windows.MainWindow;
+import ru.shift.view.windows.SettingsWindow;
 
 public class Application {
+    private static final MainWindow view = new MainWindow();
+    private static final RecordManager recordManager = new RecordManager();
+    private static final RecordController recordController = new RecordController(recordManager);
+    private static final ViewObserver viewObserver = new ViewObserver(view , recordManager , recordController);
+    private static final Timer timer = new Timer(viewObserver);
+    private static final GameModel model = new GameModel(viewObserver,GameType.NOVICE,recordManager,timer);
+    private static final NewGameController newGameController = new NewGameController(model);
+    private static final MouseController controller = new MouseController(model);
+    private static final SettingsController settingsController = new SettingsController(model);
+
     public static void main(String[] args) {
-        MainWindow mainWindow = new MainWindow();
-        SettingsWindow settingsWindow = new SettingsWindow(mainWindow);
-        HighScoresWindow highScoresWindow = new HighScoresWindow(mainWindow);
+        SettingsWindow settingsWindow = new SettingsWindow(view);
+        HighScoresWindow highScoresWindow = new HighScoresWindow(view);
+        viewObserver.setNewGameController(newGameController);
 
-        mainWindow.setNewGameMenuAction(e -> { /* TODO */ });
-        mainWindow.setSettingsMenuAction(e -> settingsWindow.setVisible(true));
-        mainWindow.setHighScoresMenuAction(e -> highScoresWindow.setVisible(true));
-        mainWindow.setExitMenuAction(e -> mainWindow.dispose());
-        mainWindow.setCellListener((x, y, buttonType) -> { /* TODO */ });
 
-        mainWindow.createGameField(10, 10);
-        mainWindow.setVisible(true);
+        view.setHighScoresMenuAction(e -> highScoresWindow.setVisible(true));
+        view.setExitMenuAction(e -> view.dispose());
+        view.setSettingsMenuAction(e -> settingsWindow.setVisible(true));
+        view.setNewGameMenuAction(e -> newGameController.newGame());
 
-        // TODO: There is a sample code below, remove it after try
+        view.setCellListener(controller);
+        settingsWindow.setGameTypeListener(settingsController);
 
-        mainWindow.setTimerValue(145);
-        mainWindow.setBombsCount(45);
-        mainWindow.setCellImage(0, 0, GameImage.EMPTY);
-        mainWindow.setCellImage(0, 1, GameImage.CLOSED);
-        mainWindow.setCellImage(0, 2, GameImage.MARKED);
-        mainWindow.setCellImage(0, 3, GameImage.BOMB);
-        mainWindow.setCellImage(1, 0, GameImage.NUM_1);
-        mainWindow.setCellImage(1, 1, GameImage.NUM_2);
-        mainWindow.setCellImage(1, 2, GameImage.NUM_3);
-        mainWindow.setCellImage(1, 3, GameImage.NUM_4);
-        mainWindow.setCellImage(1, 4, GameImage.NUM_5);
-        mainWindow.setCellImage(1, 5, GameImage.NUM_6);
-        mainWindow.setCellImage(1, 6, GameImage.NUM_7);
-        mainWindow.setCellImage(1, 7, GameImage.NUM_8);
+        view.createGameField(9, 9);
+        view.setVisible(true);
     }
 }

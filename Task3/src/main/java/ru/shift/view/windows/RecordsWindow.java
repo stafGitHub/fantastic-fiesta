@@ -1,4 +1,6 @@
-package ru.shift.view;
+package ru.shift.view.windows;
+
+import ru.shift.model.listners.RecordNameListener;
 
 import javax.swing.*;
 import java.awt.*;

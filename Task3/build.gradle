@@ -1,15 +1,23 @@
-group 'ru.cft.javaLessons.miner'
-version '1.0-SNAPSHOT'
+plugins {
+    id 'java'
+}
 
-apply plugin: 'java'
+group = 'ru_shift'
+version = '1.0-SNAPSHOT'
 
-sourceCompatibility = 1.8
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
 
 repositories {
     mavenCentral()
 }
 
 dependencies {
-    implementation "ch.qos.logback:logback-classic:1.2.3"
-    testImplementation group: 'junit', name: 'junit', version: '4.12'
+    compileOnly 'org.projectlombok:lombok:1.18.30'
+    annotationProcessor 'org.projectlombok:lombok:1.18.30'
+    implementation 'ch.qos.logback:logback-classic:1.4.12'
+    testImplementation group: 'junit', name: 'junit', version: '4.13.1'
 }

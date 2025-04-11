@@ -1,4 +1,4 @@
-package ru.shift.view;
+package ru.shift.view.windows;
 
 import javax.swing.*;
 import java.awt.*;
