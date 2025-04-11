@@ -18,6 +18,9 @@ public class ViewObserver implements ViewModelListener {
     private NewGameController newGameController;
     private final RecordController recordController;
 
+    private LoseWindow loseWindow =null;
+    private WinWindow winWindow = null;
+
     @Override
     public void updateTheCellView(ClickResult clickResult) {
         for (int i = 0; i < clickResult.getColumnRes().size(); i++) {
@@ -48,11 +51,11 @@ public class ViewObserver implements ViewModelListener {
     }
 
     @Override
-    public void flagPlaning(int col , int row ,boolean flag) {
+    public void flagPlaning(int col, int row, boolean flag) {
         if (flag) {
-            mainWindow.setCellImage(row,col,GameImage.MARKED);
-        }else {
-            mainWindow.setCellImage(row,col,GameImage.CLOSED);
+            mainWindow.setCellImage(row, col, GameImage.MARKED);
+        } else {
+            mainWindow.setCellImage(row, col, GameImage.CLOSED);
         }
     }
 
@@ -63,23 +66,24 @@ public class ViewObserver implements ViewModelListener {
 
     @Override
     public void updateGame(GameType gameType) {
-        mainWindow.createGameField(gameType.rows,gameType.cols);
+        mainWindow.createGameField(gameType.rows, gameType.cols);
     }
 
     @Override
     public void loseGame() {
-        var loseWindow = new LoseWindow(mainWindow);
-        loseWindow.setNewGameListener(e->newGameController.newGame());
-        loseWindow.setExitListener(e-> mainWindow.dispose());
-        loseWindow.setVisible(true);
+            loseWindow = new LoseWindow(mainWindow);
+            loseWindow.setNewGameListener(e -> newGameController.newGame());
+            loseWindow.setExitListener(e -> mainWindow.dispose());
+            loseWindow.setVisible(true);
+
     }
 
     @Override
     public void winGame() {
-        var winWindow = new WinWindow(mainWindow);
-        winWindow.setNewGameListener(e->newGameController.newGame());
-        winWindow.setExitListener(e-> mainWindow.dispose());
-        winWindow.setVisible(true);
+            winWindow = new WinWindow(mainWindow);
+            winWindow.setNewGameListener(e -> newGameController.newGame());
+            winWindow.setExitListener(e -> mainWindow.dispose());
+            winWindow.setVisible(true);
     }
 
     @Override
@@ -93,4 +97,5 @@ public class ViewObserver implements ViewModelListener {
         recordsWindow.setNameListener(recordController);
         recordsWindow.setVisible(true);
     }
+
 }

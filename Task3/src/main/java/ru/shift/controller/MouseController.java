@@ -14,7 +14,7 @@ public class MouseController implements CellEventListener {
         switch (buttonType) {
             case LEFT_BUTTON -> gameModel.openCellLeftButton(y, x);
             case MIDDLE_BUTTON -> gameModel.flagPlaning(y, x);
-//            case RIGHT_BUTTON ->
+            case RIGHT_BUTTON -> gameModel.openCellWithMouseCell(y, x);
         }
     }
 

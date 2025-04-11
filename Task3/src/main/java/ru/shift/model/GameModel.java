@@ -11,15 +11,15 @@ public class GameModel implements ControllerModelListener {
     private final ViewModelListener viewModelListener;
     private final RecordManager recordManager;
 
-    private final static int OPEN_COLUMN = -2;
     private final static int MINE = -1;
     private final static int EMPTY_COLUMN = 0;
 
     private GameType gameType;
     private int openCellsToWin;
 
-    private int[][] mineField;
+    private int[][] fields;
     private boolean[][] flags;
+    private boolean[][] openFields;
     private final Timer timer;
 
     private boolean gameOver;
@@ -41,23 +41,31 @@ public class GameModel implements ControllerModelListener {
     }
 
     @Override
-    public void openCellLeftButton(int row , int col) {
+    public void openCellLeftButton(int row, int col) {
         var clickResult = new ClickResult();
-
-        if (firstClick){
-            createField();
-            timer.start();
-            firstClick = false;
+        if (gameOver) {
+            return;
         }
-
+        if (gameWon) {
+            return;
+        }
 
         if (flags[row][col]) {
             return;
         }
 
-//        if (checkGameOver(col, row)){
-//            return;
-//        }
+        if (firstClick) {
+            createField(row, col);
+            timer.start();
+            firstClick = false;
+        }
+
+        if (checkGameOver(col, row)) {
+            revealAllMines(clickResult);
+            updateTheCellView(clickResult);
+            gameOver();
+            return;
+        }
 
         openNeighbors(col, row, clickResult);
         updateTheCellView(clickResult);
@@ -67,22 +75,95 @@ public class GameModel implements ControllerModelListener {
 
     @Override
     public void openCellWithMouseCell(int row, int col) {
+        var clickResult = new ClickResult();
+        if (gameOver) {
+            return;
+        }
+
+        if (gameWon) {
+            return;
+        }
+
+        var flags = countFlag(row, col);
+        if (flags < fields[row][col] || (fields[row][col] == EMPTY_COLUMN && openFields[row][col]) || !openFields[row][col]) {
+            return;
+        }
+
+        readingCellsInCrudCoordinates(row, col, clickResult);
+
+        updateTheCellView(clickResult);
+
+        if (!checkingForBombs(clickResult)) {
+            revealAllMines(clickResult);
+            updateTheCellView(clickResult);
+            gameOver();
+            return;
+        }
+
+        checkGameWinner();
+    }
+
+    private void readingCellsInCrudCoordinates(int row, int col, ClickResult clickResult) {
+        for (int r = Math.max(0, row - 1); r <= Math.min(gameType.rows - 1, row + 1); r++) {
+            for (int c = Math.max(0, col - 1); c <= Math.min(gameType.cols - 1, col + 1); c++) {
+                if (r == row && c == col || flags[r][c] || openFields[r][c]) {
+                    continue;
+                }
+                clickResult.getX().add(c);
+                clickResult.getY().add(r);
+                clickResult.getColumnRes().add(fields[r][c]);
+                openCells++;
+                openFields[r][c] = true;
+            }
+        }
+    }
+
+    private boolean checkingForBombs(ClickResult clickResult) {
+        var count = clickResult.getColumnRes().stream()
+                .filter(f -> f == MINE)
+                .count();
+
+        return count == 0;
 
     }
 
+    private void revealAllMines(ClickResult clickResult) {
+        for (int r = 0; r < gameType.rows; r++) {
+            for (int c = 0; c < gameType.cols; c++) {
+                if (fields[r][c] == MINE && !flags[r][c]) {
+                    clickResult.getX().add(c);
+                    clickResult.getY().add(r);
+                    clickResult.getColumnRes().add(MINE);
+                }
+            }
+        }
+    }
+
+    private int countFlag(int row, int col) {
+        int flag = 0;
+        for (int r = Math.max(0, row - 1); r <= Math.min(gameType.rows - 1, row + 1); r++) {
+            for (int c = Math.max(0, col - 1); c <= Math.min(gameType.cols - 1, col + 1); c++) {
+                if (flags[r][c]) {
+                    flag++;
+                }
+            }
+        }
+        return flag;
+    }
+
     @Override
-    public void flagPlaning(int row , int col) {
-        if (mineField[row][col] == OPEN_COLUMN || mines == 0) {
+    public void flagPlaning(int row, int col) {
+        if (openFields[row][col] || mines == 0) {
             return;
         }
         if (!flags[row][col]) {
             flags[row][col] = true;
-            viewModelListener.flagPlaning(row,col , true);
+            viewModelListener.flagPlaning(row, col, true);
             mines--;
             updateBomb();
-        }else {
+        } else {
             flags[row][col] = false;
-            viewModelListener.flagPlaning(row,col , false);
+            viewModelListener.flagPlaning(row, col, false);
             mines++;
             updateBomb();
         }
@@ -101,8 +182,7 @@ public class GameModel implements ControllerModelListener {
     }
 
     private void openNeighbors(int col, int row, ClickResult clickResult) {
-        if (col < 0 || col >= gameType.cols || row < 0 || row >= gameType.rows ||
-                mineField[row][col] == OPEN_COLUMN) {
+        if (col < 0 || col >= gameType.cols || row < 0 || row >= gameType.rows || openFields[row][col]) {
             return;
         }
         if (flags[row][col]) {
@@ -113,10 +193,10 @@ public class GameModel implements ControllerModelListener {
 
         clickResult.getX().add(col);
         clickResult.getY().add(row);
-        clickResult.getColumnRes().add(mineField[row][col]);
+        clickResult.getColumnRes().add(fields[row][col]);
 
-        int cellValue = mineField[row][col];
-        mineField[row][col] = OPEN_COLUMN;
+        int cellValue = fields[row][col];
+        openFields[row][col] = true;
         openCells++;
 
         if (cellValue != EMPTY_COLUMN) {
@@ -132,40 +212,51 @@ public class GameModel implements ControllerModelListener {
     }
 
     private boolean checkGameOver(int col, int row) {
-        if (mineField[row][col] == MINE) {
+        if (fields[row][col] == MINE) {
             gameOver = true;
-            timer.stop();
-            viewModelListener.loseGame();
+            return true;
+        } else {
+            return false;
         }
-        return false;
+    }
+
+    private void gameOver() {
+        gameOver = true;
+        timer.stop();
+        viewModelListener.loseGame();
     }
 
     private void checkGameWinner() {
         if (openCells == openCellsToWin) {
-            timer.stop();
             gameWon = true;
-            var record = recordManager.checkRecords(timer.getSecondsPassed().get(), gameType);
-
-            if (record){
-                viewModelListener.updateRecord(timer.getSecondsPassed().get());
-                recordManager.updateRecord(timer.getSecondsPassed().get());
-            }
-
-            viewModelListener.winGame();
+            gameWon();
         }
+    }
+
+    private void gameWon() {
+        timer.stop();
+        gameWon = true;
+        var record = recordManager.checkRecords(timer.getSecondsPassed().get(), gameType);
+
+        if (record) {
+            viewModelListener.updateRecord(timer.getSecondsPassed().get());
+            recordManager.updateRecord(timer.getSecondsPassed().get());
+        }
+
+        viewModelListener.winGame();
     }
 
     private void updateTheCellView(ClickResult clickResult) {
         viewModelListener.updateTheCellView(clickResult);
     }
 
-    private void createField(){
-        fillTheFieldWithBombs(gameType.rows, gameType.cols);
+    private void createField(int rows, int cols) {
+        fillTheFieldWithBombs(rows, cols);
         fillTheFieldWithNumbers();
         updateBomb();
     }
 
-    private void fillTheFieldWithBombs(int col, int row) {
+    private void fillTheFieldWithBombs(int row, int col) {
         int bomb = 0;
         while (bomb != gameType.numberOfBombs) {
             int xCoordinate = RANDOM.nextInt(gameType.rows);
@@ -175,8 +266,8 @@ public class GameModel implements ControllerModelListener {
                 continue;
             }
 
-            if (mineField[xCoordinate][yCoordinate] != MINE) {
-                mineField[xCoordinate][yCoordinate] = MINE;
+            if (fields[xCoordinate][yCoordinate] != MINE) {
+                fields[xCoordinate][yCoordinate] = MINE;
                 bomb++;
             }
         }
@@ -186,37 +277,40 @@ public class GameModel implements ControllerModelListener {
         for (int row = 0; row < gameType.rows; row++) {
             for (int col = 0; col < gameType.cols; col++) {
 
-                if (mineField[row][col] != MINE) {
+                if (fields[row][col] != MINE) {
                     int mineCount = 0;
                     for (int r = Math.max(0, row - 1); r <= Math.min(gameType.rows - 1, row + 1); r++) {
                         for (int c = Math.max(0, col - 1); c <= Math.min(gameType.cols - 1, col + 1); c++) {
 
-                            if (mineField[r][c] == MINE) {
+                            if (fields[r][c] == MINE) {
                                 mineCount++;
                             }
 
                         }
                     }
-                    mineField[row][col] = mineCount;
+                    fields[row][col] = mineCount;
                 }
 
             }
         }
     }
 
-    private void updateBomb(){
+    private void updateBomb() {
         viewModelListener.updateBombCount(mines);
     }
 
-    private void createGame(GameType gameType){
+    private void createGame(GameType gameType) {
         this.gameType = gameType;
         openCellsToWin = gameType.rows * gameType.cols - gameType.numberOfBombs;
         openCells = 0;
+        gameWon = false;
+        gameOver = false;
 
         timer.reset();
 
-        mineField = new int[gameType.rows][gameType.cols];
+        fields = new int[gameType.rows][gameType.cols];
         flags = new boolean[gameType.rows][gameType.cols];
+        openFields = new boolean[gameType.rows][gameType.cols];
         mines = gameType.numberOfBombs;
         firstClick = true;
     }
