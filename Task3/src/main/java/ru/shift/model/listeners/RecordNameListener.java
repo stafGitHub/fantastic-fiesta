@@ -1,4 +1,4 @@
-package ru.shift.model.listners;
+package ru.shift.model.listeners;
 
 public interface RecordNameListener {
     void onRecordNameEntered(String name);

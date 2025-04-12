@@ -1,13 +1,13 @@
 package ru.shift.controller;
 
 import lombok.RequiredArgsConstructor;
-import ru.shift.controller.listners.CellEventListener;
-import ru.shift.model.listners.ControllerModelListener;
+import ru.shift.view.listeners.ViewControllerCellEventListener;
+import ru.shift.controller.listeners.ControllerModelFieldListener;
 import ru.shift.view.ButtonType;
 
 @RequiredArgsConstructor
-public class MouseController implements CellEventListener {
-    private final ControllerModelListener gameModel;
+public class MouseViewController implements ViewControllerCellEventListener {
+    private final ControllerModelFieldListener gameModel;
 
     @Override
     public void onMouseClick(int x, int y, ButtonType buttonType) {

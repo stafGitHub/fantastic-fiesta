@@ -1,14 +1,14 @@
 package ru.shift.app;
 
-import ru.shift.controller.NewGameController;
-import ru.shift.controller.SettingsController;
+import ru.shift.controller.NewGameViewController;
+import ru.shift.controller.SettingsViewController;
 import ru.shift.model.GameType;
 import ru.shift.model.records.RecordController;
 import ru.shift.model.records.RecordManager;
 import ru.shift.model.Timer;
-import ru.shift.view.ViewObserver;
+import ru.shift.view.observers.ViewObserver;
 
-import ru.shift.controller.MouseController;
+import ru.shift.controller.MouseViewController;
 import ru.shift.model.GameModel;
 import ru.shift.view.windows.HighScoresWindow;
 import ru.shift.view.windows.MainWindow;
@@ -25,9 +25,9 @@ public class Application {
     private static final ViewObserver viewObserver = new ViewObserver(view , recordController);
     private static final Timer timer = new Timer(viewObserver);
     private static final GameModel model = new GameModel(viewObserver,GameType.NOVICE,recordManager,timer);
-    private static final NewGameController newGameController = new NewGameController(model);
-    private static final MouseController controller = new MouseController(model);
-    private static final SettingsController settingsController = new SettingsController(model);
+    private static final NewGameViewController newGameController = new NewGameViewController(model);
+    private static final MouseViewController controller = new MouseViewController(model);
+    private static final SettingsViewController settingsController = new SettingsViewController(model);
 
     public static void main(String[] args) {
         SettingsWindow settingsWindow = new SettingsWindow(view);

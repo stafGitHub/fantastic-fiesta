@@ -1,6 +1,6 @@
 package ru.shift.view.windows;
 
-import ru.shift.controller.listners.GameTypeListener;
+import ru.shift.view.listeners.ViewControllerGameTypeListener;
 import ru.shift.model.GameType;
 
 import javax.swing.*;
@@ -12,7 +12,7 @@ public class SettingsWindow extends JDialog {
     private final Map<GameType, JRadioButton> radioButtonsMap = new HashMap<>(3);
     private final ButtonGroup radioGroup = new ButtonGroup();
 
-    private GameTypeListener gameTypeListener;
+    private ViewControllerGameTypeListener viewControllerGameTypeListener;
     private GameType gameType;
 
     public SettingsWindow(JFrame owner) {
@@ -50,8 +50,8 @@ public class SettingsWindow extends JDialog {
         radioGroup.setSelected(radioButton.getModel(), true);
     }
 
-    public void setGameTypeListener(GameTypeListener gameTypeListener) {
-        this.gameTypeListener = gameTypeListener;
+    public void setGameTypeListener(ViewControllerGameTypeListener viewControllerGameTypeListener) {
+        this.viewControllerGameTypeListener = viewControllerGameTypeListener;
     }
 
     private JRadioButton createRadioButton(String radioButtonText, GameType gameType, GridBagLayout layout, int gridY) {
@@ -80,8 +80,8 @@ public class SettingsWindow extends JDialog {
         okButton.addActionListener(e -> {
             dispose();
 
-            if (gameTypeListener != null) {
-                gameTypeListener.onGameTypeChanged(gameType);
+            if (viewControllerGameTypeListener != null) {
+                viewControllerGameTypeListener.onGameTypeChanged(gameType);
             }
         });
 

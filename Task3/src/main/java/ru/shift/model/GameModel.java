@@ -1,14 +1,21 @@
 package ru.shift.model;
 
-import ru.shift.model.listners.ControllerModelListener;
-import ru.shift.model.dto.ClickResult;
+import ru.shift.controller.listeners.ControllerModelFieldListener;
+import ru.shift.model.dto.PlayingFieldCells;
+import ru.shift.controller.listeners.ControllerModelSettingsListeners;
+import ru.shift.controller.listeners.ControllerModelNewGameListener;
 import ru.shift.view.ViewModelListener;
 import ru.shift.model.records.RecordManager;
 
 import java.util.Random;
 
-public class GameModel implements ControllerModelListener {
+public class GameModel implements
+        ControllerModelFieldListener,
+        ControllerModelSettingsListeners,
+        ControllerModelNewGameListener {
+
     private final ViewModelListener viewModelListener;
+
     private final RecordManager recordManager;
 
     private final static int MINE = -1;
@@ -42,17 +49,11 @@ public class GameModel implements ControllerModelListener {
 
     @Override
     public void openCellLeftButton(int row, int col) {
-        var clickResult = new ClickResult();
-        if (gameOver) {
-            return;
-        }
-        if (gameWon) {
+        if (gameOver || gameWon || flags[row][col]) {
             return;
         }
 
-        if (flags[row][col]) {
-            return;
-        }
+        var clickResult = new PlayingFieldCells();
 
         if (firstClick) {
             createField(row, col);
@@ -75,22 +76,16 @@ public class GameModel implements ControllerModelListener {
 
     @Override
     public void openCellWithMouseCell(int row, int col) {
-        var clickResult = new ClickResult();
-        if (gameOver) {
+        if (gameOver || gameWon || flags[row][col]) {
             return;
         }
-
-        if (gameWon) {
-            return;
-        }
-
+        var clickResult = new PlayingFieldCells();
         var flags = countFlag(row, col);
         if (flags < fields[row][col] || (fields[row][col] == EMPTY_COLUMN && openFields[row][col]) || !openFields[row][col]) {
             return;
         }
 
         readingCellsInCrudCoordinates(row, col, clickResult);
-
         updateTheCellView(clickResult);
 
         if (!checkingForBombs(clickResult)) {
@@ -101,54 +96,6 @@ public class GameModel implements ControllerModelListener {
         }
 
         checkGameWinner();
-    }
-
-    private void readingCellsInCrudCoordinates(int row, int col, ClickResult clickResult) {
-        for (int r = Math.max(0, row - 1); r <= Math.min(gameType.rows - 1, row + 1); r++) {
-            for (int c = Math.max(0, col - 1); c <= Math.min(gameType.cols - 1, col + 1); c++) {
-                if (r == row && c == col || flags[r][c] || openFields[r][c]) {
-                    continue;
-                }
-                clickResult.getX().add(c);
-                clickResult.getY().add(r);
-                clickResult.getColumnRes().add(fields[r][c]);
-                openCells++;
-                openFields[r][c] = true;
-            }
-        }
-    }
-
-    private boolean checkingForBombs(ClickResult clickResult) {
-        var count = clickResult.getColumnRes().stream()
-                .filter(f -> f == MINE)
-                .count();
-
-        return count == 0;
-
-    }
-
-    private void revealAllMines(ClickResult clickResult) {
-        for (int r = 0; r < gameType.rows; r++) {
-            for (int c = 0; c < gameType.cols; c++) {
-                if (fields[r][c] == MINE && !flags[r][c]) {
-                    clickResult.getX().add(c);
-                    clickResult.getY().add(r);
-                    clickResult.getColumnRes().add(MINE);
-                }
-            }
-        }
-    }
-
-    private int countFlag(int row, int col) {
-        int flag = 0;
-        for (int r = Math.max(0, row - 1); r <= Math.min(gameType.rows - 1, row + 1); r++) {
-            for (int c = Math.max(0, col - 1); c <= Math.min(gameType.cols - 1, col + 1); c++) {
-                if (flags[r][c]) {
-                    flag++;
-                }
-            }
-        }
-        return flag;
     }
 
     @Override
@@ -181,7 +128,55 @@ public class GameModel implements ControllerModelListener {
         viewModelListener.updateGame(gameType);
     }
 
-    private void openNeighbors(int col, int row, ClickResult clickResult) {
+    private void readingCellsInCrudCoordinates(int row, int col, PlayingFieldCells playingFieldCells) {
+        for (int r = Math.max(0, row - 1); r <= Math.min(gameType.rows - 1, row + 1); r++) {
+            for (int c = Math.max(0, col - 1); c <= Math.min(gameType.cols - 1, col + 1); c++) {
+                if (r == row && c == col || flags[r][c] || openFields[r][c]) {
+                    continue;
+                }
+                playingFieldCells.getX().add(c);
+                playingFieldCells.getY().add(r);
+                playingFieldCells.getColumnRes().add(fields[r][c]);
+                openCells++;
+                openFields[r][c] = true;
+            }
+        }
+    }
+
+    private boolean checkingForBombs(PlayingFieldCells playingFieldCells) {
+        var count = playingFieldCells.getColumnRes().stream()
+                .filter(f -> f == MINE)
+                .count();
+
+        return count == 0;
+
+    }
+
+    private void revealAllMines(PlayingFieldCells playingFieldCells) {
+        for (int r = 0; r < gameType.rows; r++) {
+            for (int c = 0; c < gameType.cols; c++) {
+                if (fields[r][c] == MINE && !flags[r][c]) {
+                    playingFieldCells.getX().add(c);
+                    playingFieldCells.getY().add(r);
+                    playingFieldCells.getColumnRes().add(MINE);
+                }
+            }
+        }
+    }
+
+    private int countFlag(int row, int col) {
+        int flag = 0;
+        for (int r = Math.max(0, row - 1); r <= Math.min(gameType.rows - 1, row + 1); r++) {
+            for (int c = Math.max(0, col - 1); c <= Math.min(gameType.cols - 1, col + 1); c++) {
+                if (flags[r][c]) {
+                    flag++;
+                }
+            }
+        }
+        return flag;
+    }
+
+    private void openNeighbors(int col, int row, PlayingFieldCells playingFieldCells) {
         if (col < 0 || col >= gameType.cols || row < 0 || row >= gameType.rows || openFields[row][col]) {
             return;
         }
@@ -191,9 +186,9 @@ public class GameModel implements ControllerModelListener {
             updateBomb();
         }
 
-        clickResult.getX().add(col);
-        clickResult.getY().add(row);
-        clickResult.getColumnRes().add(fields[row][col]);
+        playingFieldCells.getX().add(col);
+        playingFieldCells.getY().add(row);
+        playingFieldCells.getColumnRes().add(fields[row][col]);
 
         int cellValue = fields[row][col];
         openFields[row][col] = true;
@@ -206,7 +201,7 @@ public class GameModel implements ControllerModelListener {
         for (int dx = -1; dx <= 1; dx++) {
             for (int dy = -1; dy <= 1; dy++) {
                 if (dx == 0 && dy == 0) continue;
-                openNeighbors(col + dx, row + dy, clickResult);
+                openNeighbors(col + dx, row + dy, playingFieldCells);
             }
         }
     }
@@ -246,8 +241,8 @@ public class GameModel implements ControllerModelListener {
         viewModelListener.winGame();
     }
 
-    private void updateTheCellView(ClickResult clickResult) {
-        viewModelListener.updateTheCellView(clickResult);
+    private void updateTheCellView(PlayingFieldCells playingFieldCells) {
+        viewModelListener.updateTheCellView(playingFieldCells);
     }
 
     private void createField(int rows, int cols) {
@@ -282,6 +277,7 @@ public class GameModel implements ControllerModelListener {
             }
         }
     }
+
     private int countAdjacentMines(int row, int col) {
         int mineCount = 0;
         for (int r = Math.max(0, row-1); r <= Math.min(gameType.rows-1, row+1); r++) {

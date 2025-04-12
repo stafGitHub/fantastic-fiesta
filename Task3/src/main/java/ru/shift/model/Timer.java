@@ -1,52 +1,44 @@
 package ru.shift.model;
 
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import ru.shift.view.ViewModelListener;
 
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
-@RequiredArgsConstructor
 public class Timer {
-    private Thread timerThread;
     @Getter
     private final AtomicInteger secondsPassed = new AtomicInteger(0);
+    private ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
     private final ViewModelListener listener;
     private volatile boolean running;
+
+    public Timer(ViewModelListener listener) {
+        this.listener = listener;
+    }
 
     public void start() {
         if (running) {
             return;
         }
-
         running = true;
 
-        timerThread = new Thread(() -> {
-            while (running) {
-                try {
-                    Thread.sleep(1000);
-                    secondsPassed.incrementAndGet();
-                    listener.timeUpdate(secondsPassed.intValue());
-                } catch (InterruptedException e) {
-                    break;
-                }
-            }
-        });
-
-        timerThread.start();
+        executor.scheduleAtFixedRate(() -> {
+            int currentSeconds = secondsPassed.incrementAndGet();
+            listener.timeUpdate(currentSeconds);
+        }, 1, 1, TimeUnit.SECONDS);
     }
 
     public void stop() {
         running = false;
-        if (timerThread != null) {
-            timerThread.interrupt();
-            timerThread = null;
-        }
+        executor.shutdownNow();
     }
 
     public void reset() {
         stop();
         secondsPassed.set(0);
+        executor = Executors.newSingleThreadScheduledExecutor();
     }
-
 }

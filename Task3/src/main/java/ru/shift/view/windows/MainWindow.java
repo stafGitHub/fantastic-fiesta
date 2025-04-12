@@ -1,6 +1,6 @@
 package ru.shift.view.windows;
 
-import ru.shift.controller.listners.CellEventListener;
+import ru.shift.view.listeners.ViewControllerCellEventListener;
 import ru.shift.view.ButtonType;
 import ru.shift.view.GameImage;
 
@@ -19,7 +19,7 @@ public class MainWindow extends JFrame {
     private JMenuItem settingsMenu;
     private JMenuItem exitMenu;
 
-    private CellEventListener listener;
+    private ViewControllerCellEventListener listener;
 
     private JButton[][] cellButtons;
     private JLabel timerLabel;
@@ -70,7 +70,7 @@ public class MainWindow extends JFrame {
         exitMenu.addActionListener(listener);
     }
 
-    public void setCellListener(CellEventListener listener) {
+    public void setCellListener(ViewControllerCellEventListener listener) {
         this.listener = listener;
     }
 

@@ -1,7 +1,7 @@
-package ru.shift.controller.listners;
+package ru.shift.view.listeners;
 
 import ru.shift.view.ButtonType;
 
-public interface CellEventListener {
+public interface ViewControllerCellEventListener {
     void onMouseClick(int x, int y, ButtonType buttonType);
 }

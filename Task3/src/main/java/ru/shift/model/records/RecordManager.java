@@ -59,7 +59,9 @@ public class RecordManager {
             case NOVICE -> {
                 if (time < currentRecord.getNoviceTime()) {
                     this.gameType = gameType;
-                }  return true;
+
+                    return true;
+                }
             }
             case MEDIUM -> {
                 if (time < currentRecord.getMediumTime()){
@@ -74,7 +76,6 @@ public class RecordManager {
                 }
             }
         }
-
         return false;
     }
 
