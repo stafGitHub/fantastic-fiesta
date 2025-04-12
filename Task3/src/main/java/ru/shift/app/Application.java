@@ -1,15 +1,16 @@
 package ru.shift.app;
 
+import ru.shift.controller.MouseViewController;
 import ru.shift.controller.NewGameViewController;
 import ru.shift.controller.SettingsViewController;
+import ru.shift.model.GameModel;
 import ru.shift.model.GameType;
+import ru.shift.model.Timer;
 import ru.shift.model.records.RecordController;
 import ru.shift.model.records.RecordManager;
-import ru.shift.model.Timer;
-import ru.shift.view.observers.ViewObserver;
-
-import ru.shift.controller.MouseViewController;
-import ru.shift.model.GameModel;
+import ru.shift.view.observers.GameRecordObserver;
+import ru.shift.view.observers.GameResultObserver;
+import ru.shift.view.observers.GameWindowsObserver;
 import ru.shift.view.windows.HighScoresWindow;
 import ru.shift.view.windows.MainWindow;
 import ru.shift.view.windows.SettingsWindow;
@@ -22,17 +23,28 @@ public class Application {
     private static final RecordManager recordManager = new RecordManager(highScoresWindow);
 
     private static final RecordController recordController = new RecordController(recordManager);
-    private static final ViewObserver viewObserver = new ViewObserver(view , recordController);
-    private static final Timer timer = new Timer(viewObserver);
-    private static final GameModel model = new GameModel(viewObserver,GameType.NOVICE,recordManager,timer);
+
+
+    private static final GameWindowsObserver gameWindowsObserver = new GameWindowsObserver(view);
+    private static final GameResultObserver gameResultObserver = new GameResultObserver(view);
+    private static final GameRecordObserver gameRecordObserver = new GameRecordObserver(view, recordController);
+    private static final Timer timer = new Timer(gameWindowsObserver);
+    private static final GameModel model = new GameModel(
+            GameType.NOVICE,
+            recordManager,
+            timer,
+            gameWindowsObserver,
+            gameResultObserver,
+            gameRecordObserver
+    );
+
     private static final NewGameViewController newGameController = new NewGameViewController(model);
     private static final MouseViewController controller = new MouseViewController(model);
     private static final SettingsViewController settingsController = new SettingsViewController(model);
 
     public static void main(String[] args) {
         SettingsWindow settingsWindow = new SettingsWindow(view);
-
-        viewObserver.setNewGameController(newGameController);
+        gameResultObserver.setNewGameController(newGameController);
 
         view.setSettingsMenuAction(e -> settingsWindow.setVisible(true));
         view.setHighScoresMenuAction(e -> highScoresWindow.setVisible(true));

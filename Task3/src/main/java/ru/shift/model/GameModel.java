@@ -1,10 +1,12 @@
 package ru.shift.model;
 
 import ru.shift.controller.listeners.ControllerModelFieldListener;
-import ru.shift.model.dto.PlayingFieldCells;
-import ru.shift.controller.listeners.ControllerModelSettingsListeners;
 import ru.shift.controller.listeners.ControllerModelNewGameListener;
-import ru.shift.view.ViewModelListener;
+import ru.shift.controller.listeners.ControllerModelSettingsListeners;
+import ru.shift.model.dto.PlayingFieldCells;
+import ru.shift.model.listeners.ModelViewFieldListener;
+import ru.shift.model.listeners.ModelViewGameResultListener;
+import ru.shift.model.listeners.ModelViewRecordListener;
 import ru.shift.model.records.RecordManager;
 
 import java.util.Random;
@@ -14,8 +16,9 @@ public class GameModel implements
         ControllerModelSettingsListeners,
         ControllerModelNewGameListener {
 
-    private final ViewModelListener viewModelListener;
-
+    private final ModelViewFieldListener modelViewFieldListener;
+    private final ModelViewGameResultListener modelViewGameResultListener;
+    private final ModelViewRecordListener modelViewRecordListener;
     private final RecordManager recordManager;
 
     private final static int MINE = -1;
@@ -39,10 +42,17 @@ public class GameModel implements
 
     private final Random RANDOM = new Random();
 
-    public GameModel(ViewModelListener viewModelListener, GameType gameType, RecordManager recordManager, Timer timer) {
-        this.viewModelListener = viewModelListener;
+    public GameModel(GameType gameType,
+                     RecordManager recordManager,
+                     Timer timer,
+                     ModelViewFieldListener modelViewFieldListener,
+                     ModelViewGameResultListener modelViewGameResultListener,
+                     ModelViewRecordListener modelViewRecordListener) {
+        this.modelViewFieldListener = modelViewFieldListener;
         this.recordManager = recordManager;
         this.timer = timer;
+        this.modelViewGameResultListener = modelViewGameResultListener;
+        this.modelViewRecordListener = modelViewRecordListener;
         createGame(gameType);
 
     }
@@ -105,12 +115,12 @@ public class GameModel implements
         }
         if (!flags[row][col]) {
             flags[row][col] = true;
-            viewModelListener.flagPlaning(row, col, true);
+            modelViewFieldListener.flagPlaning(row, col, true);
             mines--;
             updateBomb();
         } else {
             flags[row][col] = false;
-            viewModelListener.flagPlaning(row, col, false);
+            modelViewFieldListener.flagPlaning(row, col, false);
             mines++;
             updateBomb();
         }
@@ -119,13 +129,13 @@ public class GameModel implements
     @Override
     public void changeDifficulty(GameType gameType) {
         createGame(gameType);
-        viewModelListener.updateGame(gameType);
+        modelViewFieldListener.updateGame(gameType);
     }
 
     @Override
     public void newGame() {
         createGame(gameType);
-        viewModelListener.updateGame(gameType);
+        modelViewFieldListener.updateGame(gameType);
     }
 
     private void readingCellsInCrudCoordinates(int row, int col, PlayingFieldCells playingFieldCells) {
@@ -218,7 +228,7 @@ public class GameModel implements
     private void gameOver() {
         gameOver = true;
         timer.stop();
-        viewModelListener.loseGame();
+        modelViewGameResultListener.loseGame();
     }
 
     private void checkGameWinner() {
@@ -234,15 +244,15 @@ public class GameModel implements
         var record = recordManager.checkRecords(timer.getSecondsPassed().get(), gameType);
 
         if (record) {
-            viewModelListener.updateRecord(timer.getSecondsPassed().get());
+            modelViewRecordListener.updateRecord(timer.getSecondsPassed().get());
             recordManager.updateRecord(timer.getSecondsPassed().get());
         }
 
-        viewModelListener.winGame();
+        modelViewGameResultListener.winGame();
     }
 
     private void updateTheCellView(PlayingFieldCells playingFieldCells) {
-        viewModelListener.updateTheCellView(playingFieldCells);
+        modelViewFieldListener.updateTheCellView(playingFieldCells);
     }
 
     private void createField(int rows, int cols) {
@@ -289,7 +299,7 @@ public class GameModel implements
     }
 
     private void updateBomb() {
-        viewModelListener.updateBombCount(mines);
+        modelViewFieldListener.updateBombCount(mines);
     }
 
     private void createGame(GameType gameType) {

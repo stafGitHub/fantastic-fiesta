@@ -1,8 +1,7 @@
 package ru.shift.model;
 
 import lombok.Getter;
-import ru.shift.view.ViewModelListener;
-
+import ru.shift.model.listeners.ModelViewFieldListener;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -12,10 +11,10 @@ public class Timer {
     @Getter
     private final AtomicInteger secondsPassed = new AtomicInteger(0);
     private ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
-    private final ViewModelListener listener;
+    private final ModelViewFieldListener listener;
     private volatile boolean running;
 
-    public Timer(ViewModelListener listener) {
+    public Timer(ModelViewFieldListener listener) {
         this.listener = listener;
     }
 
