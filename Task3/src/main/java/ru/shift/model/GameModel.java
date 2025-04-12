@@ -276,23 +276,20 @@ public class GameModel implements ControllerModelListener {
     private void fillTheFieldWithNumbers() {
         for (int row = 0; row < gameType.rows; row++) {
             for (int col = 0; col < gameType.cols; col++) {
-
                 if (fields[row][col] != MINE) {
-                    int mineCount = 0;
-                    for (int r = Math.max(0, row - 1); r <= Math.min(gameType.rows - 1, row + 1); r++) {
-                        for (int c = Math.max(0, col - 1); c <= Math.min(gameType.cols - 1, col + 1); c++) {
-
-                            if (fields[r][c] == MINE) {
-                                mineCount++;
-                            }
-
-                        }
-                    }
-                    fields[row][col] = mineCount;
+                    fields[row][col] = countAdjacentMines(row, col);
                 }
-
             }
         }
+    }
+    private int countAdjacentMines(int row, int col) {
+        int mineCount = 0;
+        for (int r = Math.max(0, row-1); r <= Math.min(gameType.rows-1, row+1); r++) {
+            for (int c = Math.max(0, col-1); c <= Math.min(gameType.cols-1, col+1); c++) {
+                if (fields[r][c] == MINE) mineCount++;
+            }
+        }
+        return mineCount;
     }
 
     private void updateBomb() {

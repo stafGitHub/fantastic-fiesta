@@ -18,9 +18,6 @@ public class ViewObserver implements ViewModelListener {
     private NewGameController newGameController;
     private final RecordController recordController;
 
-    private LoseWindow loseWindow =null;
-    private WinWindow winWindow = null;
-
     @Override
     public void updateTheCellView(ClickResult clickResult) {
         for (int i = 0; i < clickResult.getColumnRes().size(); i++) {
@@ -71,7 +68,7 @@ public class ViewObserver implements ViewModelListener {
 
     @Override
     public void loseGame() {
-            loseWindow = new LoseWindow(mainWindow);
+        LoseWindow loseWindow = new LoseWindow(mainWindow);
             loseWindow.setNewGameListener(e -> newGameController.newGame());
             loseWindow.setExitListener(e -> mainWindow.dispose());
             loseWindow.setVisible(true);
@@ -80,7 +77,7 @@ public class ViewObserver implements ViewModelListener {
 
     @Override
     public void winGame() {
-            winWindow = new WinWindow(mainWindow);
+        WinWindow winWindow = new WinWindow(mainWindow);
             winWindow.setNewGameListener(e -> newGameController.newGame());
             winWindow.setExitListener(e -> mainWindow.dispose());
             winWindow.setVisible(true);
