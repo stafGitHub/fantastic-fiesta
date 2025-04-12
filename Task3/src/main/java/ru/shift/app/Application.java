@@ -11,14 +11,14 @@ import ru.shift.model.records.RecordManager;
 import ru.shift.view.observers.GameRecordObserver;
 import ru.shift.view.observers.GameResultObserver;
 import ru.shift.view.observers.GameWindowsObserver;
-import ru.shift.view.windows.HighScoresWindow;
-import ru.shift.view.windows.MainWindow;
-import ru.shift.view.windows.SettingsWindow;
+import ru.shift.view.windows.*;
 
 public class Application {
     private static final MainWindow view = new MainWindow();
 
     private static final HighScoresWindow highScoresWindow = new HighScoresWindow(view);
+    private static final LoseWindow loseWindow = new LoseWindow(view);
+    private static final WinWindow winWindow = new WinWindow(view);
 
     private static final RecordManager recordManager = new RecordManager(highScoresWindow);
 
@@ -26,7 +26,7 @@ public class Application {
 
 
     private static final GameWindowsObserver gameWindowsObserver = new GameWindowsObserver(view);
-    private static final GameResultObserver gameResultObserver = new GameResultObserver(view);
+    private static final GameResultObserver gameResultObserver = new GameResultObserver(loseWindow, winWindow);
     private static final GameRecordObserver gameRecordObserver = new GameRecordObserver(view, recordController);
     private static final Timer timer = new Timer(gameWindowsObserver);
     private static final GameModel model = new GameModel(
@@ -44,7 +44,12 @@ public class Application {
 
     public static void main(String[] args) {
         SettingsWindow settingsWindow = new SettingsWindow(view);
-        gameResultObserver.setNewGameController(newGameController);
+
+        winWindow.setNewGameListener(e -> newGameController.newGame());
+        winWindow.setExitListener(e -> view.dispose());
+
+        loseWindow.setNewGameListener(e -> newGameController.newGame());
+        loseWindow.setExitListener(e -> view.dispose());
 
         view.setSettingsMenuAction(e -> settingsWindow.setVisible(true));
         view.setHighScoresMenuAction(e -> highScoresWindow.setVisible(true));

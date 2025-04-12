@@ -29,6 +29,7 @@ public class RecordManager {
     }
 
     public void updateRecord(int time) {
+        log.info("Обновление рекорда - {} : {}",gameType,time);
         switch (gameType) {
             case NOVICE -> {
                 currentRecord.setNoviceTime(time);
@@ -55,35 +56,19 @@ public class RecordManager {
     }
 
     public boolean checkRecords(int time, GameType gameType) {
-        switch (gameType) {
-            case NOVICE -> {
-                if (time < currentRecord.getNoviceTime()) {
-                    this.gameType = gameType;
-
-                    return true;
-                }
-            }
-            case MEDIUM -> {
-                if (time < currentRecord.getMediumTime()){
-                    this.gameType = gameType;
-                    return true;
-                }
-            }
-            case EXPERT -> {
-                if (time < currentRecord.getExpertTime()){
-                    this.gameType = gameType;
-                    return true;
-                }
-            }
-        }
-        return false;
+        log.info("Проверка рекорда: {}",gameType);
+        this.gameType = gameType;
+        return switch (gameType) {
+            case NOVICE -> time < currentRecord.getNoviceTime();
+            case MEDIUM -> time < currentRecord.getMediumTime();
+            case EXPERT -> time < currentRecord.getExpertTime();
+        };
     }
 
     private void loadRecords() {
         try {
             if (Files.exists(RECORDS_FILE_PATH)) {
-                try (ObjectInputStream ois = new ObjectInputStream(
-                        new FileInputStream(RECORDS_FILE_PATH.toFile()))) {
+                try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(RECORDS_FILE_PATH.toFile()))) {
                     currentRecord = (Record) ois.readObject();
                     log.info("Чтение файла с рекордами: {}", RECORDS_FILE_PATH);
                 }
@@ -98,8 +83,7 @@ public class RecordManager {
     }
 
     private void saveRecords() {
-        try (ObjectOutputStream oos = new ObjectOutputStream(
-                new FileOutputStream(RECORDS_FILE_PATH.toFile()))) {
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(RECORDS_FILE_PATH.toFile()))) {
             oos.writeObject(currentRecord);
             log.info("Сохранение объекта с рекордами: {}", RECORDS_FILE_PATH);
         } catch (IOException e) {
@@ -107,10 +91,10 @@ public class RecordManager {
         }
     }
 
-    private void updateRecordWindow(){
-        highScoresWindow.setNoviceRecord(currentRecord.getNoviceRecordName(),currentRecord.getNoviceTime());
-        highScoresWindow.setMediumRecord(currentRecord.getMediumRecordName(),currentRecord.getMediumTime());
-        highScoresWindow.setExpertRecord(currentRecord.getExpertRecordName(),currentRecord.getExpertTime());
+    private void updateRecordWindow() {
+        highScoresWindow.setNoviceRecord(currentRecord.getNoviceRecordName(), currentRecord.getNoviceTime());
+        highScoresWindow.setMediumRecord(currentRecord.getMediumRecordName(), currentRecord.getMediumTime());
+        highScoresWindow.setExpertRecord(currentRecord.getExpertRecordName(), currentRecord.getExpertTime());
     }
 
 }

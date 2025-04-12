@@ -1,12 +1,14 @@
 package ru.shift.model;
 
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 import ru.shift.model.listeners.ModelViewFieldListener;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
+@Slf4j
 public class Timer {
     @Getter
     private final AtomicInteger secondsPassed = new AtomicInteger(0);
@@ -16,6 +18,7 @@ public class Timer {
 
     public Timer(ModelViewFieldListener listener) {
         this.listener = listener;
+        log.info("Таймер создан");
     }
 
     public void start() {

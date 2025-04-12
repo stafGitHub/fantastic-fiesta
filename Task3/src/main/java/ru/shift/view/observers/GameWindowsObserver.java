@@ -1,41 +1,50 @@
 package ru.shift.view.observers;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import ru.shift.model.GameModel;
 import ru.shift.model.GameType;
 import ru.shift.model.dto.PlayingFieldCells;
 import ru.shift.model.listeners.ModelViewFieldListener;
 import ru.shift.view.GameImage;
 import ru.shift.view.windows.MainWindow;
 
+import java.util.Map;
+
+@Slf4j
 @RequiredArgsConstructor
 public class GameWindowsObserver implements ModelViewFieldListener {
     private final MainWindow mainWindow;
 
+    private static final Map<Integer, GameImage> CELL_IMAGES = Map.of(
+            GameModel.MINE, GameImage.BOMB,
+            GameModel.EMPTY_COLUMN, GameImage.EMPTY,
+            1, GameImage.NUM_1,
+            2, GameImage.NUM_2,
+            3, GameImage.NUM_3,
+            4, GameImage.NUM_4,
+            5, GameImage.NUM_5,
+            6, GameImage.NUM_6,
+            7, GameImage.NUM_7,
+            8, GameImage.NUM_8
+    );
+
     @Override
     public void updateTheCellView(PlayingFieldCells playingFieldCells) {
         for (int i = 0; i < playingFieldCells.getColumnRes().size(); i++) {
+            int value = playingFieldCells.getColumnRes().get(i);
+            GameImage image = CELL_IMAGES.get(value);
+            if (image != null) {
+                mainWindow.setCellImage(
+                        playingFieldCells.getX().get(i),
+                        playingFieldCells.getY().get(i),
+                        image
+                );
 
-            switch (playingFieldCells.getColumnRes().get(i)) {
-                case -1 ->
-                        mainWindow.setCellImage(playingFieldCells.getX().get(i), playingFieldCells.getY().get(i), GameImage.BOMB);
-                case 0 ->
-                        mainWindow.setCellImage(playingFieldCells.getX().get(i), playingFieldCells.getY().get(i), GameImage.EMPTY);
-                case 1 ->
-                        mainWindow.setCellImage(playingFieldCells.getX().get(i), playingFieldCells.getY().get(i), GameImage.NUM_1);
-                case 2 ->
-                        mainWindow.setCellImage(playingFieldCells.getX().get(i), playingFieldCells.getY().get(i), GameImage.NUM_2);
-                case 3 ->
-                        mainWindow.setCellImage(playingFieldCells.getX().get(i), playingFieldCells.getY().get(i), GameImage.NUM_3);
-                case 4 ->
-                        mainWindow.setCellImage(playingFieldCells.getX().get(i), playingFieldCells.getY().get(i), GameImage.NUM_4);
-                case 5 ->
-                        mainWindow.setCellImage(playingFieldCells.getX().get(i), playingFieldCells.getY().get(i), GameImage.NUM_5);
-                case 6 ->
-                        mainWindow.setCellImage(playingFieldCells.getX().get(i), playingFieldCells.getY().get(i), GameImage.NUM_6);
-                case 7 ->
-                        mainWindow.setCellImage(playingFieldCells.getX().get(i), playingFieldCells.getY().get(i), GameImage.NUM_7);
-                case 8 ->
-                        mainWindow.setCellImage(playingFieldCells.getX().get(i), playingFieldCells.getY().get(i), GameImage.NUM_8);
+                log.debug("Установка результата во вью : x - {} , y - {} , img - {}",
+                        playingFieldCells.getX().get(i),
+                        playingFieldCells.getY().get(i),
+                        image);
             }
         }
     }
