@@ -1,7 +1,8 @@
 package ru.shift.view.observers;
 
 import lombok.RequiredArgsConstructor;
-import ru.shift.model.listeners.ModelViewRecordListener;
+import ru.shift.model.GameModel;
+import ru.shift.model.events.ModelViewRecordListener;
 import ru.shift.model.records.RecordController;
 import ru.shift.view.windows.MainWindow;
 import ru.shift.view.windows.RecordsWindow;

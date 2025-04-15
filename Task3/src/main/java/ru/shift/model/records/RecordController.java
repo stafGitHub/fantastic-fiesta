@@ -1,7 +1,7 @@
 package ru.shift.model.records;
 
 import lombok.RequiredArgsConstructor;
-import ru.shift.model.listeners.RecordNameListener;
+import ru.shift.model.events.RecordNameListener;
 
 @RequiredArgsConstructor
 public class RecordController implements RecordNameListener {

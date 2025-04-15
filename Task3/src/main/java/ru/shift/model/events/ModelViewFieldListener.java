@@ -1,4 +1,4 @@
-package ru.shift.model.listeners;
+package ru.shift.model.events;
 
 import ru.shift.model.GameType;
 import ru.shift.model.dto.PlayingFieldCells;

@@ -2,7 +2,7 @@ package ru.shift.model;
 
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
-import ru.shift.model.listeners.ModelViewFieldListener;
+import ru.shift.model.events.ModelViewFieldListener;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;

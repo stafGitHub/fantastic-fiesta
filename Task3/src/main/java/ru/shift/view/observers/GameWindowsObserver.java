@@ -5,7 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import ru.shift.model.GameModel;
 import ru.shift.model.GameType;
 import ru.shift.model.dto.PlayingFieldCells;
-import ru.shift.model.listeners.ModelViewFieldListener;
+import ru.shift.model.events.ModelViewFieldListener;
 import ru.shift.view.GameImage;
 import ru.shift.view.windows.MainWindow;
 

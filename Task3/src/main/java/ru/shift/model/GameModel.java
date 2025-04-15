@@ -5,18 +5,19 @@ import ru.shift.controller.listeners.ControllerModelFieldListener;
 import ru.shift.controller.listeners.ControllerModelNewGameListener;
 import ru.shift.controller.listeners.ControllerModelSettingsListeners;
 import ru.shift.model.dto.PlayingFieldCells;
-import ru.shift.model.listeners.ModelViewFieldListener;
-import ru.shift.model.listeners.ModelViewGameResultListener;
-import ru.shift.model.listeners.ModelViewRecordListener;
+import ru.shift.model.events.*;
+import ru.shift.model.events.game.result.Win;
 import ru.shift.model.records.RecordManager;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 @Slf4j
 public class GameModel implements
         ControllerModelFieldListener,
         ControllerModelSettingsListeners,
-        ControllerModelNewGameListener {
+        ControllerModelNewGameListener , Publisher {
     public final static int MINE = -1;
     public final static int EMPTY_COLUMN = 0;
 
@@ -25,6 +26,17 @@ public class GameModel implements
     private final ModelViewRecordListener modelViewRecordListener;
     private final RecordManager recordManager;
 
+    private final List<GameSettingsListener> gameSettingsListeners = new ArrayList<>();
+
+    @Override
+    public void addListener(GameSettingsListener gameSettingsListener) {
+        gameSettingsListeners.add(gameSettingsListener);
+    }
+
+    @Override
+    public void notifyListeners(GameEvent gameEvent) {
+        gameSettingsListeners.forEach(listener -> listener.onGameEvent(gameEvent));
+    }
 
     private GameType gameType;
     private int openCellsToWin;
@@ -74,7 +86,7 @@ public class GameModel implements
             firstClick = false;
         }
 
-        // Можно закомитить , поражение отключиться
+//         Можно закомитить , поражение отключиться
         if (checkGameOver(col, row)) {
             revealAllMines(clickResult);
             updateTheCellView(clickResult);
@@ -113,7 +125,7 @@ public class GameModel implements
         readingCellsBySquareCoordinates(row, col, clickResult);
         updateTheCellView(clickResult);
 
-        // Можно закомитить , поражение отключиться
+//         Можно закомитить , поражение отключиться
         if (!checkingForBombs(clickResult)) {
             revealAllMines(clickResult);
             updateTheCellView(clickResult);
