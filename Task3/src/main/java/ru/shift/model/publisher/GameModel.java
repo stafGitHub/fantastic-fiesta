@@ -5,9 +5,17 @@ import ru.shift.controller.listeners.ControllerModelFieldListener;
 import ru.shift.controller.listeners.ControllerModelNewGameListener;
 import ru.shift.controller.listeners.ControllerModelSettingsListeners;
 import ru.shift.model.dto.PlayingFieldCells;
-import ru.shift.model.events.*;
-import ru.shift.model.events.game.result.Win;
-import ru.shift.model.records.RecordManager;
+import ru.shift.model.events.GameEvent;
+import ru.shift.model.events.GameSettingsListener;
+import ru.shift.model.events.fields.FlagPlaning;
+import ru.shift.model.events.fields.UpdateBombCount;
+import ru.shift.model.events.fields.UpdateGame;
+import ru.shift.model.events.fields.UpdateTheCell;
+import ru.shift.model.events.game.result.Lose;
+import ru.shift.model.events.game.result.Won;
+import ru.shift.model.events.game.status.FirstClick;
+import ru.shift.model.events.game.status.GameOver;
+import ru.shift.model.events.game.status.NewGame;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,14 +25,10 @@ import java.util.Random;
 public class GameModel implements
         ControllerModelFieldListener,
         ControllerModelSettingsListeners,
-        ControllerModelNewGameListener , Publisher {
+        ControllerModelNewGameListener,
+        Publisher {
     public final static int MINE = -1;
     public final static int EMPTY_COLUMN = 0;
-
-    private final ModelViewFieldListener modelViewFieldListener;
-    private final ModelViewGameResultListener modelViewGameResultListener;
-    private final ModelViewRecordListener modelViewRecordListener;
-    private final RecordManager recordManager;
 
     private final List<GameSettingsListener> gameSettingsListeners = new ArrayList<>();
 
@@ -44,7 +48,6 @@ public class GameModel implements
     private int[][] fields;
     private boolean[][] flags;
     private boolean[][] openFields;
-    private final Timer timer;
 
     private boolean gameOver;
     private boolean gameWon;
@@ -56,17 +59,7 @@ public class GameModel implements
 
     private final Random RANDOM = new Random();
 
-    public GameModel(GameType gameType,
-                     RecordManager recordManager,
-                     Timer timer,
-                     ModelViewFieldListener modelViewFieldListener,
-                     ModelViewGameResultListener modelViewGameResultListener,
-                     ModelViewRecordListener modelViewRecordListener) {
-        this.modelViewFieldListener = modelViewFieldListener;
-        this.recordManager = recordManager;
-        this.timer = timer;
-        this.modelViewGameResultListener = modelViewGameResultListener;
-        this.modelViewRecordListener = modelViewRecordListener;
+    public GameModel(GameType gameType) {
         createGame(gameType);
 
     }
@@ -82,17 +75,17 @@ public class GameModel implements
 
         if (firstClick) {
             createField(row, col);
-            timer.start();
+            notifyListeners(new FirstClick());
             firstClick = false;
         }
 
 //         Можно закомитить , поражение отключиться
-        if (checkGameOver(col, row)) {
-            revealAllMines(clickResult);
-            updateTheCellView(clickResult);
-            gameOver();
-            return;
-        }
+//        if (checkGameOver(col, row)) {
+//            revealAllMines(clickResult);
+//            updateTheCellView(clickResult);
+//            gameOver();
+//            return;
+//        }
 
         log.info("Рекурсивное открытие");
         long startTime = System.nanoTime();
@@ -141,7 +134,7 @@ public class GameModel implements
 
         if (flags[row][col]) {
             flags[row][col] = false;
-            modelViewFieldListener.flagPlaning(row, col, false);
+            notifyListeners(new FlagPlaning(row, col, false));
             mines++;
             updateBomb();
 
@@ -154,7 +147,7 @@ public class GameModel implements
 
         if (!flags[row][col]) {
             flags[row][col] = true;
-            modelViewFieldListener.flagPlaning(row, col, true);
+            notifyListeners(new FlagPlaning(row, col, true));
             mines--;
             updateBomb();
         }
@@ -164,13 +157,13 @@ public class GameModel implements
     public void changeDifficulty(GameType gameType) {
         log.info("Изменение сложности {}", gameType);
         createGame(gameType);
-        modelViewFieldListener.updateGame(gameType);
+        notifyListeners(new UpdateGame(gameType));
     }
 
     @Override
     public void newGame() {
         createGame(gameType);
-        modelViewFieldListener.updateGame(gameType);
+        notifyListeners(new UpdateGame(gameType));
     }
 
     private void readingCellsBySquareCoordinates(int row, int col, PlayingFieldCells playingFieldCells) {
@@ -281,42 +274,41 @@ public class GameModel implements
     private boolean checkGameOver(int col, int row) {
         if (fields[row][col] == MINE) {
             gameOver = true;
+            notifyListeners(new GameOver());
             return true;
         } else {
             return false;
         }
     }
 
-    private void gameOver() {
-        log.info("Game over");
-        gameOver = true;
-        timer.stop();
-        modelViewGameResultListener.loseGame();
-    }
-
     private void checkGameWinner() {
         if (openCells == openCellsToWin) {
             gameWon = true;
+            notifyListeners(new GameOver());
             gameWon();
         }
     }
 
+    private void gameOver() {
+        log.info("Game over");
+        gameOver = true;
+        notifyListeners(new Lose());
+    }
+
     private void gameWon() {
         log.info("Game won");
-        timer.stop();
         gameWon = true;
-        var record = recordManager.checkRecords(timer.getSecondsPassed().get(), gameType);
-
-        if (record) {
-            modelViewRecordListener.updateRecord(timer.getSecondsPassed().get());
-            recordManager.updateRecord(timer.getSecondsPassed().get());
-        }
-
-        modelViewGameResultListener.winGame();
+//        var record = recordManager.checkRecords(timer.getSecondsPassed().get(), gameType);
+//
+//        if (record) {
+//            notifyListeners(new NewRecord(timer.getSecondsPassed().get()));
+//            recordManager.updateRecord(timer.getSecondsPassed().get());
+//        }
+        notifyListeners(new Won(gameType));
     }
 
     private void updateTheCellView(PlayingFieldCells playingFieldCells) {
-        modelViewFieldListener.updateTheCellView(playingFieldCells);
+        notifyListeners(new UpdateTheCell(playingFieldCells));
     }
 
     private void createField(int rows, int cols) {
@@ -387,7 +379,7 @@ public class GameModel implements
 
     private void updateBomb() {
         log.info("Обновление view - количество бомб равно : {}", mines);
-        modelViewFieldListener.updateBombCount(mines);
+        notifyListeners(new UpdateBombCount(mines));
     }
 
     private void createGame(GameType gameType) {
@@ -397,14 +389,13 @@ public class GameModel implements
         openCells = 0;
         gameWon = false;
         gameOver = false;
-
-        timer.reset();
-
         fields = new int[gameType.rows][gameType.cols];
         flags = new boolean[gameType.rows][gameType.cols];
         openFields = new boolean[gameType.rows][gameType.cols];
         mines = gameType.numberOfBombs;
         firstClick = true;
+
+        notifyListeners(new NewGame());
         log.info("Создание игры завершено {}", gameType);
     }
 }
