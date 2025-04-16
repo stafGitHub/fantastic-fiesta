@@ -78,7 +78,8 @@ public class GameModel implements
         if (firstClick) {
             createField(row, col);
             notifyListeners(new FirstClick());
-            revealAllMines(clickResult);
+            //Для теста - показывает все мины при первом клике
+           revealAllMines(clickResult);
             firstClick = false;
         }
 
@@ -305,12 +306,6 @@ public class GameModel implements
     private void gameWon() {
         log.info("Game won");
         gameWon = true;
-//        var record = recordManager.checkRecords(timer.getSecondsPassed().get(), gameType);
-//
-//        if (record) {
-//            notifyListeners(new NewRecord(timer.getSecondsPassed().get()));
-//            recordManager.updateRecord(timer.getSecondsPassed().get());
-//        }
         notifyListeners(new Won(gameType));
     }
 

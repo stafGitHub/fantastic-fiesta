@@ -1,7 +1,7 @@
 package ru.shift.model.events;
 
 import lombok.extern.slf4j.Slf4j;
-import ru.shift.model.Publisher;
+import ru.shift.Publisher;
 
 @Slf4j
 public abstract class GameSettingsListener {
