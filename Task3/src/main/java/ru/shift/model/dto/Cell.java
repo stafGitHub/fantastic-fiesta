@@ -10,7 +10,7 @@ public class Cell {
     private final int x;
     private final int y;
     @Setter
-    private int meaning;
+    private int meaning = 0;
     @Setter
     private boolean flag = false;
     @Setter

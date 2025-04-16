@@ -67,6 +67,7 @@ public class Timer extends Observer {
     private void reset() {
         stop();
         secondsPassed.set(0);
+        timeObserver.onGameEvent(new TimeUpdate(secondsPassed.get()));
     }
 
 }

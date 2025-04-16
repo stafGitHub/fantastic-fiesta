@@ -37,6 +37,7 @@ public class GameModel implements
     private GameType gameType;
     private int openCellsToWin;
 
+    private Cell[][] cells;
     private int[][] fields;
     private boolean[][] flags;
     private boolean[][] openFields;
@@ -114,7 +115,7 @@ public class GameModel implements
 
         var clickResult = new PlayingFieldCells();
         var flags = countFlag(row, col);
-        if (flags < fields[row][col] || (fields[row][col] == EMPTY_COLUMN && openFields[row][col]) || !openFields[row][col]) {
+        if (flags < cells[row][col].getMeaning() || (cells[row][col].getMeaning() == EMPTY_COLUMN && openFields[row][col]) || !openFields[row][col]) {
             return;
         }
 
@@ -182,9 +183,9 @@ public class GameModel implements
 
                 playingFieldCells.getX().add(c);
                 playingFieldCells.getY().add(r);
-                playingFieldCells.getColumnRes().add(fields[r][c]);
+                playingFieldCells.getColumnRes().add(cells[r][c].getMeaning());
 
-                if (fields[r][c] == EMPTY_COLUMN) {
+                if (cells[r][c].getMeaning() == EMPTY_COLUMN) {
                     openNeighbors(c, r, playingFieldCells);
                 } else {
                     openCells++;
@@ -216,7 +217,7 @@ public class GameModel implements
 
         for (int r = 0; r < gameType.rows; r++) {
             for (int c = 0; c < gameType.cols; c++) {
-                if (fields[r][c] == MINE && !flags[r][c]) {
+                if (cells[r][c].getMeaning() == MINE && !flags[r][c]) {
                     playingFieldCells.getX().add(c);
                     playingFieldCells.getY().add(r);
                     playingFieldCells.getColumnRes().add(MINE);
@@ -260,9 +261,9 @@ public class GameModel implements
 
         playingFieldCells.getX().add(col);
         playingFieldCells.getY().add(row);
-        playingFieldCells.getColumnRes().add(fields[row][col]);
+        playingFieldCells.getColumnRes().add(cells[row][col].getMeaning());
 
-        int cellValue = fields[row][col];
+        int cellValue = cells[row][col].getMeaning();
         openFields[row][col] = true;
         openCells++;
 
@@ -279,7 +280,7 @@ public class GameModel implements
     }
 
     private boolean checkGameOver(int col, int row) {
-        if (fields[row][col] == MINE) {
+        if (cells[row][col].getMeaning() == MINE) {
             gameOver = true;
             notifyListeners(new GameOver());
             return true;
@@ -332,8 +333,8 @@ public class GameModel implements
                 continue;
             }
 
-            if (fields[xCoordinate][yCoordinate] != MINE) {
-                fields[xCoordinate][yCoordinate] = MINE;
+            if (cells[xCoordinate][yCoordinate].getMeaning() != MINE) {
+                cells[xCoordinate][yCoordinate].setMeaning(MINE);
                 bomb++;
             }
         }
@@ -349,8 +350,8 @@ public class GameModel implements
 
         for (int row = 0; row < gameType.rows; row++) {
             for (int col = 0; col < gameType.cols; col++) {
-                if (fields[row][col] != MINE) {
-                    fields[row][col] = countAdjacentMine(row, col);
+                if (cells[row][col].getMeaning() != MINE) {
+                    cells[row][col].setMeaning(countAdjacentMine(row, col));
                 }
             }
         }
@@ -368,7 +369,7 @@ public class GameModel implements
         int mineCount = 0;
         for (int r = Math.max(0, row - 1); r <= Math.min(gameType.rows - 1, row + 1); r++) {
             for (int c = Math.max(0, col - 1); c <= Math.min(gameType.cols - 1, col + 1); c++) {
-                if (fields[r][c] == MINE) mineCount++;
+                if (cells[r][c].getMeaning() == MINE) mineCount++;
             }
         }
 
@@ -391,6 +392,13 @@ public class GameModel implements
         gameWon = false;
         gameOver = false;
         fields = new int[gameType.rows][gameType.cols];
+        cells = new Cell[gameType.rows][gameType.cols];
+
+        for (int row = 0; row < gameType.rows; row++) {
+            for (int col = 0; col < gameType.cols; col++) {
+                cells[row][col] = new Cell(row, col);
+            }
+        }
         flags = new boolean[gameType.rows][gameType.cols];
         openFields = new boolean[gameType.rows][gameType.cols];
         mines = gameType.numberOfBombs;
