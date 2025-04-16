@@ -1,19 +1,18 @@
-package ru.shift.model.publisher;
+package ru.shift.record;
 
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import ru.shift.events.GameEvent;
+import ru.shift.events.Observer;
+import ru.shift.events.Publisher;
+import ru.shift.events.game.result.Won;
+import ru.shift.events.record.NewRecord;
 import ru.shift.model.GameType;
-import ru.shift.model.Publisher;
-import ru.shift.model.events.GameEvent;
-import ru.shift.model.events.GameSettingsListener;
-import ru.shift.model.events.game.result.Won;
-import ru.shift.model.events.record.NewRecord;
-import ru.shift.model.dto.Record;
+import ru.shift.timer.Timer;
 import ru.shift.view.windows.HighScoresWindow;
 
 import java.io.*;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -21,28 +20,28 @@ import java.util.List;
 
 @Getter
 @Slf4j
-public class RecordManager extends GameSettingsListener implements Publisher {
+public class RecordManager extends Observer implements Publisher {
     private static final String FILE_NAME = "stafievskiy_application_record.ser";
     private static final Path RECORDS_FILE_PATH = Paths.get(System.getProperty("user.home"), FILE_NAME);
     private final HighScoresWindow highScoresWindow;
     private final Timer timer;
-    private final List<GameSettingsListener> gameSettingsListeners = new ArrayList<>();
+    private final List<Observer> observers = new ArrayList<>();
 
     @Override
-    public void addListener(GameSettingsListener gameSettingsListener) {
-        gameSettingsListeners.add(gameSettingsListener);
+    public void addListener(Observer observer) {
+        observers.add(observer);
     }
 
     @Override
     public void notifyListeners(GameEvent gameEvent) {
-        gameSettingsListeners.forEach(listener -> listener.onGameEvent(gameEvent));
+        observers.forEach(listener -> listener.onGameEvent(gameEvent));
     }
 
     @Setter
     private String recordName;
     private Record currentRecord;
 
-    public RecordManager(HighScoresWindow highScoresWindow ,
+    public RecordManager(HighScoresWindow highScoresWindow,
                          Publisher publisher,
                          Timer timer) {
         super(publisher);
@@ -54,18 +53,18 @@ public class RecordManager extends GameSettingsListener implements Publisher {
 
     @Override
     public void onGameEvent(GameEvent gameEvent) {
-        if (gameEvent instanceof Won won){
+        if (gameEvent instanceof Won won) {
             boolean record = checkRecords(timer.getSecondsPassed().get(), won.gameType());
-            if (record){
+            if (record) {
                 notifyListeners(new NewRecord(timer.getSecondsPassed().get()));
-                updateRecord(timer.getSecondsPassed().get(),won.gameType());
+                updateRecord(timer.getSecondsPassed().get(), won.gameType());
                 updateRecordWindow();
             }
         }
     }
 
-    private void updateRecord(int time , GameType gameType) {
-        log.info("Обновление рекорда - {} : {}",gameType,time);
+    private void updateRecord(int time, GameType gameType) {
+        log.info("Обновление рекорда - {} : {}", gameType, time);
         switch (gameType) {
             case NOVICE -> {
                 currentRecord.setNoviceTime(time);
@@ -92,7 +91,7 @@ public class RecordManager extends GameSettingsListener implements Publisher {
     }
 
     private boolean checkRecords(int time, GameType gameType) {
-        log.info("Проверка рекорда: {}",gameType);
+        log.info("Проверка рекорда: {}", gameType);
         return switch (gameType) {
             case NOVICE -> time < currentRecord.getNoviceTime();
             case MEDIUM -> time < currentRecord.getMediumTime();
@@ -101,18 +100,13 @@ public class RecordManager extends GameSettingsListener implements Publisher {
     }
 
     private void loadRecords() {
-        try {
-            if (Files.exists(RECORDS_FILE_PATH)) {
-                try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(RECORDS_FILE_PATH.toFile()))) {
-                    currentRecord = (Record) ois.readObject();
-                    log.info("Чтение файла с рекордами: {}", RECORDS_FILE_PATH);
-                }
-            } else {
-                currentRecord = new Record();
-                log.info("Создан новый файл с рекордами");
-            }
-        } catch (IOException | ClassNotFoundException e) {
-            log.error("Ошибка чтения файла с рекордами", e);
+
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(RECORDS_FILE_PATH.toFile()))) {
+            currentRecord = (Record) ois.readObject();
+            log.info("Чтение файла с рекордами: {}", RECORDS_FILE_PATH);
+
+        }catch (IOException | ClassNotFoundException e) {
+            log.error("Создания файла с рекордами", e);
             currentRecord = new Record();
         }
     }

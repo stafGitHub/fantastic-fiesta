@@ -1,6 +1,6 @@
-package ru.shift.model.events.record;
+package ru.shift.events.record;
 
-import ru.shift.model.events.GameEvent;
+import ru.shift.events.GameEvent;
 
 public record NewRecord(int time) implements GameEvent {
 }

@@ -1,23 +1,23 @@
-package ru.shift.model.publisher;
+package ru.shift.model;
 
 import lombok.extern.slf4j.Slf4j;
+import ru.shift.events.Publisher;
 import ru.shift.controller.listeners.ControllerModelFieldListener;
 import ru.shift.controller.listeners.ControllerModelNewGameListener;
 import ru.shift.controller.listeners.ControllerModelSettingsListeners;
-import ru.shift.model.GameType;
-import ru.shift.model.Publisher;
+import ru.shift.model.dto.Cell;
 import ru.shift.model.dto.PlayingFieldCells;
-import ru.shift.model.events.GameEvent;
-import ru.shift.model.events.GameSettingsListener;
-import ru.shift.model.events.fields.FlagPlaning;
-import ru.shift.model.events.fields.UpdateBombCount;
-import ru.shift.model.events.fields.UpdateGame;
-import ru.shift.model.events.fields.UpdateTheCell;
-import ru.shift.model.events.game.result.Lose;
-import ru.shift.model.events.game.result.Won;
-import ru.shift.model.events.game.status.FirstClick;
-import ru.shift.model.events.game.status.GameOver;
-import ru.shift.model.events.game.status.NewGame;
+import ru.shift.events.GameEvent;
+import ru.shift.events.Observer;
+import ru.shift.events.fields.FlagPlaning;
+import ru.shift.events.fields.UpdateBombCount;
+import ru.shift.events.fields.UpdateGame;
+import ru.shift.events.fields.UpdateTheCell;
+import ru.shift.events.game.result.Lose;
+import ru.shift.events.game.result.Won;
+import ru.shift.events.game.status.FirstClick;
+import ru.shift.events.game.status.GameOver;
+import ru.shift.events.game.status.NewGame;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,17 +32,7 @@ public class GameModel implements
     public final static int MINE = -1;
     public final static int EMPTY_COLUMN = 0;
 
-    private final List<GameSettingsListener> gameSettingsListeners = new ArrayList<>();
-
-    @Override
-    public void addListener(GameSettingsListener gameSettingsListener) {
-        gameSettingsListeners.add(gameSettingsListener);
-    }
-
-    @Override
-    public void notifyListeners(GameEvent gameEvent) {
-        gameSettingsListeners.forEach(listener -> listener.onGameEvent(gameEvent));
-    }
+    private final List<Observer> observers = new ArrayList<>();
 
     private GameType gameType;
     private int openCellsToWin;
@@ -63,7 +53,16 @@ public class GameModel implements
 
     public GameModel(GameType gameType) {
         createGame(gameType);
+    }
 
+    @Override
+    public void notifyListeners(GameEvent gameEvent) {
+        observers.forEach(listener -> listener.onGameEvent(gameEvent));
+    }
+
+    @Override
+    public void addListener(Observer observer) {
+        observers.add(observer);
     }
 
     @Override

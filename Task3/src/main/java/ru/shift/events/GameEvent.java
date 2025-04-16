@@ -1,4 +1,4 @@
-package ru.shift.model.events;
+package ru.shift.events;
 
 /***
     Маркерный интерфейс

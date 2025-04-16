@@ -1,13 +1,13 @@
 package ru.shift.view.observers;
 
-import ru.shift.model.Publisher;
-import ru.shift.model.events.GameEvent;
-import ru.shift.model.events.GameSettingsListener;
-import ru.shift.model.events.fields.FlagPlaning;
+import ru.shift.events.Publisher;
+import ru.shift.events.GameEvent;
+import ru.shift.events.Observer;
+import ru.shift.events.fields.FlagPlaning;
 import ru.shift.view.GameImage;
 import ru.shift.view.windows.MainWindow;
 
-public class FlagPlaningObserver extends GameSettingsListener {
+public class FlagPlaningObserver extends Observer {
     private final MainWindow mainWindow;
 
     public FlagPlaningObserver(Publisher publisher, MainWindow mainWindow) {

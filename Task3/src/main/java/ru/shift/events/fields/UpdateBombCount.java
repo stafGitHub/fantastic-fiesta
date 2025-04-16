@@ -1,6 +1,6 @@
-package ru.shift.model.events.fields;
+package ru.shift.events.fields;
 
-import ru.shift.model.events.GameEvent;
+import ru.shift.events.GameEvent;
 
 public record UpdateBombCount(int count) implements GameEvent {
 }

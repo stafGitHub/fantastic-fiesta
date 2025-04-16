@@ -1,6 +1,6 @@
-package ru.shift.model.events.game.status;
+package ru.shift.events.game.status;
 
-import ru.shift.model.events.GameEvent;
+import ru.shift.events.GameEvent;
 
 public record NewGame() implements GameEvent {
 }

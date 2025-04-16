@@ -1,14 +1,14 @@
-package ru.shift.model.publisher;
+package ru.shift.timer;
 
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
-import ru.shift.model.Publisher;
-import ru.shift.model.events.GameEvent;
-import ru.shift.model.events.GameSettingsListener;
-import ru.shift.model.events.fields.TimeUpdate;
-import ru.shift.model.events.game.status.FirstClick;
-import ru.shift.model.events.game.status.GameOver;
-import ru.shift.model.events.game.status.NewGame;
+import ru.shift.events.Publisher;
+import ru.shift.events.GameEvent;
+import ru.shift.events.Observer;
+import ru.shift.events.fields.TimeUpdate;
+import ru.shift.events.game.status.FirstClick;
+import ru.shift.events.game.status.GameOver;
+import ru.shift.events.game.status.NewGame;
 import ru.shift.view.observers.TimeObserver;
 
 import java.util.concurrent.Executors;
@@ -17,7 +17,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @Slf4j
-public class Timer extends GameSettingsListener {
+public class Timer extends Observer {
     @Getter
     private final AtomicInteger secondsPassed = new AtomicInteger(0);
     private ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();

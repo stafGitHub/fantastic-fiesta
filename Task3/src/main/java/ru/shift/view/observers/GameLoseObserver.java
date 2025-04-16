@@ -1,12 +1,12 @@
 package ru.shift.view.observers;
 
-import ru.shift.model.Publisher;
-import ru.shift.model.events.GameEvent;
-import ru.shift.model.events.GameSettingsListener;
-import ru.shift.model.events.game.result.Lose;
+import ru.shift.events.Publisher;
+import ru.shift.events.GameEvent;
+import ru.shift.events.Observer;
+import ru.shift.events.game.result.Lose;
 import ru.shift.view.windows.LoseWindow;
 
-public class GameLoseObserver extends GameSettingsListener {
+public class GameLoseObserver extends Observer {
     private final LoseWindow loseWindow;
     public GameLoseObserver(Publisher publisher, LoseWindow loseWindow) {
         super(publisher);

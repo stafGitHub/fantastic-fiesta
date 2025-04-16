@@ -1,12 +1,12 @@
 package ru.shift.view.observers;
 
-import ru.shift.model.Publisher;
-import ru.shift.model.events.GameEvent;
-import ru.shift.model.events.GameSettingsListener;
-import ru.shift.model.events.record.NewRecord;
+import ru.shift.events.Publisher;
+import ru.shift.events.GameEvent;
+import ru.shift.events.Observer;
+import ru.shift.events.record.NewRecord;
 import ru.shift.view.windows.RecordsWindow;
 
-public class GameRecordObserver extends GameSettingsListener {
+public class GameRecordObserver extends Observer {
     private final RecordsWindow recordsWindow;
     public GameRecordObserver(Publisher publisher,
                                RecordsWindow recordsWindow) {

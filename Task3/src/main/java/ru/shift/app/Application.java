@@ -3,11 +3,11 @@ package ru.shift.app;
 import ru.shift.controller.MouseViewController;
 import ru.shift.controller.NewGameViewController;
 import ru.shift.controller.SettingsViewController;
-import ru.shift.model.publisher.GameModel;
+import ru.shift.model.GameModel;
 import ru.shift.model.GameType;
-import ru.shift.model.publisher.Timer;
+import ru.shift.timer.Timer;
 import ru.shift.controller.RecordController;
-import ru.shift.model.publisher.RecordManager;
+import ru.shift.record.RecordManager;
 import ru.shift.view.observers.*;
 import ru.shift.view.windows.*;
 
@@ -46,7 +46,7 @@ public class Application {
     private static final SettingsViewController settingsController = new SettingsViewController(model);
 
     public static void main(String[] args) {
-        //Records
+        //Record
         recordsWindow.setNameListener(recordController);
 
         //Win

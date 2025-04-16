@@ -1,12 +1,12 @@
 package ru.shift.view.observers;
 
-import ru.shift.model.Publisher;
-import ru.shift.model.events.GameEvent;
-import ru.shift.model.events.GameSettingsListener;
-import ru.shift.model.events.game.result.Won;
+import ru.shift.events.Publisher;
+import ru.shift.events.GameEvent;
+import ru.shift.events.Observer;
+import ru.shift.events.game.result.Won;
 import ru.shift.view.windows.WinWindow;
 
-public class GameWonObserver extends GameSettingsListener {
+public class GameWonObserver extends Observer {
     private final WinWindow winWindow;
     public GameWonObserver(Publisher publisher, WinWindow winWindow) {
         super(publisher);

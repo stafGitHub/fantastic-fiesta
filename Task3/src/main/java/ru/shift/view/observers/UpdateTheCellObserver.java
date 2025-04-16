@@ -1,18 +1,18 @@
 package ru.shift.view.observers;
 
 import lombok.extern.slf4j.Slf4j;
-import ru.shift.model.publisher.GameModel;
-import ru.shift.model.Publisher;
-import ru.shift.model.events.GameEvent;
-import ru.shift.model.events.GameSettingsListener;
-import ru.shift.model.events.fields.UpdateTheCell;
+import ru.shift.model.GameModel;
+import ru.shift.events.Publisher;
+import ru.shift.events.GameEvent;
+import ru.shift.events.Observer;
+import ru.shift.events.fields.UpdateTheCell;
 import ru.shift.view.GameImage;
 import ru.shift.view.windows.MainWindow;
 
 import java.util.Map;
 
 @Slf4j
-public class UpdateTheCellObserver extends GameSettingsListener {
+public class UpdateTheCellObserver extends Observer {
     private final MainWindow mainWindow;
 
     private static final Map<Integer, GameImage> CELL_IMAGES = Map.of(
