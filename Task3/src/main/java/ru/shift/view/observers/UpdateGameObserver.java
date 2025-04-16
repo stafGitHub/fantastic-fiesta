@@ -16,8 +16,8 @@ public class UpdateGameObserver extends GameSettingsListener {
 
     @Override
     public void onGameEvent(GameEvent gameEvent) {
-        if (gameEvent instanceof UpdateGame(GameType gameType)){
-            mainWindow.createGameField(gameType.rows,gameType.cols);
+        if (gameEvent instanceof UpdateGame updateGame){
+            mainWindow.createGameField(updateGame.gameType().rows,updateGame.gameType().cols);
         }
     }
 }

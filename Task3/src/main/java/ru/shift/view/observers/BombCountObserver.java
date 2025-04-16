@@ -15,8 +15,8 @@ public class BombCountObserver extends GameSettingsListener {
 
     @Override
     public void onGameEvent(GameEvent gameEvent) {
-        if (gameEvent instanceof UpdateBombCount(int count)){
-            mainWindow.setBombsCount(count);
+        if (gameEvent instanceof UpdateBombCount updateBombCount){
+            mainWindow.setBombsCount(updateBombCount.count());
         }
     }
 }

@@ -1,6 +1,6 @@
 package ru.shift.view.windows;
 
-import ru.shift.model.events.RecordNameListener;
+import ru.shift.controller.listeners.RecordNameListener;
 
 import javax.swing.*;
 import java.awt.*;
@@ -26,7 +26,6 @@ public class RecordsWindow extends JDialog {
         setResizable(false);
         pack();
         setLocationRelativeTo(null);
-        setVisible(true);
     }
 
     public void setNameListener(RecordNameListener nameListener) {

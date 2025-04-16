@@ -1,9 +1,8 @@
 package ru.shift.view.observers;
 
 import lombok.extern.slf4j.Slf4j;
-import ru.shift.model.GameModel;
+import ru.shift.model.publisher.GameModel;
 import ru.shift.model.Publisher;
-import ru.shift.model.dto.PlayingFieldCells;
 import ru.shift.model.events.GameEvent;
 import ru.shift.model.events.GameSettingsListener;
 import ru.shift.model.events.fields.UpdateTheCell;
@@ -36,20 +35,20 @@ public class UpdateTheCellObserver extends GameSettingsListener {
 
     @Override
     public void onGameEvent(GameEvent gameEvent) {
-        if (gameEvent instanceof UpdateTheCell(PlayingFieldCells playingFieldCells)){
-            for (int i = 0; i < playingFieldCells.getColumnRes().size(); i++) {
-                int value = playingFieldCells.getColumnRes().get(i);
+        if (gameEvent instanceof UpdateTheCell updateTheCell){
+            for (int i = 0; i < updateTheCell.playingFieldCells().getColumnRes().size(); i++) {
+                int value = updateTheCell.playingFieldCells().getColumnRes().get(i);
                 GameImage image = CELL_IMAGES.get(value);
                 if (image != null) {
                     mainWindow.setCellImage(
-                            playingFieldCells.getX().get(i),
-                            playingFieldCells.getY().get(i),
+                            updateTheCell.playingFieldCells().getX().get(i),
+                            updateTheCell.playingFieldCells().getY().get(i),
                             image
                     );
 
                     log.debug("Установка результата во вью : x - {} , y - {} , img - {}",
-                            playingFieldCells.getX().get(i),
-                            playingFieldCells.getY().get(i),
+                            updateTheCell.playingFieldCells().getX().get(i),
+                            updateTheCell.playingFieldCells().getY().get(i),
                             image);
                 }
             }

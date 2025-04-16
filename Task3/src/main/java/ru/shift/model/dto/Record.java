@@ -1,4 +1,4 @@
-package ru.shift.model.records;
+package ru.shift.model.dto;
 
 import lombok.Getter;
 import lombok.Setter;

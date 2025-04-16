@@ -1,7 +1,8 @@
-package ru.shift.model;
+package ru.shift.model.publisher;
 
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
+import ru.shift.model.Publisher;
 import ru.shift.model.events.GameEvent;
 import ru.shift.model.events.GameSettingsListener;
 import ru.shift.model.events.fields.TimeUpdate;

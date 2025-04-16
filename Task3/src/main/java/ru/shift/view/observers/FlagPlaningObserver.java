@@ -17,11 +17,11 @@ public class FlagPlaningObserver extends GameSettingsListener {
 
     @Override
     public void onGameEvent(GameEvent gameEvent) {
-        if (gameEvent instanceof FlagPlaning(int row, int column, boolean flag)){
-            if (flag){
-                mainWindow.setCellImage(row, column,GameImage.MARKED);
+        if (gameEvent instanceof FlagPlaning flagPlaning){
+            if (flagPlaning.flag()){
+                mainWindow.setCellImage(flagPlaning.column(), flagPlaning.row(),GameImage.MARKED);
             }else {
-                mainWindow.setCellImage(row, column,GameImage.CLOSED);
+                mainWindow.setCellImage(flagPlaning.column(), flagPlaning.row(),GameImage.CLOSED);
             }
         }
     }

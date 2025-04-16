@@ -15,8 +15,8 @@ public class TimeObserver extends GameSettingsListener {
 
     @Override
     public void onGameEvent(GameEvent gameEvent) {
-        if (gameEvent instanceof TimeUpdate(int time)){
-            mainWindow.setTimerValue(time);
+        if (gameEvent instanceof TimeUpdate timeUpdate) {
+            mainWindow.setTimerValue(timeUpdate.time());
         }
     }
 }

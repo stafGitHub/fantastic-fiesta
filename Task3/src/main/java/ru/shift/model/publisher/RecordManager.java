@@ -1,15 +1,15 @@
-package ru.shift.model.records;
+package ru.shift.model.publisher;
 
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import ru.shift.model.GameType;
 import ru.shift.model.Publisher;
-import ru.shift.model.Timer;
 import ru.shift.model.events.GameEvent;
 import ru.shift.model.events.GameSettingsListener;
 import ru.shift.model.events.game.result.Won;
 import ru.shift.model.events.record.NewRecord;
+import ru.shift.model.dto.Record;
 import ru.shift.view.windows.HighScoresWindow;
 
 import java.io.*;

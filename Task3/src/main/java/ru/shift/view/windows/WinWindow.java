@@ -9,7 +9,7 @@ public class WinWindow extends JDialog {
     private ActionListener exitListener;
 
     public WinWindow(JFrame owner) {
-        super(owner, "Win", true);
+        super(owner, "Won", true);
 
         GridBagLayout layout = new GridBagLayout();
         Container contentPane = getContentPane();

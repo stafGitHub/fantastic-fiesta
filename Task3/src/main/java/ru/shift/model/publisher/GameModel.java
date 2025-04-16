@@ -1,9 +1,11 @@
-package ru.shift.model;
+package ru.shift.model.publisher;
 
 import lombok.extern.slf4j.Slf4j;
 import ru.shift.controller.listeners.ControllerModelFieldListener;
 import ru.shift.controller.listeners.ControllerModelNewGameListener;
 import ru.shift.controller.listeners.ControllerModelSettingsListeners;
+import ru.shift.model.GameType;
+import ru.shift.model.Publisher;
 import ru.shift.model.dto.PlayingFieldCells;
 import ru.shift.model.events.GameEvent;
 import ru.shift.model.events.GameSettingsListener;
@@ -76,16 +78,17 @@ public class GameModel implements
         if (firstClick) {
             createField(row, col);
             notifyListeners(new FirstClick());
+            revealAllMines(clickResult);
             firstClick = false;
         }
 
 //         Можно закомитить , поражение отключиться
-//        if (checkGameOver(col, row)) {
-//            revealAllMines(clickResult);
-//            updateTheCellView(clickResult);
-//            gameOver();
-//            return;
-//        }
+        if (checkGameOver(col, row)) {
+            revealAllMines(clickResult);
+            updateTheCellView(clickResult);
+            gameOver();
+            return;
+        }
 
         log.info("Рекурсивное открытие");
         long startTime = System.nanoTime();
@@ -180,12 +183,16 @@ public class GameModel implements
                 playingFieldCells.getX().add(c);
                 playingFieldCells.getY().add(r);
                 playingFieldCells.getColumnRes().add(fields[r][c]);
-                openCells++;
 
                 if (fields[r][c] == EMPTY_COLUMN) {
                     openNeighbors(c, r, playingFieldCells);
+                } else {
+                    openCells++;
                 }
+
+
                 openFields[r][c] = true;
+
             }
         }
         long endTime = System.nanoTime();
