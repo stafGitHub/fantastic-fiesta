@@ -9,7 +9,7 @@ public class RecordsWindow extends JDialog {
     private RecordNameListener nameListener;
 
     public RecordsWindow(JFrame frame) {
-        super(frame, "New Record", true);
+        super(frame, "New GameRecord", true);
 
         JTextField nameField = new JTextField();
 

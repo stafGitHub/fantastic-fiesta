@@ -1,5 +1,5 @@
 package ru.shift.view.listeners;
 
-public interface ViewControllerNewGameListener {
+public interface NewGameListener {
     void newGame();
 }

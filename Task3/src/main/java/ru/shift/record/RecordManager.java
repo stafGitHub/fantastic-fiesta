@@ -16,30 +16,24 @@ import java.io.*;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.EnumMap;
 import java.util.List;
+import java.util.Map;
 
 @Getter
 @Slf4j
 public class RecordManager extends Observer implements Publisher {
     private static final String FILE_NAME = "stafievskiy_application_record.ser";
     private static final Path RECORDS_FILE_PATH = Paths.get(System.getProperty("user.home"), FILE_NAME);
+    private static final String DEFAULT_PLAYER_NAME = "Unknown";
+    private static final int DEFAULT_RECORD_TIME = 999;
+
     private final HighScoresWindow highScoresWindow;
     private final Timer timer;
     private final List<Observer> observers = new ArrayList<>();
-
-    @Override
-    public void addListener(Observer observer) {
-        observers.add(observer);
-    }
-
-    @Override
-    public void notifyListeners(GameEvent gameEvent) {
-        observers.forEach(listener -> listener.onGameEvent(gameEvent));
-    }
-
+    private final Map<GameType, GameRecord> records = new EnumMap<>(GameType.class);
     @Setter
     private String recordName;
-    private Record currentRecord;
 
     public RecordManager(HighScoresWindow highScoresWindow,
                          Publisher publisher,
@@ -52,78 +46,76 @@ public class RecordManager extends Observer implements Publisher {
     }
 
     @Override
+    public void addListener(Observer observer) {
+        observers.add(observer);
+    }
+
+    @Override
+    public void notifyListeners(GameEvent gameEvent) {
+        observers.forEach(listener -> listener.onGameEvent(gameEvent));
+    }
+
+    @Override
     public void onGameEvent(GameEvent gameEvent) {
         if (gameEvent instanceof Won won) {
-            boolean record = checkRecords(timer.getSecondsPassed().get(), won.gameType());
-            if (record) {
-                notifyListeners(new NewRecord(timer.getSecondsPassed().get()));
-                updateRecord(timer.getSecondsPassed().get(), won.gameType());
+            int currentTime = timer.getSecondsPassed().get();
+            GameType gameType = won.gameType();
+
+            if (isNewRecord(currentTime, gameType)) {
+                notifyListeners(new NewRecord(currentTime));
+                updateRecord(currentTime, gameType);
                 updateRecordWindow();
             }
         }
+    }
+
+    private boolean isNewRecord(int time, GameType gameType) {
+        GameRecord gameRecord = records.get(gameType);
+        return gameRecord == null || time < gameRecord.time();
     }
 
     private void updateRecord(int time, GameType gameType) {
-        log.info("Обновление рекорда - {} : {}", gameType, time);
-        switch (gameType) {
-            case NOVICE -> {
-                currentRecord.setNoviceTime(time);
-                currentRecord.setNoviceRecordName(recordName);
-                saveRecords();
-                loadRecords();
-                updateRecordWindow();
-            }
-            case MEDIUM -> {
-                currentRecord.setMediumTime(time);
-                currentRecord.setMediumRecordName(recordName);
-                saveRecords();
-                loadRecords();
-                updateRecordWindow();
-            }
-            case EXPERT -> {
-                currentRecord.setExpertTime(time);
-                currentRecord.setExpertRecordName(recordName);
-                saveRecords();
-                loadRecords();
-                updateRecordWindow();
-            }
-        }
-    }
-
-    private boolean checkRecords(int time, GameType gameType) {
-        log.info("Проверка рекорда: {}", gameType);
-        return switch (gameType) {
-            case NOVICE -> time < currentRecord.getNoviceTime();
-            case MEDIUM -> time < currentRecord.getMediumTime();
-            case EXPERT -> time < currentRecord.getExpertTime();
-        };
+        records.put(gameType, new GameRecord(time, recordName != null ? recordName : DEFAULT_PLAYER_NAME));
+        saveRecords();
+        log.info("Рекорд обновлен: {} - {} сек", gameType, time);
     }
 
     private void loadRecords() {
-
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(RECORDS_FILE_PATH.toFile()))) {
-            currentRecord = (Record) ois.readObject();
-            log.info("Чтение файла с рекордами: {}", RECORDS_FILE_PATH);
+            Map<GameType, GameRecord> loadedRecords = (Map<GameType, GameRecord>) ois.readObject();
+            records.putAll(loadedRecords);
+            log.info("Загружены рекорды из файла: {}", RECORDS_FILE_PATH);
+        } catch (IOException | ClassNotFoundException s) {
+            log.info("Создана новая таблица рекордов");
+            initializeDefaultRecords();
+        }
+    }
 
-        } catch (IOException | ClassNotFoundException e) {
-            log.error("Создания файла с рекордами", e);
-            currentRecord = new Record();
+    private void initializeDefaultRecords() {
+        for (GameType type : GameType.values()) {
+            records.put(type, new GameRecord(DEFAULT_RECORD_TIME, DEFAULT_PLAYER_NAME));
         }
     }
 
     private void saveRecords() {
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(RECORDS_FILE_PATH.toFile()))) {
-            oos.writeObject(currentRecord);
-            log.info("Сохранение объекта с рекордами: {}", RECORDS_FILE_PATH);
+            oos.writeObject(records);
+            log.info("Рекорды сохранены в файл: {}", RECORDS_FILE_PATH);
         } catch (IOException e) {
             log.error("Ошибка сохранения рекордов", e);
         }
     }
 
     private void updateRecordWindow() {
-        highScoresWindow.setNoviceRecord(currentRecord.getNoviceRecordName(), currentRecord.getNoviceTime());
-        highScoresWindow.setMediumRecord(currentRecord.getMediumRecordName(), currentRecord.getMediumTime());
-        highScoresWindow.setExpertRecord(currentRecord.getExpertRecordName(), currentRecord.getExpertTime());
+        for (GameType type : GameType.values()) {
+            GameRecord gameRecord = records.get(type);
+            if (gameRecord != null) {
+                switch (type) {
+                    case NOVICE -> highScoresWindow.setNoviceRecord(gameRecord.name(), gameRecord.time());
+                    case MEDIUM -> highScoresWindow.setMediumRecord(gameRecord.name(), gameRecord.time());
+                    case EXPERT -> highScoresWindow.setExpertRecord(gameRecord.name(), gameRecord.time());
+                }
+            }
+        }
     }
-
 }

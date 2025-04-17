@@ -2,13 +2,12 @@ package ru.shift.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import ru.shift.controller.listeners.ControllerModelNewGameListener;
-import ru.shift.view.listeners.ViewControllerNewGameListener;
+import ru.shift.view.listeners.NewGameListener;
 
 @Slf4j
 @RequiredArgsConstructor
-public class NewGameViewController implements ViewControllerNewGameListener {
-    private final ControllerModelNewGameListener controllerModelListener;
+public class NewGameController implements NewGameListener {
+    private final ru.shift.controller.listeners.NewGameListener controllerModelListener;
 
     @Override
     public void newGame() {

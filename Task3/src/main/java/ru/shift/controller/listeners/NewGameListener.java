@@ -1,5 +1,5 @@
 package ru.shift.controller.listeners;
 
-public interface ControllerModelNewGameListener {
+public interface NewGameListener {
     void newGame();
 }
