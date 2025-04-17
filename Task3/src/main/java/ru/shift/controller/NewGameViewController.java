@@ -2,8 +2,8 @@ package ru.shift.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import ru.shift.view.listeners.ViewControllerNewGameListener;
 import ru.shift.controller.listeners.ControllerModelNewGameListener;
+import ru.shift.view.listeners.ViewControllerNewGameListener;
 
 @Slf4j
 @RequiredArgsConstructor

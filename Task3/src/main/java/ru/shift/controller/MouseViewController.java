@@ -14,7 +14,6 @@ public class MouseViewController implements ViewControllerCellEventListener {
     @Override
     public void onMouseClick(int x, int y, ButtonType buttonType) {
         log.info("Обработка нажатия: {}", buttonType);
-        long startTime = System.nanoTime();
 
         switch (buttonType) {
             case LEFT_BUTTON -> gameModel.openCellLeftButton(y, x);
@@ -22,10 +21,7 @@ public class MouseViewController implements ViewControllerCellEventListener {
             case RIGHT_BUTTON -> gameModel.openCellWithMouseCell(y, x);
         }
 
-        long endTime = System.nanoTime();
-        long elapsedTime = endTime - startTime;
-
-        log.info("Обработка завершена : {}", elapsedTime);
+        log.info("Обработка завершена");
     }
 
 }

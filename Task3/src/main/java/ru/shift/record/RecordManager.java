@@ -105,7 +105,7 @@ public class RecordManager extends Observer implements Publisher {
             currentRecord = (Record) ois.readObject();
             log.info("Чтение файла с рекордами: {}", RECORDS_FILE_PATH);
 
-        }catch (IOException | ClassNotFoundException e) {
+        } catch (IOException | ClassNotFoundException e) {
             log.error("Создания файла с рекордами", e);
             currentRecord = new Record();
         }

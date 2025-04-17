@@ -1,7 +1,7 @@
 package ru.shift.events;
 
 /***
-    Маркерный интерфейс
+ Маркерный интерфейс
  */
 public interface GameEvent {
 }

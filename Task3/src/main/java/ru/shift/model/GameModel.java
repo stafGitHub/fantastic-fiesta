@@ -1,14 +1,12 @@
 package ru.shift.model;
 
 import lombok.extern.slf4j.Slf4j;
-import ru.shift.events.Publisher;
 import ru.shift.controller.listeners.ControllerModelFieldListener;
 import ru.shift.controller.listeners.ControllerModelNewGameListener;
 import ru.shift.controller.listeners.ControllerModelSettingsListeners;
-import ru.shift.model.dto.Cell;
-import ru.shift.model.dto.PlayingFieldCells;
 import ru.shift.events.GameEvent;
 import ru.shift.events.Observer;
+import ru.shift.events.Publisher;
 import ru.shift.events.fields.FlagPlaning;
 import ru.shift.events.fields.UpdateBombCount;
 import ru.shift.events.fields.UpdateGame;
@@ -18,10 +16,15 @@ import ru.shift.events.game.result.Won;
 import ru.shift.events.game.status.FirstClick;
 import ru.shift.events.game.status.GameOver;
 import ru.shift.events.game.status.NewGame;
+import ru.shift.model.dto.Cell;
+import ru.shift.model.dto.CellOutput;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+
+import static ru.shift.model.dto.Cell.EMPTY_COLUMN;
+import static ru.shift.model.dto.Cell.MINE;
 
 @Slf4j
 public class GameModel implements
@@ -29,28 +32,18 @@ public class GameModel implements
         ControllerModelSettingsListeners,
         ControllerModelNewGameListener,
         Publisher {
-    public final static int MINE = -1;
-    public final static int EMPTY_COLUMN = 0;
+    private final Random RANDOM = new Random();
 
     private final List<Observer> observers = new ArrayList<>();
-
+    private Cell[][] cells;
     private GameType gameType;
     private int openCellsToWin;
-
-    private Cell[][] cells;
-    private int[][] fields;
-    private boolean[][] flags;
-    private boolean[][] openFields;
-
     private boolean gameOver;
     private boolean gameWon;
-
     private int openCells;
     private int mines;
-
     private boolean firstClick = true;
 
-    private final Random RANDOM = new Random();
 
     public GameModel(GameType gameType) {
         createGame(gameType);
@@ -69,39 +62,34 @@ public class GameModel implements
     @Override
     public void openCellLeftButton(int row, int col) {
         log.info("openCellLeftButton");
-        if (gameOver || gameWon || flags[row][col] || openFields[row][col]) {
+        if (gameOver || gameWon || cells[row][col].isFlag() || cells[row][col].isOpen()) {
             return;
         }
 
-        var clickResult = new PlayingFieldCells();
+        var cellOutput = new CellOutput();
 
         if (firstClick) {
             createField(row, col);
             notifyListeners(new FirstClick());
             //Для теста - показывает все мины при первом клике
-           revealAllMines(clickResult);
+            revealAllMines(cellOutput);
             firstClick = false;
         }
 
 //         Можно закомитить , поражение отключиться
         if (checkGameOver(col, row)) {
-            revealAllMines(clickResult);
-            updateTheCellView(clickResult);
+            revealAllMines(cellOutput);
+            updateTheCellView(cellOutput);
             gameOver();
             return;
         }
 
         log.info("Рекурсивное открытие");
-        long startTime = System.nanoTime();
-
-        openNeighbors(col, row, clickResult);
-
-        long endTime = System.nanoTime();
-        long elapsedTime = endTime - startTime;
-        log.info("Рекурсивное открытие клеток завершено : {}", elapsedTime);
+        openNeighbors(col, row, cellOutput);
+        log.info("Рекурсивное открытие клеток завершено");
 
 
-        updateTheCellView(clickResult);
+        updateTheCellView(cellOutput);
 
         checkGameWinner();
     }
@@ -109,23 +97,23 @@ public class GameModel implements
     @Override
     public void openCellWithMouseCell(int row, int col) {
         log.info("openCellWithMouseCell");
-        if (gameOver || gameWon || flags[row][col]) {
+        if (gameOver || gameWon || cells[row][col].isFlag()) {
             return;
         }
 
-        var clickResult = new PlayingFieldCells();
+        var cellOutput = new CellOutput();
         var flags = countFlag(row, col);
-        if (flags < cells[row][col].getMeaning() || (cells[row][col].getMeaning() == EMPTY_COLUMN && openFields[row][col]) || !openFields[row][col]) {
+        if (flags < cells[row][col].getMeaning() || (cells[row][col].getMeaning() == EMPTY_COLUMN && cells[row][col].isOpen()) || !cells[row][col].isOpen()) {
             return;
         }
 
-        readingCellsBySquareCoordinates(row, col, clickResult);
-        updateTheCellView(clickResult);
+        readingCellsBySquareCoordinates(row, col, cellOutput);
+        updateTheCellView(cellOutput);
 
 //         Можно закомитить , поражение отключиться
-        if (!checkingForBombs(clickResult)) {
-            revealAllMines(clickResult);
-            updateTheCellView(clickResult);
+        if (!checkingForBombs(cellOutput)) {
+            revealAllMines(cellOutput);
+            updateTheCellView(cellOutput);
             gameOver();
             return;
         }
@@ -136,8 +124,8 @@ public class GameModel implements
     @Override
     public void flagPlaning(int row, int col) {
 
-        if (flags[row][col]) {
-            flags[row][col] = false;
+        if (cells[row][col].isFlag()) {
+            cells[row][col].setFlag(false);
             notifyListeners(new FlagPlaning(row, col, false));
             mines++;
             updateBomb();
@@ -145,12 +133,12 @@ public class GameModel implements
             return;
         }
 
-        if (openFields[row][col] || mines == 0) {
+        if (cells[row][col].isOpen() || mines == 0) {
             return;
         }
 
-        if (!flags[row][col]) {
-            flags[row][col] = true;
+        if (!cells[row][col].isFlag()) {
+            cells[row][col].setFlag(true);
             notifyListeners(new FlagPlaning(row, col, true));
             mines--;
             updateBomb();
@@ -170,40 +158,36 @@ public class GameModel implements
         notifyListeners(new UpdateGame(gameType));
     }
 
-    private void readingCellsBySquareCoordinates(int row, int col, PlayingFieldCells playingFieldCells) {
+    private void readingCellsBySquareCoordinates(int row, int col, CellOutput cellOutput) {
         log.info("Чтение клеток вокруг координаты");
-        long startTime = System.nanoTime();
-
         for (int r = Math.max(0, row - 1); r <= Math.min(gameType.rows - 1, row + 1); r++) {
             for (int c = Math.max(0, col - 1); c <= Math.min(gameType.cols - 1, col + 1); c++) {
-                if (r == row && c == col || flags[r][c] || openFields[r][c]) {
+                if (r == row && c == col || cells[r][c].isFlag() || cells[r][c].isOpen()) {
                     continue;
                 }
 
 
-                playingFieldCells.getX().add(c);
-                playingFieldCells.getY().add(r);
-                playingFieldCells.getColumnRes().add(cells[r][c].getMeaning());
+                cellOutput.getX().add(c);
+                cellOutput.getY().add(r);
+                cellOutput.getColumnRes().add(cells[r][c].getMeaning());
 
                 if (cells[r][c].getMeaning() == EMPTY_COLUMN) {
-                    openNeighbors(c, r, playingFieldCells);
+                    openNeighbors(c, r, cellOutput);
                 } else {
                     openCells++;
                 }
 
 
-                openFields[r][c] = true;
+                cells[r][c].setOpen(true);
 
             }
         }
-        long endTime = System.nanoTime();
-        long elapsedTime = endTime - startTime;
-        log.info("Чтение клеток завершено : {}", elapsedTime);
+        log.info("Чтение клеток завершено");
     }
 
-    private boolean checkingForBombs(PlayingFieldCells playingFieldCells) {
-        log.info("Проверка на наличие бомб {}", playingFieldCells);
-        var count = playingFieldCells.getColumnRes().stream()
+    private boolean checkingForBombs(CellOutput cellOutput) {
+        log.info("Проверка на наличие бомб {}", cellOutput);
+        var count = cellOutput.getColumnRes().stream()
                 .filter(f -> f == MINE)
                 .count();
 
@@ -211,60 +195,54 @@ public class GameModel implements
 
     }
 
-    private void revealAllMines(PlayingFieldCells playingFieldCells) {
+    private void revealAllMines(CellOutput cellOutput) {
         log.info("Открытие всех мин");
-        long startTime = System.nanoTime();
 
         for (int r = 0; r < gameType.rows; r++) {
             for (int c = 0; c < gameType.cols; c++) {
-                if (cells[r][c].getMeaning() == MINE && !flags[r][c]) {
-                    playingFieldCells.getX().add(c);
-                    playingFieldCells.getY().add(r);
-                    playingFieldCells.getColumnRes().add(MINE);
+                if (cells[r][c].getMeaning() == MINE && !cells[r][c].isFlag()) {
+                    cellOutput.getX().add(c);
+                    cellOutput.getY().add(r);
+                    cellOutput.getColumnRes().add(MINE);
                 }
             }
         }
-        long endTime = System.nanoTime();
-        long elapsedTime = endTime - startTime;
 
-        log.info("Открытие мин завершено : {}", elapsedTime);
+        log.info("Открытие мин завершено");
     }
 
     private int countFlag(int row, int col) {
         log.info("Чтение флагов вокруг координаты");
-        long startTime = System.nanoTime();
         int flag = 0;
         for (int r = Math.max(0, row - 1); r <= Math.min(gameType.rows - 1, row + 1); r++) {
             for (int c = Math.max(0, col - 1); c <= Math.min(gameType.cols - 1, col + 1); c++) {
-                if (flags[r][c]) {
+                if (cells[r][c].isFlag()) {
                     flag++;
                 }
             }
         }
-        long endTime = System.nanoTime();
-        long elapsedTime = endTime - startTime;
-        log.info("Чтение флагов завершено : {}", elapsedTime);
+        log.info("Чтение флагов завершено");
 
         return flag;
     }
 
-    private void openNeighbors(int col, int row, PlayingFieldCells playingFieldCells) {
+    private void openNeighbors(int col, int row, CellOutput cellOutput) {
         log.debug("openNeighbors : {} {}", col, row);
-        if (col < 0 || col >= gameType.cols || row < 0 || row >= gameType.rows || openFields[row][col]) {
+        if (col < 0 || col >= gameType.cols || row < 0 || row >= gameType.rows || cells[row][col].isOpen()) {
             return;
         }
-        if (flags[row][col]) {
-            flags[row][col] = false;
+        if (cells[row][col].isFlag()) {
+            cells[row][col].setFlag(false);
             mines++;
             updateBomb();
         }
 
-        playingFieldCells.getX().add(col);
-        playingFieldCells.getY().add(row);
-        playingFieldCells.getColumnRes().add(cells[row][col].getMeaning());
+        cellOutput.getX().add(col);
+        cellOutput.getY().add(row);
+        cellOutput.getColumnRes().add(cells[row][col].getMeaning());
 
         int cellValue = cells[row][col].getMeaning();
-        openFields[row][col] = true;
+        cells[row][col].setOpen(true);
         openCells++;
 
         if (cellValue != EMPTY_COLUMN) {
@@ -274,7 +252,7 @@ public class GameModel implements
         for (int dx = -1; dx <= 1; dx++) {
             for (int dy = -1; dy <= 1; dy++) {
                 if (dx == 0 && dy == 0) continue;
-                openNeighbors(col + dx, row + dy, playingFieldCells);
+                openNeighbors(col + dx, row + dy, cellOutput);
             }
         }
     }
@@ -309,8 +287,8 @@ public class GameModel implements
         notifyListeners(new Won(gameType));
     }
 
-    private void updateTheCellView(PlayingFieldCells playingFieldCells) {
-        notifyListeners(new UpdateTheCell(playingFieldCells));
+    private void updateTheCellView(CellOutput cellOutput) {
+        notifyListeners(new UpdateTheCell(cellOutput));
     }
 
     private void createField(int rows, int cols) {
@@ -322,7 +300,6 @@ public class GameModel implements
 
     private void fillTheFieldWithBombs(int row, int col) {
         log.info("заполнение игрового поля бомбами");
-        long startTime = System.nanoTime();
 
         int bomb = 0;
         while (bomb != gameType.numberOfBombs) {
@@ -339,14 +316,11 @@ public class GameModel implements
             }
         }
 
-        long endTime = System.nanoTime();
-        long elapsedTime = endTime - startTime;
-        log.info("Заполнение завершено успешно : {}", elapsedTime);
+        log.info("Заполнение завершено успешно");
     }
 
     private void fillTheFieldWithNumbers() {
         log.info("Заполнение поля числами");
-        long startTime = System.nanoTime();
 
         for (int row = 0; row < gameType.rows; row++) {
             for (int col = 0; col < gameType.cols; col++) {
@@ -356,16 +330,11 @@ public class GameModel implements
             }
         }
 
-        long endTime = System.nanoTime();
-        long elapsedTime = endTime - startTime;
-
-        log.info("Поле заполнено цифрами: {}", elapsedTime);
+        log.info("Поле заполнено цифрами");
     }
 
     private int countAdjacentMine(int row, int col) {
         log.debug("Расчёт мин вокруг ячейки");
-        long startTime = System.nanoTime();
-
         int mineCount = 0;
         for (int r = Math.max(0, row - 1); r <= Math.min(gameType.rows - 1, row + 1); r++) {
             for (int c = Math.max(0, col - 1); c <= Math.min(gameType.cols - 1, col + 1); c++) {
@@ -373,9 +342,7 @@ public class GameModel implements
             }
         }
 
-        long endTime = System.nanoTime();
-        long elapsedTime = endTime - startTime;
-        log.debug("Мин вокруг ячейки - {} : {}", mineCount, elapsedTime);
+        log.debug("Мин вокруг ячейки - {}", mineCount);
         return mineCount;
     }
 
@@ -391,7 +358,14 @@ public class GameModel implements
         openCells = 0;
         gameWon = false;
         gameOver = false;
-        fields = new int[gameType.rows][gameType.cols];
+        fillThePlayingFieldWithCells();
+        mines = gameType.numberOfBombs;
+        firstClick = true;
+        notifyListeners(new NewGame());
+        log.info("Создание игры завершено {} : ", gameType);
+    }
+
+    private void fillThePlayingFieldWithCells() {
         cells = new Cell[gameType.rows][gameType.cols];
 
         for (int row = 0; row < gameType.rows; row++) {
@@ -399,12 +373,5 @@ public class GameModel implements
                 cells[row][col] = new Cell(row, col);
             }
         }
-        flags = new boolean[gameType.rows][gameType.cols];
-        openFields = new boolean[gameType.rows][gameType.cols];
-        mines = gameType.numberOfBombs;
-        firstClick = true;
-
-        notifyListeners(new NewGame());
-        log.info("Создание игры завершено {}", gameType);
     }
 }

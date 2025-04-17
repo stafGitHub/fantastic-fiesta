@@ -10,8 +10,9 @@ public abstract class Observer {
 
     public abstract void onGameEvent(GameEvent gameEvent);
 
-    void subscribe(Publisher publisher){
-        log.info("{} подписался на {}",this, publisher);
+    void subscribe(Publisher publisher) {
+        log.debug("{} подписался на {}", this, publisher);
         publisher.addListener(this);
-    };
+    }
+
 }
