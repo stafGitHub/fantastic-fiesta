@@ -18,6 +18,7 @@ import ru.shift.events.game.status.GameOver;
 import ru.shift.events.game.status.NewGame;
 import ru.shift.model.dto.Cell;
 import ru.shift.model.dto.CellOutput;
+import ru.shift.model.state.PlayingField;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,8 +34,8 @@ public class GameModel implements
         NewGameListener,
         Publisher {
     private final Random random = new Random();
-
     private final List<Observer> observers = new ArrayList<>();
+    PlayingField playingField;
     private Cell[][] cells;
     private GameType gameType;
     private int openCellsToWin;
@@ -43,7 +44,6 @@ public class GameModel implements
     private int openCells;
     private int mines;
     private boolean firstClick = true;
-
 
     public GameModel(GameType gameType) {
         createGame(gameType);
@@ -113,21 +113,15 @@ public class GameModel implements
 
     @Override
     public void flagPlaning(int row, int col) {
-
         if (cells[row][col].isFlag()) {
             cells[row][col].setFlag(false);
             notifyListeners(new FlagPlaning(row, col, false));
             mines++;
             updateBomb();
-
-            return;
-        }
-
-        if (cells[row][col].isOpen() || mines == 0) {
-            return;
-        }
-
-        if (!cells[row][col].isFlag()) {
+        }else {
+            if (cells[row][col].isOpen() || mines == 0) {
+                return;
+            }
             cells[row][col].setFlag(true);
             notifyListeners(new FlagPlaning(row, col, true));
             mines--;
