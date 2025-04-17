@@ -1,6 +1,8 @@
 package ru.shift.view.windows;
 
-import ru.shift.view.listeners.ViewControllerCellEventListener;
+import lombok.extern.slf4j.Slf4j;
+import ru.shift.model.GameType;
+import ru.shift.view.listeners.CellEventListener;
 import ru.shift.view.ButtonType;
 import ru.shift.view.GameImage;
 
@@ -10,6 +12,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+@Slf4j
 public class MainWindow extends JFrame {
     private final Container contentPane;
     private final GridBagLayout mainLayout;
@@ -19,7 +22,7 @@ public class MainWindow extends JFrame {
     private JMenuItem settingsMenu;
     private JMenuItem exitMenu;
 
-    private ViewControllerCellEventListener listener;
+    private CellEventListener listener;
 
     private JButton[][] cellButtons;
     private JLabel timerLabel;
@@ -70,7 +73,7 @@ public class MainWindow extends JFrame {
         exitMenu.addActionListener(listener);
     }
 
-    public void setCellListener(ViewControllerCellEventListener listener) {
+    public void setCellListener(CellEventListener listener) {
         this.listener = listener;
     }
 
@@ -83,6 +86,8 @@ public class MainWindow extends JFrame {
     }
 
     public void setTimerValue(int value) {
+        log.info("Обновление таймера в View: {}", value);
+
         timerLabel.setText(String.valueOf(value));
     }
 
@@ -194,5 +199,13 @@ public class MainWindow extends JFrame {
         gbc.weightx = 0.1;
         mainLayout.setConstraints(label, gbc);
         contentPane.add(label);
+    }
+
+    public void resetUI(GameType gameType) {
+        SwingUtilities.invokeLater(() -> {
+            timerLabel.setText("0");
+            bombsCounterLabel.setText(String.valueOf(gameType.numberOfBombs));
+            repaint();
+        });
     }
 }

@@ -1,9 +1,9 @@
 package ru.shift.model;
 
 import lombok.extern.slf4j.Slf4j;
-import ru.shift.controller.listeners.ControllerModelFieldListener;
-import ru.shift.controller.listeners.ControllerModelNewGameListener;
-import ru.shift.controller.listeners.ControllerModelSettingsListeners;
+import ru.shift.controller.listeners.FieldListener;
+import ru.shift.controller.listeners.NewGameListener;
+import ru.shift.controller.listeners.SettingsListeners;
 import ru.shift.events.GameEvent;
 import ru.shift.events.Observer;
 import ru.shift.events.Publisher;
@@ -28,9 +28,9 @@ import static ru.shift.model.dto.Cell.MINE;
 
 @Slf4j
 public class GameModel implements
-        ControllerModelFieldListener,
-        ControllerModelSettingsListeners,
-        ControllerModelNewGameListener,
+        FieldListener,
+        SettingsListeners,
+        NewGameListener,
         Publisher {
     private final Random RANDOM = new Random();
 
@@ -60,7 +60,7 @@ public class GameModel implements
     }
 
     @Override
-    public void openCellLeftButton(int row, int col) {
+    public void openCell(int row, int col) {
         log.info("openCellLeftButton");
         if (gameOver || gameWon || cells[row][col].isFlag() || cells[row][col].isOpen()) {
             return;
@@ -71,8 +71,8 @@ public class GameModel implements
         if (firstClick) {
             createField(row, col);
             notifyListeners(new FirstClick());
-            //Для теста - показывает все мины при первом клике
-            revealAllMines(cellOutput);
+            //Показывает все мины при первом клике
+//            revealAllMines(cellOutput);
             firstClick = false;
         }
 
@@ -95,7 +95,7 @@ public class GameModel implements
     }
 
     @Override
-    public void openCellWithMouseCell(int row, int col) {
+    public void openAround(int row, int col) {
         log.info("openCellWithMouseCell");
         if (gameOver || gameWon || cells[row][col].isFlag()) {
             return;
@@ -353,6 +353,7 @@ public class GameModel implements
 
     private void createGame(GameType gameType) {
         log.info("Создание новой игры : {}", gameType);
+        notifyListeners(new NewGame());
         this.gameType = gameType;
         openCellsToWin = gameType.rows * gameType.cols - gameType.numberOfBombs;
         openCells = 0;
@@ -361,7 +362,6 @@ public class GameModel implements
         fillThePlayingFieldWithCells();
         mines = gameType.numberOfBombs;
         firstClick = true;
-        notifyListeners(new NewGame());
         log.info("Создание игры завершено {} : ", gameType);
     }
 

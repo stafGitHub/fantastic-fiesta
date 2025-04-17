@@ -56,6 +56,7 @@ public class Timer extends Observer {
     }
 
     private void stop() {
+        log.info("Таймер остановлен");
         if (!running) {
             return;
         }
@@ -67,7 +68,7 @@ public class Timer extends Observer {
     private void reset() {
         stop();
         secondsPassed.set(0);
-        timeObserver.onGameEvent(new TimeUpdate(secondsPassed.get()));
+        log.info("Таймер сброшен");
     }
 
 }

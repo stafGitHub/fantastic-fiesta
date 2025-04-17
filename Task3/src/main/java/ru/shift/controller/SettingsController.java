@@ -2,14 +2,14 @@ package ru.shift.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import ru.shift.controller.listeners.ControllerModelSettingsListeners;
+import ru.shift.controller.listeners.SettingsListeners;
 import ru.shift.model.GameType;
-import ru.shift.view.listeners.ViewControllerGameTypeListener;
+import ru.shift.view.listeners.GameTypeListener;
 
 @Slf4j
 @RequiredArgsConstructor
-public class SettingsViewController implements ViewControllerGameTypeListener {
-    private final ControllerModelSettingsListeners gameModel;
+public class SettingsController implements GameTypeListener {
+    private final SettingsListeners gameModel;
 
     @Override
     public void onGameTypeChanged(GameType gameType) {
