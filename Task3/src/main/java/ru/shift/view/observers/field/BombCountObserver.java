@@ -9,7 +9,7 @@ import ru.shift.view.windows.MainWindow;
 public class BombCountObserver extends Observer {
     private final MainWindow mainWindow;
 
-    public BombCountObserver(Publisher publisher, MainWindow mainWindow) {
+    public BombCountObserver(MainWindow mainWindow,Publisher... publisher) {
         super(publisher);
         this.mainWindow = mainWindow;
     }

@@ -63,8 +63,6 @@ public class GameModel implements
         }
 
         if (checkGameOver(col, row)) {
-            playingField.revealAllMines(cellOutput);
-            updateTheCellView(cellOutput);
             gameOver();
             return;
         }
@@ -101,8 +99,6 @@ public class GameModel implements
         updateTheCellView(cellOutput);
 
         if (!checkingForBombs(cellOutput)) {
-            playingField.revealAllMines(cellOutput);
-            updateTheCellView(cellOutput);
             gameOver();
             return;
         }

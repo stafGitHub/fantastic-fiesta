@@ -11,7 +11,7 @@ import ru.shift.view.windows.MainWindow;
 public class UpdateGameObserver extends Observer {
     private final MainWindow mainWindow;
 
-    public UpdateGameObserver(Publisher publisher, MainWindow mainWindow) {
+    public UpdateGameObserver(MainWindow mainWindow,Publisher... publisher) {
         super(publisher);
         this.mainWindow = mainWindow;
     }

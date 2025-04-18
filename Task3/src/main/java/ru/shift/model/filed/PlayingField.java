@@ -27,9 +27,9 @@ public class PlayingField implements Field {
     }
 
     @Override
-    public CellOutput revealAllMines(CellOutput cellOutput) {
+    public CellOutput revealAllMines() {
         log.info("Открытие всех мин");
-
+        var cellOutput = new CellOutput();
         for (int r = 0; r < gameType.rows; r++) {
             for (int c = 0; c < gameType.cols; c++) {
                 if (cells[r][c].getMeaning() == MINE) {

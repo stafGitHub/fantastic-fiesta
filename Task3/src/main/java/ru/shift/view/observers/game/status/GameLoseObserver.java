@@ -9,7 +9,7 @@ import ru.shift.view.windows.LoseWindow;
 public class GameLoseObserver extends Observer {
     private final LoseWindow loseWindow;
 
-    public GameLoseObserver(Publisher publisher, LoseWindow loseWindow) {
+    public GameLoseObserver(LoseWindow loseWindow,Publisher... publisher) {
         super(publisher);
         this.loseWindow = loseWindow;
     }

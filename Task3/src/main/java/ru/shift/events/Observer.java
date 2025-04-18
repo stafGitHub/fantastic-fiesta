@@ -4,8 +4,11 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public abstract class Observer {
-    public Observer(Publisher publisher) {
-        subscribe(publisher);
+    protected Observer(Publisher... publisher) {
+        for (Publisher pub : publisher) {
+            subscribe(pub);
+        }
+
     }
 
     public abstract void onGameEvent(GameEvent gameEvent);

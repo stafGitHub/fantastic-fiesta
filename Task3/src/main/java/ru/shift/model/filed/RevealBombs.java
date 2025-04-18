@@ -5,5 +5,5 @@ import ru.shift.model.dto.CellOutput;
 
 public interface Field {
     Cell[][] getCells();
-    CellOutput revealAllMines(CellOutput cellOutput);
+    CellOutput revealAllMines();
 }

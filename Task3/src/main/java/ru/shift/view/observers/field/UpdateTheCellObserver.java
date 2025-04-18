@@ -30,7 +30,7 @@ public class UpdateTheCellObserver extends Observer {
             8, GameImage.NUM_8
     );
 
-    public UpdateTheCellObserver(Publisher publisher, MainWindow mainWindow) {
+    public UpdateTheCellObserver(MainWindow mainWindow, Publisher... publisher) {
         super(publisher);
         this.mainWindow = mainWindow;
     }
