@@ -4,7 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import ru.shift.events.GameEvent;
 import ru.shift.events.Observer;
 import ru.shift.events.Publisher;
-import ru.shift.model.events.fields.UpdateTheCell;
+import ru.shift.model.events.UpdateTheCell;
 import ru.shift.view.GameImage;
 import ru.shift.view.windows.MainWindow;
 
@@ -38,22 +38,22 @@ public class UpdateTheCellObserver extends Observer {
     @Override
     public void onGameEvent(GameEvent gameEvent) {
         if (gameEvent instanceof UpdateTheCell updateTheCell) {
-            for (int i = 0; i < updateTheCell.cellOutput().getColumnRes().size(); i++) {
-                int value = updateTheCell.cellOutput().getColumnRes().get(i);
-                GameImage image = CELL_IMAGES.get(value);
-                if (image != null) {
-                    mainWindow.setCellImage(
-                            updateTheCell.cellOutput().getX().get(i),
-                            updateTheCell.cellOutput().getY().get(i),
-                            image
-                    );
+            updateTheCell.cellOutput()
+                    .forEach(cellOutput -> {
+                        GameImage image = CELL_IMAGES.get(cellOutput.number());
+                        if (image != null) {
+                            mainWindow.setCellImage(
+                                    cellOutput.x(),
+                                    cellOutput.y(),
+                                    image
+                            );
 
-                    log.debug("Установка результата во вью : x - {} , y - {} , img - {}",
-                            updateTheCell.cellOutput().getX().get(i),
-                            updateTheCell.cellOutput().getY().get(i),
-                            image);
-                }
-            }
+                            log.debug("Установка результата во вью : x - {} , y - {} , img - {}",
+                                    cellOutput.x(),
+                                    cellOutput.y(),
+                                    image);
+                        }
+                    });
         }
     }
 

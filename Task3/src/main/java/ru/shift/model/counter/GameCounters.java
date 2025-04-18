@@ -1,6 +1,7 @@
-package ru.shift.model;
+package ru.shift.model.counter;
 
 import lombok.Getter;
+import ru.shift.model.GameType;
 
 @Getter
 public class GameCounters {

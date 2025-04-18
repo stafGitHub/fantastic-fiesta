@@ -1,16 +1,20 @@
 package ru.shift.model.filed;
 
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import ru.shift.model.GameType;
 import ru.shift.model.dto.Cell;
 import ru.shift.model.dto.CellOutput;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import static ru.shift.model.dto.Cell.MINE;
 
 @Slf4j
-public class PlayingField implements Field {
+public class PlayingField implements RevealBombs {
+    @Getter
     private Cell[][] cells;
     private final Random random = new Random();
     private GameType gameType;
@@ -22,21 +26,14 @@ public class PlayingField implements Field {
     }
 
     @Override
-    public Cell[][] getCells() {
-        return cells;
-    }
-
-    @Override
-    public CellOutput revealAllMines() {
+    public List<CellOutput> revealAllMines() {
         log.info("Открытие всех мин");
-        var cellOutput = new CellOutput();
+        var cellOutput = new ArrayList<CellOutput>();
+
         for (int r = 0; r < gameType.rows; r++) {
             for (int c = 0; c < gameType.cols; c++) {
                 if (cells[r][c].getMeaning() == MINE) {
-                    cellOutput.getX().add(c);
-                    cellOutput.getY().add(r);
-                    cellOutput.getColumnRes().add(MINE);
-                    cells[r][c].setOpen(true);
+                    cellOutput.add(new CellOutput(c,r,MINE));
                 }
             }
         }

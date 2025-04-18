@@ -7,10 +7,11 @@ import ru.shift.controller.listeners.SettingsListeners;
 import ru.shift.events.GameEvent;
 import ru.shift.events.Observer;
 import ru.shift.events.Publisher;
+import ru.shift.model.counter.GameCounters;
 import ru.shift.model.events.fields.FlagPlaning;
 import ru.shift.model.events.fields.UpdateBombCount;
 import ru.shift.model.events.fields.UpdateGame;
-import ru.shift.model.events.fields.UpdateTheCell;
+import ru.shift.model.events.UpdateTheCell;
 import ru.shift.model.events.game.result.Lose;
 import ru.shift.model.events.game.result.Won;
 import ru.shift.model.events.game.status.FirstClick;
@@ -53,7 +54,7 @@ public class GameModel implements
             return;
         }
 
-        var cellOutput = new CellOutput();
+        var cellOutput = new ArrayList<CellOutput>();
 
         if (firstOpenCell) {
             playingField.fillInThField(row, col);
@@ -86,7 +87,7 @@ public class GameModel implements
             return;
         }
 
-        var cellOutput = new CellOutput();
+        var cellOutput = new ArrayList<CellOutput>();
         var flags = countFlag(row, col);
 
         if (flags < playingField.getCells()[row][col].getMeaning() ||
@@ -149,7 +150,7 @@ public class GameModel implements
         observers.add(observer);
     }
 
-    private void readingCellsBySquareCoordinates(int row, int col, CellOutput cellOutput) {
+    private void readingCellsBySquareCoordinates(int row, int col, List<CellOutput> cellOutput) {
         log.info("Чтение клеток вокруг координаты");
         for (int r = Math.max(0, row - 1); r <= Math.min(gameType.rows - 1, row + 1); r++) {
             for (int c = Math.max(0, col - 1); c <= Math.min(gameType.cols - 1, col + 1); c++) {
@@ -158,9 +159,7 @@ public class GameModel implements
                 }
 
 
-                cellOutput.getX().add(c);
-                cellOutput.getY().add(r);
-                cellOutput.getColumnRes().add(playingField.getCells()[r][c].getMeaning());
+                cellOutput.add(new CellOutput(c,r,playingField.getCells()[r][c].getMeaning()));
 
                 if (playingField.getCells()[r][c].getMeaning() == EMPTY_COLUMN) {
                     openNeighbors(c, r, cellOutput);
@@ -176,10 +175,10 @@ public class GameModel implements
         log.info("Чтение клеток завершено");
     }
 
-    private boolean checkingForBombs(CellOutput cellOutput) {
+    private boolean checkingForBombs(List<CellOutput> cellOutput) {
         log.info("Проверка на наличие бомб {}", cellOutput);
-        var count = cellOutput.getColumnRes().stream()
-                .filter(f -> f == MINE)
+        var count = cellOutput.stream()
+                .filter(cell -> cell.number() == MINE)
                 .count();
 
         return count == 0;
@@ -201,7 +200,7 @@ public class GameModel implements
         return flag;
     }
 
-    private void openNeighbors(int col, int row, CellOutput cellOutput) {
+    private void openNeighbors(int col, int row, List<CellOutput> cellOutput) {
         log.debug("openNeighbors : {} {}", col, row);
         if (col < 0 || col >= gameType.cols || row < 0 || row >= gameType.rows || playingField.getCells()[row][col].isOpen()) {
             return;
@@ -213,9 +212,7 @@ public class GameModel implements
             updateBomb();
         }
 
-        cellOutput.getX().add(col);
-        cellOutput.getY().add(row);
-        cellOutput.getColumnRes().add(playingField.getCells()[row][col].getMeaning());
+        cellOutput.add(new CellOutput(col,row,playingField.getCells()[row][col].getMeaning()));
 
         int cellValue = playingField.getCells()[row][col].getMeaning();
         playingField.getCells()[row][col].setOpen(true);
@@ -263,7 +260,7 @@ public class GameModel implements
         notifyListeners(new Won(gameType));
     }
 
-    private void updateTheCellView(CellOutput cellOutput) {
+    private void updateTheCellView(List<CellOutput> cellOutput) {
         notifyListeners(new UpdateTheCell(cellOutput));
     }
 

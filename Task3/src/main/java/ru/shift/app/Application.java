@@ -4,7 +4,7 @@ import ru.shift.controller.MouseController;
 import ru.shift.controller.NewGameController;
 import ru.shift.controller.RecordController;
 import ru.shift.controller.SettingsController;
-import ru.shift.model.GameCounters;
+import ru.shift.model.counter.GameCounters;
 import ru.shift.model.GameModel;
 import ru.shift.model.GameType;
 import ru.shift.model.filed.PlayingField;
