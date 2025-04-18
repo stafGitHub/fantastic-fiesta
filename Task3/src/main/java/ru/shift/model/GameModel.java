@@ -8,16 +8,16 @@ import ru.shift.events.GameEvent;
 import ru.shift.events.Observer;
 import ru.shift.events.Publisher;
 import ru.shift.model.counter.GameCounters;
+import ru.shift.model.dto.CellOutput;
+import ru.shift.model.events.UpdateTheCell;
 import ru.shift.model.events.fields.FlagPlaning;
 import ru.shift.model.events.fields.UpdateBombCount;
 import ru.shift.model.events.fields.UpdateGame;
-import ru.shift.model.events.UpdateTheCell;
 import ru.shift.model.events.game.result.Lose;
 import ru.shift.model.events.game.result.Won;
 import ru.shift.model.events.game.status.FirstClick;
 import ru.shift.model.events.game.status.GameOver;
 import ru.shift.model.events.game.status.NewGame;
-import ru.shift.model.dto.CellOutput;
 import ru.shift.model.filed.PlayingField;
 
 import java.util.ArrayList;

@@ -6,9 +6,9 @@ import lombok.extern.slf4j.Slf4j;
 import ru.shift.events.GameEvent;
 import ru.shift.events.Observer;
 import ru.shift.events.Publisher;
+import ru.shift.model.GameType;
 import ru.shift.model.events.game.result.Won;
 import ru.shift.record.events.NewRecord;
-import ru.shift.model.GameType;
 import ru.shift.timer.Timer;
 import ru.shift.view.windows.HighScoresWindow;
 

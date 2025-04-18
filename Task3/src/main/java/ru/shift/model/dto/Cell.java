@@ -7,8 +7,8 @@ import lombok.Setter;
 @RequiredArgsConstructor
 @Getter
 public class Cell {
-    public final static int MINE = -1;
-    public final static int EMPTY_COLUMN = 0;
+    public static final int MINE = -1;
+    public static final int EMPTY_COLUMN = 0;
     private final int x;
     private final int y;
     @Setter
