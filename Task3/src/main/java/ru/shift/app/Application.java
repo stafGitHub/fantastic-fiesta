@@ -4,11 +4,20 @@ import ru.shift.controller.MouseController;
 import ru.shift.controller.NewGameController;
 import ru.shift.controller.RecordController;
 import ru.shift.controller.SettingsController;
+import ru.shift.model.GameCounters;
 import ru.shift.model.GameModel;
 import ru.shift.model.GameType;
+import ru.shift.model.filed.PlayingField;
 import ru.shift.record.RecordManager;
 import ru.shift.timer.Timer;
-import ru.shift.view.observers.*;
+import ru.shift.view.observers.field.BombCountObserver;
+import ru.shift.view.observers.field.FlagPlaningObserver;
+import ru.shift.view.observers.field.UpdateGameObserver;
+import ru.shift.view.observers.field.UpdateTheCellObserver;
+import ru.shift.view.observers.game.status.GameLoseObserver;
+import ru.shift.view.observers.game.status.GameWonObserver;
+import ru.shift.view.observers.record.GameRecordObserver;
+import ru.shift.view.observers.time.TimeObserver;
 import ru.shift.view.windows.*;
 
 public class Application {
@@ -20,8 +29,11 @@ public class Application {
     private static final RecordsWindow recordsWindow = new RecordsWindow(mainWindow);
     private static final SettingsWindow settingsWindow = new SettingsWindow(mainWindow);
 
+
     //Model
-    private static final GameModel model = new GameModel(GameType.NOVICE);
+    private static final GameCounters gameCounters = new GameCounters();
+    private static final PlayingField playingField = new PlayingField();
+    private static final GameModel model = new GameModel(GameType.NOVICE , playingField , gameCounters);
 
     //Timer
     private static final Timer timer = new Timer(model);

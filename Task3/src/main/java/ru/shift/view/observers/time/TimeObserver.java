@@ -1,9 +1,9 @@
-package ru.shift.view.observers;
+package ru.shift.view.observers.time;
 
 import ru.shift.events.GameEvent;
 import ru.shift.events.Observer;
 import ru.shift.events.Publisher;
-import ru.shift.events.fields.TimeUpdate;
+import ru.shift.model.events.fields.TimeUpdate;
 import ru.shift.view.windows.MainWindow;
 
 public class TimeObserver extends Observer {

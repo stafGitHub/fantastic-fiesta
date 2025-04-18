@@ -5,10 +5,10 @@ import lombok.extern.slf4j.Slf4j;
 import ru.shift.events.GameEvent;
 import ru.shift.events.Observer;
 import ru.shift.events.Publisher;
-import ru.shift.events.fields.TimeUpdate;
-import ru.shift.events.game.status.FirstClick;
-import ru.shift.events.game.status.GameOver;
-import ru.shift.events.game.status.NewGame;
+import ru.shift.model.events.fields.TimeUpdate;
+import ru.shift.model.events.game.status.FirstClick;
+import ru.shift.model.events.game.status.GameOver;
+import ru.shift.model.events.game.status.NewGame;
 
 import java.util.ArrayList;
 import java.util.List;

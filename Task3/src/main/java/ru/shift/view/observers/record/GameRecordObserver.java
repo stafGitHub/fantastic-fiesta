@@ -1,9 +1,9 @@
-package ru.shift.view.observers;
+package ru.shift.view.observers.record;
 
 import ru.shift.events.GameEvent;
 import ru.shift.events.Observer;
 import ru.shift.events.Publisher;
-import ru.shift.events.record.NewRecord;
+import ru.shift.record.events.NewRecord;
 import ru.shift.view.windows.RecordsWindow;
 
 public class GameRecordObserver extends Observer {

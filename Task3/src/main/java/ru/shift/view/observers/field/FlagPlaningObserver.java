@@ -1,9 +1,9 @@
-package ru.shift.view.observers;
+package ru.shift.view.observers.field;
 
 import ru.shift.events.GameEvent;
 import ru.shift.events.Observer;
 import ru.shift.events.Publisher;
-import ru.shift.events.fields.FlagPlaning;
+import ru.shift.model.events.fields.FlagPlaning;
 import ru.shift.view.GameImage;
 import ru.shift.view.windows.MainWindow;
 

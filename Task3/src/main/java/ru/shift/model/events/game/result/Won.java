@@ -1,4 +1,4 @@
-package ru.shift.events.game.result;
+package ru.shift.model.events.game.result;
 
 import ru.shift.events.GameEvent;
 import ru.shift.model.GameType;

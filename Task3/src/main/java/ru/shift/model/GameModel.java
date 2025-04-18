@@ -7,22 +7,20 @@ import ru.shift.controller.listeners.SettingsListeners;
 import ru.shift.events.GameEvent;
 import ru.shift.events.Observer;
 import ru.shift.events.Publisher;
-import ru.shift.events.fields.FlagPlaning;
-import ru.shift.events.fields.UpdateBombCount;
-import ru.shift.events.fields.UpdateGame;
-import ru.shift.events.fields.UpdateTheCell;
-import ru.shift.events.game.result.Lose;
-import ru.shift.events.game.result.Won;
-import ru.shift.events.game.status.FirstClick;
-import ru.shift.events.game.status.GameOver;
-import ru.shift.events.game.status.NewGame;
-import ru.shift.model.dto.Cell;
+import ru.shift.model.events.fields.FlagPlaning;
+import ru.shift.model.events.fields.UpdateBombCount;
+import ru.shift.model.events.fields.UpdateGame;
+import ru.shift.model.events.fields.UpdateTheCell;
+import ru.shift.model.events.game.result.Lose;
+import ru.shift.model.events.game.result.Won;
+import ru.shift.model.events.game.status.FirstClick;
+import ru.shift.model.events.game.status.GameOver;
+import ru.shift.model.events.game.status.NewGame;
 import ru.shift.model.dto.CellOutput;
-import ru.shift.model.state.PlayingField;
+import ru.shift.model.filed.PlayingField;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import static ru.shift.model.dto.Cell.EMPTY_COLUMN;
 import static ru.shift.model.dto.Cell.MINE;
@@ -33,42 +31,39 @@ public class GameModel implements
         SettingsListeners,
         NewGameListener,
         Publisher {
-    private final Random random = new Random();
     private final List<Observer> observers = new ArrayList<>();
-    PlayingField playingField;
-    private Cell[][] cells;
+    private final PlayingField playingField;
+    private final GameCounters gameCounters;
     private GameType gameType;
-    private int openCellsToWin;
-    private boolean gameOver;
-    private boolean gameWon;
-    private int openCells;
-    private int mines;
-    private boolean firstClick = true;
+    private GameState gameState;
+    private boolean firstOpenCell = true;
 
-    public GameModel(GameType gameType) {
+    public GameModel(GameType gameType ,
+                     PlayingField playingField,
+                     GameCounters gameCounters) {
+        this.playingField = playingField;
+        this.gameCounters = gameCounters;
         createGame(gameType);
     }
 
     @Override
     public void openCell(int row, int col) {
         log.info("openCellLeftButton");
-        if (gameOver || gameWon || cells[row][col].isFlag() || cells[row][col].isOpen()) {
+        if (gameState ==GameState.WIN || gameState == GameState.LOSE || playingField.getCells()[row][col].isFlag()) {
             return;
         }
 
         var cellOutput = new CellOutput();
 
-        if (firstClick) {
-            createField(row, col);
+        if (firstOpenCell) {
+            playingField.fillInThField(row, col);
+            updateBomb();
             notifyListeners(new FirstClick());
-//            Показывает все мины при первом клике, для теста
-            revealAllMines(cellOutput);
-            firstClick = false;
+            firstOpenCell = false;
         }
 
-//         Можно закомитить , поражение отключиться
         if (checkGameOver(col, row)) {
-            revealAllMines(cellOutput);
+            playingField.revealAllMines(cellOutput);
             updateTheCellView(cellOutput);
             gameOver();
             return;
@@ -81,50 +76,56 @@ public class GameModel implements
 
         updateTheCellView(cellOutput);
 
-        checkGameWinner();
+        if (checkGameWinner()){
+            gameWon();
+        }
     }
 
     @Override
     public void openAround(int row, int col) {
         log.info("openCellWithMouseCell");
-        if (gameOver || gameWon || cells[row][col].isFlag()) {
+        if (gameState ==GameState.WIN || gameState == GameState.LOSE || playingField.getCells()[row][col].isFlag()) {
             return;
         }
 
         var cellOutput = new CellOutput();
         var flags = countFlag(row, col);
-        if (flags < cells[row][col].getMeaning() || (cells[row][col].getMeaning() == EMPTY_COLUMN && cells[row][col].isOpen()) || !cells[row][col].isOpen()) {
+
+        if (flags < playingField.getCells()[row][col].getMeaning() ||
+                (playingField.getCells()[row][col].getMeaning() == EMPTY_COLUMN && playingField.getCells()[row][col].isOpen()) ||
+                !playingField.getCells()[row][col].isOpen()) {
             return;
         }
 
         readingCellsBySquareCoordinates(row, col, cellOutput);
         updateTheCellView(cellOutput);
 
-//         Можно закомитить , поражение отключиться
         if (!checkingForBombs(cellOutput)) {
-            revealAllMines(cellOutput);
+            playingField.revealAllMines(cellOutput);
             updateTheCellView(cellOutput);
             gameOver();
             return;
         }
 
-        checkGameWinner();
+        if (checkGameWinner()){
+            gameWon();
+        }
     }
 
     @Override
     public void flagPlaning(int row, int col) {
-        if (cells[row][col].isFlag()) {
-            cells[row][col].setFlag(false);
+        if (playingField.getCells()[row][col].isFlag()) {
+            playingField.getCells()[row][col].setFlag(false);
             notifyListeners(new FlagPlaning(row, col, false));
-            mines++;
+            gameCounters.incrementRemainingFlags();
             updateBomb();
         }else {
-            if (cells[row][col].isOpen() || mines == 0) {
+            if (playingField.getCells()[row][col].isOpen() || gameCounters.getRemainingFlags() == 0) {
                 return;
             }
-            cells[row][col].setFlag(true);
+            playingField.getCells()[row][col].setFlag(true);
             notifyListeners(new FlagPlaning(row, col, true));
-            mines--;
+            gameCounters.decrementRemainingFlags();
             updateBomb();
         }
     }
@@ -156,23 +157,23 @@ public class GameModel implements
         log.info("Чтение клеток вокруг координаты");
         for (int r = Math.max(0, row - 1); r <= Math.min(gameType.rows - 1, row + 1); r++) {
             for (int c = Math.max(0, col - 1); c <= Math.min(gameType.cols - 1, col + 1); c++) {
-                if (r == row && c == col || cells[r][c].isFlag() || cells[r][c].isOpen()) {
+                if (r == row && c == col || playingField.getCells()[r][c].isFlag() || playingField.getCells()[r][c].isOpen()) {
                     continue;
                 }
 
 
                 cellOutput.getX().add(c);
                 cellOutput.getY().add(r);
-                cellOutput.getColumnRes().add(cells[r][c].getMeaning());
+                cellOutput.getColumnRes().add(playingField.getCells()[r][c].getMeaning());
 
-                if (cells[r][c].getMeaning() == EMPTY_COLUMN) {
+                if (playingField.getCells()[r][c].getMeaning() == EMPTY_COLUMN) {
                     openNeighbors(c, r, cellOutput);
                 } else {
-                    openCells++;
+                    gameCounters.incrementOpenCells();
                 }
 
 
-                cells[r][c].setOpen(true);
+                playingField.getCells()[r][c].setOpen(true);
 
             }
         }
@@ -189,28 +190,12 @@ public class GameModel implements
 
     }
 
-    private void revealAllMines(CellOutput cellOutput) {
-        log.info("Открытие всех мин");
-
-        for (int r = 0; r < gameType.rows; r++) {
-            for (int c = 0; c < gameType.cols; c++) {
-                if (cells[r][c].getMeaning() == MINE && !cells[r][c].isFlag()) {
-                    cellOutput.getX().add(c);
-                    cellOutput.getY().add(r);
-                    cellOutput.getColumnRes().add(MINE);
-                }
-            }
-        }
-
-        log.info("Открытие мин завершено");
-    }
-
     private int countFlag(int row, int col) {
         log.info("Чтение флагов вокруг координаты");
         int flag = 0;
         for (int r = Math.max(0, row - 1); r <= Math.min(gameType.rows - 1, row + 1); r++) {
             for (int c = Math.max(0, col - 1); c <= Math.min(gameType.cols - 1, col + 1); c++) {
-                if (cells[r][c].isFlag()) {
+                if (playingField.getCells()[r][c].isFlag()) {
                     flag++;
                 }
             }
@@ -222,22 +207,23 @@ public class GameModel implements
 
     private void openNeighbors(int col, int row, CellOutput cellOutput) {
         log.debug("openNeighbors : {} {}", col, row);
-        if (col < 0 || col >= gameType.cols || row < 0 || row >= gameType.rows || cells[row][col].isOpen()) {
+        if (col < 0 || col >= gameType.cols || row < 0 || row >= gameType.rows || playingField.getCells()[row][col].isOpen()) {
             return;
         }
-        if (cells[row][col].isFlag()) {
-            cells[row][col].setFlag(false);
-            mines++;
+
+        if (playingField.getCells()[row][col].isFlag()) {
+            playingField.getCells()[row][col].setFlag(false);
+            gameCounters.incrementRemainingFlags();
             updateBomb();
         }
 
         cellOutput.getX().add(col);
         cellOutput.getY().add(row);
-        cellOutput.getColumnRes().add(cells[row][col].getMeaning());
+        cellOutput.getColumnRes().add(playingField.getCells()[row][col].getMeaning());
 
-        int cellValue = cells[row][col].getMeaning();
-        cells[row][col].setOpen(true);
-        openCells++;
+        int cellValue = playingField.getCells()[row][col].getMeaning();
+        playingField.getCells()[row][col].setOpen(true);
+        gameCounters.incrementOpenCells();
 
         if (cellValue != EMPTY_COLUMN) {
             return;
@@ -252,8 +238,7 @@ public class GameModel implements
     }
 
     private boolean checkGameOver(int col, int row) {
-        if (cells[row][col].getMeaning() == MINE) {
-            gameOver = true;
+        if (playingField.getCells()[row][col].getMeaning() == MINE) {
             notifyListeners(new GameOver());
             return true;
         } else {
@@ -261,23 +246,24 @@ public class GameModel implements
         }
     }
 
-    private void checkGameWinner() {
-        if (openCells == openCellsToWin) {
-            gameWon = true;
+    private boolean checkGameWinner() {
+        if (gameCounters.getOpenCells() == gameCounters.getOpenCellsToWin()) {
             notifyListeners(new GameOver());
-            gameWon();
+            return true;
+        }else {
+            return false;
         }
     }
 
     private void gameOver() {
         log.info("Game over");
-        gameOver = true;
+        gameState = GameState.LOSE;
         notifyListeners(new Lose());
     }
 
     private void gameWon() {
         log.info("Game won");
-        gameWon = true;
+        gameState = GameState.WIN;
         notifyListeners(new Won(gameType));
     }
 
@@ -285,87 +271,22 @@ public class GameModel implements
         notifyListeners(new UpdateTheCell(cellOutput));
     }
 
-    private void createField(int rows, int cols) {
-        log.info("Создание игрового поля");
-        fillTheFieldWithBombs(rows, cols);
-        fillTheFieldWithNumbers();
-        updateBomb();
-    }
-
-    private void fillTheFieldWithBombs(int row, int col) {
-        log.info("заполнение игрового поля бомбами");
-
-        int bomb = 0;
-        while (bomb != gameType.numberOfBombs) {
-            int xCoordinate = random.nextInt(gameType.rows);
-            int yCoordinate = random.nextInt(gameType.cols);
-
-            if (xCoordinate == row && yCoordinate == col) {
-                continue;
-            }
-
-            if (cells[xCoordinate][yCoordinate].getMeaning() != MINE) {
-                cells[xCoordinate][yCoordinate].setMeaning(MINE);
-                bomb++;
-            }
-        }
-
-        log.info("Заполнение завершено успешно");
-    }
-
-    private void fillTheFieldWithNumbers() {
-        log.info("Заполнение поля числами");
-
-        for (int row = 0; row < gameType.rows; row++) {
-            for (int col = 0; col < gameType.cols; col++) {
-                if (cells[row][col].getMeaning() != MINE) {
-                    cells[row][col].setMeaning(countAdjacentMine(row, col));
-                }
-            }
-        }
-
-        log.info("Поле заполнено цифрами");
-    }
-
-    private int countAdjacentMine(int row, int col) {
-        log.debug("Расчёт мин вокруг ячейки");
-        int mineCount = 0;
-        for (int r = Math.max(0, row - 1); r <= Math.min(gameType.rows - 1, row + 1); r++) {
-            for (int c = Math.max(0, col - 1); c <= Math.min(gameType.cols - 1, col + 1); c++) {
-                if (cells[r][c].getMeaning() == MINE) mineCount++;
-            }
-        }
-
-        log.debug("Мин вокруг ячейки - {}", mineCount);
-        return mineCount;
-    }
-
     private void updateBomb() {
-        log.info("Обновление view - количество бомб равно : {}", mines);
-        notifyListeners(new UpdateBombCount(mines));
+        log.info("Обновление view - количество бомб равно : {}", gameCounters.getRemainingFlags());
+        notifyListeners(new UpdateBombCount(gameCounters.getRemainingFlags()));
     }
 
     private void createGame(GameType gameType) {
         log.info("Создание новой игры : {}", gameType);
+
         notifyListeners(new NewGame());
+        playingField.createField(gameType);
+        gameCounters.createCounters(gameType);
+
         this.gameType = gameType;
-        openCellsToWin = gameType.rows * gameType.cols - gameType.numberOfBombs;
-        openCells = 0;
-        gameWon = false;
-        gameOver = false;
-        fillThePlayingFieldWithCells();
-        mines = gameType.numberOfBombs;
-        firstClick = true;
+        gameState = null;
+        firstOpenCell = true;
+
         log.info("Создание игры завершено {} : ", gameType);
-    }
-
-    private void fillThePlayingFieldWithCells() {
-        cells = new Cell[gameType.rows][gameType.cols];
-
-        for (int row = 0; row < gameType.rows; row++) {
-            for (int col = 0; col < gameType.cols; col++) {
-                cells[row][col] = new Cell(row, col);
-            }
-        }
     }
 }

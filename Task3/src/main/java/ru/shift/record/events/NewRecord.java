@@ -1,4 +1,4 @@
-package ru.shift.events.record;
+package ru.shift.record.events;
 
 import ru.shift.events.GameEvent;
 

@@ -1,4 +1,4 @@
-package ru.shift.events.game.status;
+package ru.shift.model.events.game.status;
 
 import ru.shift.events.GameEvent;
 

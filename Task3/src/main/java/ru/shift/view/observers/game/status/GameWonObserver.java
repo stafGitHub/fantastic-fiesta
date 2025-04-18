@@ -1,9 +1,9 @@
-package ru.shift.view.observers;
+package ru.shift.view.observers.game.status;
 
 import ru.shift.events.GameEvent;
 import ru.shift.events.Observer;
 import ru.shift.events.Publisher;
-import ru.shift.events.game.result.Won;
+import ru.shift.model.events.game.result.Won;
 import ru.shift.view.windows.WinWindow;
 
 public class GameWonObserver extends Observer {

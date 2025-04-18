@@ -1,4 +1,4 @@
-package ru.shift.events.fields;
+package ru.shift.model.events.fields;
 
 import ru.shift.events.GameEvent;
 import ru.shift.model.dto.CellOutput;

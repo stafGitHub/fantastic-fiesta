@@ -1,10 +1,10 @@
-package ru.shift.view.observers;
+package ru.shift.view.observers.field;
 
 import lombok.extern.slf4j.Slf4j;
 import ru.shift.events.GameEvent;
 import ru.shift.events.Observer;
 import ru.shift.events.Publisher;
-import ru.shift.events.fields.UpdateTheCell;
+import ru.shift.model.events.fields.UpdateTheCell;
 import ru.shift.view.GameImage;
 import ru.shift.view.windows.MainWindow;
 

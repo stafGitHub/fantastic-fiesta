@@ -1,9 +1,9 @@
-package ru.shift.view.observers;
+package ru.shift.view.observers.game.status;
 
 import ru.shift.events.GameEvent;
 import ru.shift.events.Observer;
 import ru.shift.events.Publisher;
-import ru.shift.events.game.result.Lose;
+import ru.shift.model.events.game.result.Lose;
 import ru.shift.view.windows.LoseWindow;
 
 public class GameLoseObserver extends Observer {
