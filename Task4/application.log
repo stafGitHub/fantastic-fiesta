@@ -1,0 +1,286 @@
+22:23:55 [INFO] [main] ru_shift.util.UserInputScanner - Enter value: 
+22:24:00 [INFO] [main] r.services.CalculationService - Starting calculation from 1 to 131231231213122
+22:24:02 [INFO] [main] ru_shift.task.TaskCreator - Start creating tasks , formula - sum(1 + 0.1*i) from i=0 to n
+22:24:18 [INFO] [main] ru_shift.task.TaskCreator - Optimal number of tasks 48
+22:24:26 [INFO] [main] ru_shift.task.TaskCreator - Calculating range size 2733983983606
+22:24:38 [INFO] [main] ru_shift.task.TaskCreator - Creating task Task 1
+22:24:38 [INFO] [main] ru_shift.task.TaskCreator - Creating task Task 2
+22:24:38 [INFO] [main] ru_shift.task.TaskCreator - Creating task Task 3
+22:24:38 [INFO] [main] ru_shift.task.TaskCreator - Creating task Task 4
+22:24:38 [INFO] [main] ru_shift.task.TaskCreator - Creating task Task 5
+22:24:38 [INFO] [main] ru_shift.task.TaskCreator - Creating task Task 6
+22:24:38 [INFO] [main] ru_shift.task.TaskCreator - Creating task Task 7
+22:24:38 [INFO] [main] ru_shift.task.TaskCreator - Creating task Task 8
+22:24:38 [INFO] [main] ru_shift.task.TaskCreator - Creating task Task 9
+22:24:38 [INFO] [main] ru_shift.task.TaskCreator - Creating task Task 10
+22:24:38 [INFO] [main] ru_shift.task.TaskCreator - Creating task Task 11
+22:24:38 [INFO] [main] ru_shift.task.TaskCreator - Creating task Task 12
+22:24:38 [INFO] [main] ru_shift.task.TaskCreator - Creating task Task 13
+22:24:38 [INFO] [main] ru_shift.task.TaskCreator - Creating task Task 14
+22:24:38 [INFO] [main] ru_shift.task.TaskCreator - Creating task Task 15
+22:24:38 [INFO] [main] ru_shift.task.TaskCreator - Creating task Task 16
+22:24:38 [INFO] [main] ru_shift.task.TaskCreator - Creating task Task 17
+22:24:38 [INFO] [main] ru_shift.task.TaskCreator - Creating task Task 18
+22:24:38 [INFO] [main] ru_shift.task.TaskCreator - Creating task Task 19
+22:24:38 [INFO] [main] ru_shift.task.TaskCreator - Creating task Task 20
+22:24:38 [INFO] [main] ru_shift.task.TaskCreator - Creating task Task 21
+22:24:38 [INFO] [main] ru_shift.task.TaskCreator - Creating task Task 22
+22:24:38 [INFO] [main] ru_shift.task.TaskCreator - Creating task Task 23
+22:24:38 [INFO] [main] ru_shift.task.TaskCreator - Creating task Task 24
+22:24:38 [INFO] [main] ru_shift.task.TaskCreator - Creating task Task 25
+22:24:38 [INFO] [main] ru_shift.task.TaskCreator - Creating task Task 26
+22:24:38 [INFO] [main] ru_shift.task.TaskCreator - Creating task Task 27
+22:24:38 [INFO] [main] ru_shift.task.TaskCreator - Creating task Task 28
+22:24:38 [INFO] [main] ru_shift.task.TaskCreator - Creating task Task 29
+22:24:38 [INFO] [main] ru_shift.task.TaskCreator - Creating task Task 30
+22:24:38 [INFO] [main] ru_shift.task.TaskCreator - Creating task Task 31
+22:24:38 [INFO] [main] ru_shift.task.TaskCreator - Creating task Task 32
+22:24:38 [INFO] [main] ru_shift.task.TaskCreator - Creating task Task 33
+22:24:38 [INFO] [main] ru_shift.task.TaskCreator - Creating task Task 34
+22:24:38 [INFO] [main] ru_shift.task.TaskCreator - Creating task Task 35
+22:24:38 [INFO] [main] ru_shift.task.TaskCreator - Creating task Task 36
+22:24:38 [INFO] [main] ru_shift.task.TaskCreator - Creating task Task 37
+22:24:38 [INFO] [main] ru_shift.task.TaskCreator - Creating task Task 38
+22:24:38 [INFO] [main] ru_shift.task.TaskCreator - Creating task Task 39
+22:24:38 [INFO] [main] ru_shift.task.TaskCreator - Creating task Task 40
+22:24:38 [INFO] [main] ru_shift.task.TaskCreator - Creating task Task 41
+22:24:38 [INFO] [main] ru_shift.task.TaskCreator - Creating task Task 42
+22:24:38 [INFO] [main] ru_shift.task.TaskCreator - Creating task Task 43
+22:24:38 [INFO] [main] ru_shift.task.TaskCreator - Creating task Task 44
+22:24:38 [INFO] [main] ru_shift.task.TaskCreator - Creating task Task 45
+22:24:38 [INFO] [main] ru_shift.task.TaskCreator - Creating task Task 46
+22:24:38 [INFO] [main] ru_shift.task.TaskCreator - Creating task Task 47
+22:24:38 [INFO] [main] ru_shift.task.TaskCreator - Creating task Task 48
+22:24:38 [INFO] [main] ru_shift.task.TaskCreator - Creating task Task 49
+22:25:31 [INFO] [main] ru_shift.util.UserInputScanner - Enter value: 
+22:25:36 [INFO] [main] r.services.CalculationService - Starting calculation from 1 to 200000
+22:25:36 [INFO] [main] ru_shift.task.TaskCreator - Start creating tasks , formula - sum(1 + 0.1*i) from i=0 to n
+22:25:36 [INFO] [main] ru_shift.task.TaskCreator - Optimal number of tasks 0-20
+22:25:36 [INFO] [main] ru_shift.task.TaskCreator - Calculating range size 10000
+22:25:36 [INFO] [main] ru_shift.task.TaskCreator - Creating task Task 1
+22:25:36 [INFO] [main] ru_shift.task.TaskCreator - Creating task Task 2
+22:25:36 [INFO] [main] ru_shift.task.TaskCreator - Creating task Task 3
+22:25:36 [INFO] [main] ru_shift.task.TaskCreator - Creating task Task 4
+22:25:36 [INFO] [main] ru_shift.task.TaskCreator - Creating task Task 5
+22:25:36 [INFO] [main] ru_shift.task.TaskCreator - Creating task Task 6
+22:25:36 [INFO] [main] ru_shift.task.TaskCreator - Creating task Task 7
+22:25:36 [INFO] [main] ru_shift.task.TaskCreator - Creating task Task 8
+22:25:36 [INFO] [main] ru_shift.task.TaskCreator - Creating task Task 9
+22:25:36 [INFO] [main] ru_shift.task.TaskCreator - Creating task Task 10
+22:25:36 [INFO] [main] ru_shift.task.TaskCreator - Creating task Task 11
+22:25:36 [INFO] [main] ru_shift.task.TaskCreator - Creating task Task 12
+22:25:36 [INFO] [main] ru_shift.task.TaskCreator - Creating task Task 13
+22:25:36 [INFO] [main] ru_shift.task.TaskCreator - Creating task Task 14
+22:25:36 [INFO] [main] ru_shift.task.TaskCreator - Creating task Task 15
+22:25:36 [INFO] [main] ru_shift.task.TaskCreator - Creating task Task 16
+22:25:36 [INFO] [main] ru_shift.task.TaskCreator - Creating task Task 17
+22:25:36 [INFO] [main] ru_shift.task.TaskCreator - Creating task Task 18
+22:25:36 [INFO] [main] ru_shift.task.TaskCreator - Creating task Task 19
+22:25:36 [INFO] [main] ru_shift.task.TaskCreator - Creating task Task 20
+22:25:36 [INFO] [main] ru_shift.task.TaskCreator - Finish creating tasks
+22:25:36 [INFO] [main] ru_shift.task.TaskExecutor - Execution Task 1
+22:25:36 [INFO] [main] ru_shift.task.TaskExecutor - Execution Task 2
+22:25:36 [INFO] [main] ru_shift.task.TaskExecutor - Execution Task 3
+22:25:36 [INFO] [pool-1-thread-1] ru_shift.task.Task - Task 1: Calculating range 1-10000
+22:25:36 [INFO] [pool-1-thread-2] ru_shift.task.Task - Task 2: Calculating range 10001-20000
+22:25:36 [INFO] [main] ru_shift.task.TaskExecutor - Execution Task 4
+22:25:36 [INFO] [pool-1-thread-3] ru_shift.task.Task - Task 3: Calculating range 20001-30000
+22:25:36 [INFO] [main] ru_shift.task.TaskExecutor - Execution Task 5
+22:25:36 [INFO] [pool-1-thread-4] ru_shift.task.Task - Task 4: Calculating range 30001-40000
+22:25:36 [INFO] [main] ru_shift.task.TaskExecutor - Execution Task 6
+22:25:36 [INFO] [main] ru_shift.task.TaskExecutor - Execution Task 7
+22:25:36 [INFO] [pool-1-thread-5] ru_shift.task.Task - Task 5: Calculating range 40001-50000
+22:25:36 [INFO] [main] ru_shift.task.TaskExecutor - Execution Task 8
+22:25:36 [INFO] [pool-1-thread-6] ru_shift.task.Task - Task 6: Calculating range 50001-60000
+22:25:36 [INFO] [pool-1-thread-7] ru_shift.task.Task - Task 7: Calculating range 60001-70000
+22:25:36 [INFO] [main] ru_shift.task.TaskExecutor - Execution Task 9
+22:25:36 [INFO] [pool-1-thread-8] ru_shift.task.Task - Task 8: Calculating range 70001-80000
+22:25:36 [INFO] [main] ru_shift.task.TaskExecutor - Execution Task 10
+22:25:36 [INFO] [main] ru_shift.task.TaskExecutor - Execution Task 11
+22:25:36 [INFO] [pool-1-thread-9] ru_shift.task.Task - Task 9: Calculating range 80001-90000
+22:25:36 [INFO] [main] ru_shift.task.TaskExecutor - Execution Task 12
+22:25:36 [INFO] [main] ru_shift.task.TaskExecutor - Execution Task 13
+22:25:36 [INFO] [main] ru_shift.task.TaskExecutor - Execution Task 14
+22:25:36 [INFO] [main] ru_shift.task.TaskExecutor - Execution Task 15
+22:25:36 [INFO] [main] ru_shift.task.TaskExecutor - Execution Task 16
+22:25:36 [INFO] [pool-1-thread-11] ru_shift.task.Task - Task 11: Calculating range 100001-110000
+22:25:36 [INFO] [main] ru_shift.task.TaskExecutor - Execution Task 17
+22:25:36 [INFO] [pool-1-thread-10] ru_shift.task.Task - Task 10: Calculating range 90001-100000
+22:25:36 [INFO] [main] ru_shift.task.TaskExecutor - Execution Task 18
+22:25:36 [INFO] [main] ru_shift.task.TaskExecutor - Execution Task 19
+22:25:36 [INFO] [main] ru_shift.task.TaskExecutor - Execution Task 20
+22:25:36 [INFO] [pool-1-thread-12] ru_shift.task.Task - Task 12: Calculating range 110001-120000
+22:25:36 [INFO] [pool-1-thread-2] ru_shift.task.Task - Task 2: Completed range 10001-20000. Result: 15010500.0
+22:25:36 [INFO] [pool-1-thread-8] ru_shift.task.Task - Task 8: Completed range 70001-80000. Result: 75010500.0
+22:25:36 [INFO] [pool-1-thread-11] ru_shift.task.Task - Task 11: Completed range 100001-110000. Result: 105010500.0
+22:25:36 [INFO] [pool-1-thread-9] ru_shift.task.Task - Task 9: Completed range 80001-90000. Result: 85010500.0
+22:25:36 [INFO] [pool-1-thread-3] ru_shift.task.Task - Task 3: Completed range 20001-30000. Result: 25010500.0
+22:25:36 [INFO] [pool-1-thread-9] ru_shift.task.Task - Task 14: Calculating range 130001-140000
+22:25:36 [INFO] [pool-1-thread-3] ru_shift.task.Task - Task 15: Calculating range 140001-150000
+22:25:36 [INFO] [pool-1-thread-4] ru_shift.task.Task - Task 4: Completed range 30001-40000. Result: 35010500.0
+22:25:36 [INFO] [pool-1-thread-4] ru_shift.task.Task - Task 16: Calculating range 150001-160000
+22:25:36 [INFO] [pool-1-thread-2] ru_shift.task.Task - Task 17: Calculating range 160001-170000
+22:25:36 [INFO] [pool-1-thread-8] ru_shift.task.Task - Task 13: Calculating range 120001-130000
+22:25:36 [INFO] [pool-1-thread-5] ru_shift.task.Task - Task 5: Completed range 40001-50000. Result: 45010500.0
+22:25:36 [INFO] [pool-1-thread-11] ru_shift.task.Task - Task 18: Calculating range 170001-180000
+22:25:36 [INFO] [pool-1-thread-12] ru_shift.task.Task - Task 12: Completed range 110001-120000. Result: 115010500.0
+22:25:36 [INFO] [pool-1-thread-12] ru_shift.task.Task - Task 20: Calculating range 190001-200000
+22:25:36 [INFO] [pool-1-thread-5] ru_shift.task.Task - Task 19: Calculating range 180001-190000
+22:25:36 [INFO] [pool-1-thread-7] ru_shift.task.Task - Task 7: Completed range 60001-70000. Result: 65010500.0
+22:25:36 [INFO] [pool-1-thread-10] ru_shift.task.Task - Task 10: Completed range 90001-100000. Result: 95010500.0
+22:25:36 [INFO] [pool-1-thread-1] ru_shift.task.Task - Task 1: Completed range 1-10000. Result: 5010500.0
+22:25:36 [INFO] [pool-1-thread-6] ru_shift.task.Task - Task 6: Completed range 50001-60000. Result: 55010500.0
+22:25:36 [INFO] [pool-1-thread-11] ru_shift.task.Task - Task 18: Completed range 170001-180000. Result: 175010500.0
+22:25:36 [INFO] [pool-1-thread-2] ru_shift.task.Task - Task 17: Completed range 160001-170000. Result: 165010500.0
+22:25:36 [INFO] [pool-1-thread-4] ru_shift.task.Task - Task 16: Completed range 150001-160000. Result: 155010500.0
+22:25:36 [INFO] [pool-1-thread-9] ru_shift.task.Task - Task 14: Completed range 130001-140000. Result: 135010500.0
+22:25:36 [INFO] [pool-1-thread-3] ru_shift.task.Task - Task 15: Completed range 140001-150000. Result: 145010500.0
+22:25:36 [INFO] [pool-1-thread-12] ru_shift.task.Task - Task 20: Completed range 190001-200000. Result: 195010500.0
+22:25:36 [INFO] [pool-1-thread-8] ru_shift.task.Task - Task 13: Completed range 120001-130000. Result: 125010500.0
+22:25:36 [INFO] [pool-1-thread-5] ru_shift.task.Task - Task 19: Completed range 180001-190000. Result: 185010500.0
+22:25:36 [INFO] [main] r.services.CalculationService - Calculation completed in 47 ms ---> result(2000210000.0)
+22:26:00 [INFO] [main] ru_shift.util.UserInputScanner - Enter value: 
+22:26:04 [INFO] [main] r.services.CalculationService - Starting calculation from 1 to 200000
+22:26:05 [INFO] [main] ru_shift.task.TaskCreator - Start creating tasks , formula - sum(1 + 0.1*i) from i=0 to n
+22:26:06 [INFO] [main] ru_shift.task.TaskCreator - Optimal number of tasks 0-20
+22:26:06 [INFO] [main] ru_shift.task.TaskCreator - Calculating range size 10000
+22:26:07 [INFO] [main] ru_shift.task.TaskCreator - Creating task Task 1
+22:26:07 [INFO] [main] ru_shift.task.TaskCreator - Creating task Task 2
+22:26:07 [INFO] [main] ru_shift.task.TaskCreator - Creating task Task 3
+22:26:07 [INFO] [main] ru_shift.task.TaskCreator - Creating task Task 4
+22:26:07 [INFO] [main] ru_shift.task.TaskCreator - Creating task Task 5
+22:26:07 [INFO] [main] ru_shift.task.TaskCreator - Creating task Task 6
+22:26:07 [INFO] [main] ru_shift.task.TaskCreator - Creating task Task 7
+22:26:07 [INFO] [main] ru_shift.task.TaskCreator - Creating task Task 8
+22:26:07 [INFO] [main] ru_shift.task.TaskCreator - Creating task Task 9
+22:26:07 [INFO] [main] ru_shift.task.TaskCreator - Creating task Task 10
+22:26:07 [INFO] [main] ru_shift.task.TaskCreator - Creating task Task 11
+22:26:07 [INFO] [main] ru_shift.task.TaskCreator - Creating task Task 12
+22:26:07 [INFO] [main] ru_shift.task.TaskCreator - Creating task Task 13
+22:26:07 [INFO] [main] ru_shift.task.TaskCreator - Creating task Task 14
+22:26:07 [INFO] [main] ru_shift.task.TaskCreator - Creating task Task 15
+22:26:07 [INFO] [main] ru_shift.task.TaskCreator - Creating task Task 16
+22:26:07 [INFO] [main] ru_shift.task.TaskCreator - Creating task Task 17
+22:26:07 [INFO] [main] ru_shift.task.TaskCreator - Creating task Task 18
+22:26:07 [INFO] [main] ru_shift.task.TaskCreator - Creating task Task 19
+22:26:07 [INFO] [main] ru_shift.task.TaskCreator - Creating task Task 20
+22:26:30 [INFO] [main] ru_shift.util.UserInputScanner - Enter value: 
+22:26:36 [INFO] [main] ru_shift.util.UserInputScanner - the value is incorrect, enter long
+22:26:36 [INFO] [main] ru_shift.util.UserInputScanner - Enter value: 
+22:26:40 [INFO] [main] ru_shift.util.UserInputScanner - the value is incorrect, enter long
+22:26:40 [INFO] [main] ru_shift.util.UserInputScanner - Enter value: 
+22:26:43 [INFO] [main] r.services.CalculationService - Starting calculation from 1 to 2000000000000
+22:26:48 [INFO] [main] ru_shift.task.TaskCreator - Start creating tasks , formula - sum(1 + 0.1*i) from i=0 to n
+22:26:58 [INFO] [main] ru_shift.task.TaskCreator - Optimal number of tasks 48
+22:27:03 [INFO] [main] ru_shift.task.TaskCreator - Calculating range size 41666666666
+22:27:54 [INFO] [main] ru_shift.task.TaskCreator - Creating task Task 1
+22:27:55 [INFO] [main] ru_shift.task.TaskCreator - Creating task Task 2
+22:27:56 [INFO] [main] ru_shift.task.TaskCreator - Creating task Task 3
+22:27:57 [INFO] [main] ru_shift.task.TaskCreator - Creating task Task 4
+22:27:58 [INFO] [main] ru_shift.task.TaskCreator - Creating task Task 5
+22:27:59 [INFO] [main] ru_shift.task.TaskCreator - Creating task Task 6
+22:27:59 [INFO] [main] ru_shift.task.TaskCreator - Creating task Task 7
+22:27:59 [INFO] [main] ru_shift.task.TaskCreator - Creating task Task 8
+22:27:59 [INFO] [main] ru_shift.task.TaskCreator - Creating task Task 9
+22:27:59 [INFO] [main] ru_shift.task.TaskCreator - Creating task Task 10
+22:27:59 [INFO] [main] ru_shift.task.TaskCreator - Creating task Task 11
+22:27:59 [INFO] [main] ru_shift.task.TaskCreator - Creating task Task 12
+22:27:59 [INFO] [main] ru_shift.task.TaskCreator - Creating task Task 13
+22:27:59 [INFO] [main] ru_shift.task.TaskCreator - Creating task Task 14
+22:27:59 [INFO] [main] ru_shift.task.TaskCreator - Creating task Task 15
+22:27:59 [INFO] [main] ru_shift.task.TaskCreator - Creating task Task 16
+22:27:59 [INFO] [main] ru_shift.task.TaskCreator - Creating task Task 17
+22:27:59 [INFO] [main] ru_shift.task.TaskCreator - Creating task Task 18
+22:27:59 [INFO] [main] ru_shift.task.TaskCreator - Creating task Task 19
+22:27:59 [INFO] [main] ru_shift.task.TaskCreator - Creating task Task 20
+22:27:59 [INFO] [main] ru_shift.task.TaskCreator - Creating task Task 21
+22:27:59 [INFO] [main] ru_shift.task.TaskCreator - Creating task Task 22
+22:27:59 [INFO] [main] ru_shift.task.TaskCreator - Creating task Task 23
+22:27:59 [INFO] [main] ru_shift.task.TaskCreator - Creating task Task 24
+22:27:59 [INFO] [main] ru_shift.task.TaskCreator - Creating task Task 25
+22:27:59 [INFO] [main] ru_shift.task.TaskCreator - Creating task Task 26
+22:27:59 [INFO] [main] ru_shift.task.TaskCreator - Creating task Task 27
+22:27:59 [INFO] [main] ru_shift.task.TaskCreator - Creating task Task 28
+22:27:59 [INFO] [main] ru_shift.task.TaskCreator - Creating task Task 29
+22:27:59 [INFO] [main] ru_shift.task.TaskCreator - Creating task Task 30
+22:27:59 [INFO] [main] ru_shift.task.TaskCreator - Creating task Task 31
+22:27:59 [INFO] [main] ru_shift.task.TaskCreator - Creating task Task 32
+22:27:59 [INFO] [main] ru_shift.task.TaskCreator - Creating task Task 33
+22:27:59 [INFO] [main] ru_shift.task.TaskCreator - Creating task Task 34
+22:27:59 [INFO] [main] ru_shift.task.TaskCreator - Creating task Task 35
+22:27:59 [INFO] [main] ru_shift.task.TaskCreator - Creating task Task 36
+22:27:59 [INFO] [main] ru_shift.task.TaskCreator - Creating task Task 37
+22:27:59 [INFO] [main] ru_shift.task.TaskCreator - Creating task Task 38
+22:27:59 [INFO] [main] ru_shift.task.TaskCreator - Creating task Task 39
+22:27:59 [INFO] [main] ru_shift.task.TaskCreator - Creating task Task 40
+22:27:59 [INFO] [main] ru_shift.task.TaskCreator - Creating task Task 41
+22:27:59 [INFO] [main] ru_shift.task.TaskCreator - Creating task Task 42
+22:27:59 [INFO] [main] ru_shift.task.TaskCreator - Creating task Task 43
+22:27:59 [INFO] [main] ru_shift.task.TaskCreator - Creating task Task 44
+22:27:59 [INFO] [main] ru_shift.task.TaskCreator - Creating task Task 45
+22:27:59 [INFO] [main] ru_shift.task.TaskCreator - Creating task Task 46
+22:27:59 [INFO] [main] ru_shift.task.TaskCreator - Creating task Task 47
+22:27:59 [INFO] [main] ru_shift.task.TaskCreator - Creating task Task 48
+22:27:59 [INFO] [main] ru_shift.task.TaskCreator - Creating task Task 49
+22:27:59 [INFO] [main] ru_shift.task.TaskCreator - Finish creating tasks
+22:27:59 [INFO] [main] ru_shift.task.TaskExecutor - Execution Task 1
+22:27:59 [INFO] [main] ru_shift.task.TaskExecutor - Execution Task 2
+22:27:59 [INFO] [main] ru_shift.task.TaskExecutor - Execution Task 3
+22:27:59 [INFO] [main] ru_shift.task.TaskExecutor - Execution Task 4
+22:27:59 [INFO] [main] ru_shift.task.TaskExecutor - Execution Task 5
+22:27:59 [INFO] [main] ru_shift.task.TaskExecutor - Execution Task 6
+22:27:59 [INFO] [main] ru_shift.task.TaskExecutor - Execution Task 7
+22:27:59 [INFO] [pool-1-thread-3] ru_shift.task.Task - Task 3: Calculating range 83333333333-124999999998
+22:27:59 [INFO] [main] ru_shift.task.TaskExecutor - Execution Task 8
+22:27:59 [INFO] [pool-1-thread-6] ru_shift.task.Task - Task 6: Calculating range 208333333331-249999999996
+22:27:59 [INFO] [main] ru_shift.task.TaskExecutor - Execution Task 9
+22:27:59 [INFO] [pool-1-thread-7] ru_shift.task.Task - Task 7: Calculating range 249999999997-291666666662
+22:27:59 [INFO] [main] ru_shift.task.TaskExecutor - Execution Task 10
+22:27:59 [INFO] [pool-1-thread-8] ru_shift.task.Task - Task 8: Calculating range 291666666663-333333333328
+22:27:59 [INFO] [pool-1-thread-9] ru_shift.task.Task - Task 9: Calculating range 333333333329-374999999994
+22:27:59 [INFO] [pool-1-thread-10] ru_shift.task.Task - Task 10: Calculating range 374999999995-416666666660
+22:27:59 [INFO] [pool-1-thread-5] ru_shift.task.Task - Task 5: Calculating range 166666666665-208333333330
+22:27:59 [INFO] [pool-1-thread-2] ru_shift.task.Task - Task 2: Calculating range 41666666667-83333333332
+22:27:59 [INFO] [pool-1-thread-4] ru_shift.task.Task - Task 4: Calculating range 124999999999-166666666664
+22:27:59 [INFO] [main] ru_shift.task.TaskExecutor - Execution Task 11
+22:27:59 [INFO] [pool-1-thread-1] ru_shift.task.Task - Task 1: Calculating range 1-41666666666
+22:27:59 [INFO] [main] ru_shift.task.TaskExecutor - Execution Task 12
+22:27:59 [INFO] [pool-1-thread-11] ru_shift.task.Task - Task 11: Calculating range 416666666661-458333333326
+22:27:59 [INFO] [main] ru_shift.task.TaskExecutor - Execution Task 13
+22:27:59 [INFO] [main] ru_shift.task.TaskExecutor - Execution Task 14
+22:27:59 [INFO] [pool-1-thread-12] ru_shift.task.Task - Task 12: Calculating range 458333333327-499999999992
+22:27:59 [INFO] [main] ru_shift.task.TaskExecutor - Execution Task 15
+22:27:59 [INFO] [main] ru_shift.task.TaskExecutor - Execution Task 16
+22:27:59 [INFO] [main] ru_shift.task.TaskExecutor - Execution Task 17
+22:27:59 [INFO] [main] ru_shift.task.TaskExecutor - Execution Task 18
+22:27:59 [INFO] [main] ru_shift.task.TaskExecutor - Execution Task 19
+22:27:59 [INFO] [main] ru_shift.task.TaskExecutor - Execution Task 20
+22:27:59 [INFO] [main] ru_shift.task.TaskExecutor - Execution Task 21
+22:27:59 [INFO] [main] ru_shift.task.TaskExecutor - Execution Task 22
+22:27:59 [INFO] [main] ru_shift.task.TaskExecutor - Execution Task 23
+22:27:59 [INFO] [main] ru_shift.task.TaskExecutor - Execution Task 24
+22:27:59 [INFO] [main] ru_shift.task.TaskExecutor - Execution Task 25
+22:27:59 [INFO] [main] ru_shift.task.TaskExecutor - Execution Task 26
+22:27:59 [INFO] [main] ru_shift.task.TaskExecutor - Execution Task 27
+22:27:59 [INFO] [main] ru_shift.task.TaskExecutor - Execution Task 28
+22:27:59 [INFO] [main] ru_shift.task.TaskExecutor - Execution Task 29
+22:27:59 [INFO] [main] ru_shift.task.TaskExecutor - Execution Task 30
+22:27:59 [INFO] [main] ru_shift.task.TaskExecutor - Execution Task 31
+22:27:59 [INFO] [main] ru_shift.task.TaskExecutor - Execution Task 32
+22:27:59 [INFO] [main] ru_shift.task.TaskExecutor - Execution Task 33
+22:27:59 [INFO] [main] ru_shift.task.TaskExecutor - Execution Task 34
+22:27:59 [INFO] [main] ru_shift.task.TaskExecutor - Execution Task 35
+22:27:59 [INFO] [main] ru_shift.task.TaskExecutor - Execution Task 36
+22:27:59 [INFO] [main] ru_shift.task.TaskExecutor - Execution Task 37
+22:27:59 [INFO] [main] ru_shift.task.TaskExecutor - Execution Task 38
+22:27:59 [INFO] [main] ru_shift.task.TaskExecutor - Execution Task 39
+22:27:59 [INFO] [main] ru_shift.task.TaskExecutor - Execution Task 40
+22:27:59 [INFO] [main] ru_shift.task.TaskExecutor - Execution Task 41
+22:27:59 [INFO] [main] ru_shift.task.TaskExecutor - Execution Task 42
+22:27:59 [INFO] [main] ru_shift.task.TaskExecutor - Execution Task 43
+22:27:59 [INFO] [main] ru_shift.task.TaskExecutor - Execution Task 44
+22:27:59 [INFO] [main] ru_shift.task.TaskExecutor - Execution Task 45
+22:27:59 [INFO] [main] ru_shift.task.TaskExecutor - Execution Task 46
+22:27:59 [INFO] [main] ru_shift.task.TaskExecutor - Execution Task 47
+22:27:59 [INFO] [main] ru_shift.task.TaskExecutor - Execution Task 48
+22:27:59 [INFO] [main] ru_shift.task.TaskExecutor - Execution Task 49
