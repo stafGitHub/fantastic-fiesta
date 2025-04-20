@@ -19,7 +19,7 @@ public class Task implements Callable<Task> {
     private BigDecimal result;
 
     public Task(long start, long end, ComputationStrategy strategy) {
-        taskName = "Task " + id.incrementAndGet();;
+        taskName = "Task " + id.incrementAndGet();
         this.start = start;
         this.end = end;
         this.strategy = strategy;

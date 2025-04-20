@@ -8,7 +8,6 @@ import ru_shift.task.TaskCreator;
 import ru_shift.task.TaskExecutor;
 import ru_shift.util.UserInputScanner;
 
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executors;
 
 @Slf4j

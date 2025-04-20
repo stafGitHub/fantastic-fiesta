@@ -8,7 +8,7 @@ import java.util.Scanner;
 @Slf4j
 public class UserInputScanner {
     private UserInputScanner() {
-        throw new RuntimeException("Static utility class");
+        throw new UnsupportedOperationException("Static utility class");
     }
 
     public static long parseLongFromUser() {
