@@ -1,6 +1,7 @@
 package ru.shift.events;
 
 import lombok.extern.slf4j.Slf4j;
+import ru.shift.model.events.GameEvent;
 
 @Slf4j
 public abstract class Observer {

@@ -4,6 +4,6 @@ import ru.shift.model.dto.Cell;
 
 import java.util.List;
 
-public interface RevealBombs {
-    List<Cell> revealAllMines();
+public interface Field {
+    List<Cell> getField();
 }

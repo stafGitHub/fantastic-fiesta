@@ -1,8 +1,8 @@
 package ru.shift.view.observers.field;
 
-import ru.shift.events.GameEvent;
 import ru.shift.events.Observer;
 import ru.shift.events.Publisher;
+import ru.shift.model.events.GameEvent;
 import ru.shift.model.events.fields.UpdateBombCount;
 import ru.shift.view.windows.MainWindow;
 

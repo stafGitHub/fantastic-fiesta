@@ -1,7 +1,7 @@
-package ru.shift.model.events;
+package ru.shift.model.events.fields;
 
-import ru.shift.events.GameEvent;
 import ru.shift.model.dto.Cell;
+import ru.shift.model.events.GameEvent;
 
 import java.util.List;
 

@@ -1,8 +1,8 @@
 package ru.shift.view.observers.record;
 
-import ru.shift.events.GameEvent;
 import ru.shift.events.Observer;
 import ru.shift.events.Publisher;
+import ru.shift.model.events.GameEvent;
 import ru.shift.record.events.NewRecord;
 import ru.shift.view.windows.RecordsWindow;
 

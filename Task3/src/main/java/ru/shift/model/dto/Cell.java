@@ -18,6 +18,4 @@ public class Cell {
     private boolean open = false;
     @Setter
     private boolean mine = false;
-    @Setter
-    private boolean empty = false;
 }

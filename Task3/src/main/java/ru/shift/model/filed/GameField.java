@@ -5,12 +5,12 @@ import lombok.extern.slf4j.Slf4j;
 import ru.shift.model.GameType;
 import ru.shift.model.dto.Cell;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
 @Slf4j
-public class PlayingField implements RevealBombs {
+public class GameField implements Field {
     @Getter
     private Cell[][] cells;
     private final Random random = new Random();
@@ -23,20 +23,10 @@ public class PlayingField implements RevealBombs {
     }
 
     @Override
-    public List<Cell> revealAllMines() {
-        log.info("Открытие всех мин");
-        var cellOutput = new ArrayList<Cell>();
-
-        for (int r = 0; r < gameType.rows; r++) {
-            for (int c = 0; c < gameType.cols; c++) {
-                if (cells[r][c].isMine()) {
-
-                    cellOutput.add(cells[r][c]);
-                }
-            }
-        }
-        log.info("Открытие мин завершено");
-        return cellOutput;
+    public List<Cell> getField() {
+        return Arrays.stream(cells)
+                .flatMap(Arrays::stream)
+                .toList();
     }
 
     public void createField(GameType gameType) {

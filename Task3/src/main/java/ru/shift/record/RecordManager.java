@@ -3,11 +3,12 @@ package ru.shift.record;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import ru.shift.events.GameEvent;
 import ru.shift.events.Observer;
 import ru.shift.events.Publisher;
+import ru.shift.model.GameState;
 import ru.shift.model.GameType;
-import ru.shift.model.events.game.result.Won;
+import ru.shift.model.events.GameEvent;
+import ru.shift.model.events.game.result.GameResult;
 import ru.shift.record.events.NewRecord;
 import ru.shift.timer.Timer;
 import ru.shift.view.windows.HighScoresWindow;
@@ -57,14 +58,16 @@ public class RecordManager extends Observer implements Publisher {
 
     @Override
     public void onGameEvent(GameEvent gameEvent) {
-        if (gameEvent instanceof Won won) {
-            int currentTime = timer.getSecondsPassed().get();
-            GameType gameType = won.gameType();
+        if (gameEvent instanceof GameResult gameResult) {
+            if (gameResult.gameState() == GameState.WIN) {
+                int currentTime = timer.getSecondsPassed().get();
+                GameType gameType = gameResult.gameType();
 
-            if (isNewRecord(currentTime, gameType)) {
-                notifyListeners(new NewRecord(currentTime));
-                updateRecord(currentTime, gameType);
-                updateRecordWindow();
+                if (isNewRecord(currentTime, gameType)) {
+                    notifyListeners(new NewRecord(currentTime));
+                    updateRecord(currentTime, gameType);
+                    updateRecordWindow();
+                }
             }
         }
     }

@@ -2,9 +2,9 @@ package ru.shift.timer;
 
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
-import ru.shift.events.GameEvent;
 import ru.shift.events.Observer;
 import ru.shift.events.Publisher;
+import ru.shift.model.events.GameEvent;
 import ru.shift.model.events.fields.TimeUpdate;
 import ru.shift.model.events.game.status.FirstClick;
 import ru.shift.model.events.game.status.GameOver;
