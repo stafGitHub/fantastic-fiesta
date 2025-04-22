@@ -9,7 +9,7 @@ import ru.shift.view.windows.RecordsWindow;
 public class GameRecordObserver extends Observer {
     private final RecordsWindow recordsWindow;
 
-    public GameRecordObserver(RecordsWindow recordsWindow,Publisher... publisher) {
+    public GameRecordObserver(RecordsWindow recordsWindow, Publisher... publisher) {
         super(publisher);
         this.recordsWindow = recordsWindow;
     }

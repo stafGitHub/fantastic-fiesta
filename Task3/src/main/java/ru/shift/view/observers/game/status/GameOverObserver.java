@@ -22,7 +22,7 @@ public class GameOverObserver extends Observer implements Publisher {
 
     @Override
     public void onGameEvent(GameEvent gameEvent) {
-        if (gameEvent instanceof GameOver){
+        if (gameEvent instanceof GameOver) {
             var cellOutput = revealBombs.revealAllMines();
             notifyListeners(new UpdateTheCell(cellOutput));
         }

@@ -9,7 +9,7 @@ import ru.shift.view.windows.WinWindow;
 public class GameWonObserver extends Observer {
     private final WinWindow winWindow;
 
-    public GameWonObserver(WinWindow winWindow,Publisher... publisher) {
+    public GameWonObserver(WinWindow winWindow, Publisher... publisher) {
         super(publisher);
         this.winWindow = winWindow;
     }

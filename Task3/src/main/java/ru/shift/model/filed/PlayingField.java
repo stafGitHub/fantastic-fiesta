@@ -4,13 +4,10 @@ import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import ru.shift.model.GameType;
 import ru.shift.model.dto.Cell;
-import ru.shift.model.dto.CellOutput;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-
-import static ru.shift.model.dto.Cell.MINE;
 
 @Slf4j
 public class PlayingField implements RevealBombs {
@@ -26,14 +23,15 @@ public class PlayingField implements RevealBombs {
     }
 
     @Override
-    public List<CellOutput> revealAllMines() {
+    public List<Cell> revealAllMines() {
         log.info("Открытие всех мин");
-        var cellOutput = new ArrayList<CellOutput>();
+        var cellOutput = new ArrayList<Cell>();
 
         for (int r = 0; r < gameType.rows; r++) {
             for (int c = 0; c < gameType.cols; c++) {
-                if (cells[r][c].getMeaning() == MINE) {
-                    cellOutput.add(new CellOutput(c,r,MINE));
+                if (cells[r][c].isMine()) {
+
+                    cellOutput.add(cells[r][c]);
                 }
             }
         }
@@ -62,7 +60,7 @@ public class PlayingField implements RevealBombs {
 
         for (int r = Math.max(0, row - 1); r <= Math.min(gameType.rows - 1, row + 1); r++) {
             for (int c = Math.max(0, col - 1); c <= Math.min(gameType.cols - 1, col + 1); c++) {
-                if (cells[r][c].getMeaning() == MINE) mineCount++;
+                if (cells[r][c].isMine()) mineCount++;
             }
         }
 
@@ -82,8 +80,8 @@ public class PlayingField implements RevealBombs {
                 continue;
             }
 
-            if (cells[xCoordinate][yCoordinate].getMeaning() != MINE) {
-                cells[xCoordinate][yCoordinate].setMeaning(MINE);
+            if (!cells[xCoordinate][yCoordinate].isMine()) {
+                cells[xCoordinate][yCoordinate].setMine(true);
                 bomb++;
             }
         }
@@ -96,7 +94,7 @@ public class PlayingField implements RevealBombs {
 
         for (int row = 0; row < gameType.rows; row++) {
             for (int col = 0; col < gameType.cols; col++) {
-                if (cells[row][col].getMeaning() != MINE) {
+                if (!cells[row][col].isMine()) {
                     cells[row][col].setMeaning(countAdjacentMine(row, col));
                 }
             }

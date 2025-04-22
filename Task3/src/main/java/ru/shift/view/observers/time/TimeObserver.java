@@ -9,7 +9,7 @@ import ru.shift.view.windows.MainWindow;
 public class TimeObserver extends Observer {
     private final MainWindow mainWindow;
 
-    public TimeObserver(MainWindow mainWindow,Publisher... publisher) {
+    public TimeObserver(MainWindow mainWindow, Publisher... publisher) {
         super(publisher);
         this.mainWindow = mainWindow;
     }

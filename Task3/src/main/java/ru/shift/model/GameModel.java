@@ -8,7 +8,7 @@ import ru.shift.events.GameEvent;
 import ru.shift.events.Observer;
 import ru.shift.events.Publisher;
 import ru.shift.model.counter.GameCounters;
-import ru.shift.model.dto.CellOutput;
+import ru.shift.model.dto.Cell;
 import ru.shift.model.events.UpdateTheCell;
 import ru.shift.model.events.fields.FlagPlaning;
 import ru.shift.model.events.fields.UpdateBombCount;
@@ -24,7 +24,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static ru.shift.model.dto.Cell.EMPTY_COLUMN;
-import static ru.shift.model.dto.Cell.MINE;
 
 @Slf4j
 public class GameModel implements
@@ -39,7 +38,7 @@ public class GameModel implements
     private GameState gameState;
     private boolean firstOpenCell = true;
 
-    public GameModel(GameType gameType ,
+    public GameModel(GameType gameType,
                      PlayingField playingField,
                      GameCounters gameCounters) {
         this.playingField = playingField;
@@ -50,11 +49,11 @@ public class GameModel implements
     @Override
     public void openCell(int row, int col) {
         log.info("openCellLeftButton");
-        if (gameState ==GameState.WIN || gameState == GameState.LOSE || playingField.getCells()[row][col].isFlag()) {
+        if (gameState == GameState.WIN || gameState == GameState.LOSE || playingField.getCells()[row][col].isFlag()) {
             return;
         }
 
-        var cellOutput = new ArrayList<CellOutput>();
+        var cellOutput = new ArrayList<Cell>();
 
         if (firstOpenCell) {
             playingField.fillInThField(row, col);
@@ -75,7 +74,7 @@ public class GameModel implements
 
         updateTheCellView(cellOutput);
 
-        if (checkGameWinner()){
+        if (checkGameWinner()) {
             gameWon();
         }
     }
@@ -83,11 +82,11 @@ public class GameModel implements
     @Override
     public void openAround(int row, int col) {
         log.info("openCellWithMouseCell");
-        if (gameState ==GameState.WIN || gameState == GameState.LOSE || playingField.getCells()[row][col].isFlag()) {
+        if (gameState == GameState.WIN || gameState == GameState.LOSE || playingField.getCells()[row][col].isFlag()) {
             return;
         }
 
-        var cellOutput = new ArrayList<CellOutput>();
+        var cellOutput = new ArrayList<Cell>();
         var flags = countFlag(row, col);
 
         if (flags < playingField.getCells()[row][col].getMeaning() ||
@@ -104,7 +103,7 @@ public class GameModel implements
             return;
         }
 
-        if (checkGameWinner()){
+        if (checkGameWinner()) {
             gameWon();
         }
     }
@@ -116,7 +115,7 @@ public class GameModel implements
             notifyListeners(new FlagPlaning(row, col, false));
             gameCounters.incrementRemainingFlags();
             updateBomb();
-        }else {
+        } else {
             if (playingField.getCells()[row][col].isOpen() || gameCounters.getRemainingFlags() == 0) {
                 return;
             }
@@ -150,7 +149,7 @@ public class GameModel implements
         observers.add(observer);
     }
 
-    private void readingCellsBySquareCoordinates(int row, int col, List<CellOutput> cellOutput) {
+    private void readingCellsBySquareCoordinates(int row, int col, List<Cell> cellOutput) {
         log.info("Чтение клеток вокруг координаты");
         for (int r = Math.max(0, row - 1); r <= Math.min(gameType.rows - 1, row + 1); r++) {
             for (int c = Math.max(0, col - 1); c <= Math.min(gameType.cols - 1, col + 1); c++) {
@@ -159,7 +158,7 @@ public class GameModel implements
                 }
 
 
-                cellOutput.add(new CellOutput(c,r,playingField.getCells()[r][c].getMeaning()));
+                cellOutput.add(playingField.getCells()[c][r]);
 
                 if (playingField.getCells()[r][c].getMeaning() == EMPTY_COLUMN) {
                     openNeighbors(c, r, cellOutput);
@@ -175,10 +174,10 @@ public class GameModel implements
         log.info("Чтение клеток завершено");
     }
 
-    private boolean checkingForBombs(List<CellOutput> cellOutput) {
-        log.info("Проверка на наличие бомб {}", cellOutput);
-        var count = cellOutput.stream()
-                .filter(cell -> cell.number() == MINE)
+    private boolean checkingForBombs(List<Cell> cells) {
+        log.info("Проверка на наличие бомб {}", cells);
+        var count = cells.stream()
+                .filter(Cell::isMine)
                 .count();
 
         return count == 0;
@@ -200,7 +199,7 @@ public class GameModel implements
         return flag;
     }
 
-    private void openNeighbors(int col, int row, List<CellOutput> cellOutput) {
+    private void openNeighbors(int col, int row, List<Cell> cellOutput) {
         log.debug("openNeighbors : {} {}", col, row);
         if (col < 0 || col >= gameType.cols || row < 0 || row >= gameType.rows || playingField.getCells()[row][col].isOpen()) {
             return;
@@ -212,7 +211,7 @@ public class GameModel implements
             updateBomb();
         }
 
-        cellOutput.add(new CellOutput(col,row,playingField.getCells()[row][col].getMeaning()));
+        cellOutput.add(playingField.getCells()[row][col]);
 
         int cellValue = playingField.getCells()[row][col].getMeaning();
         playingField.getCells()[row][col].setOpen(true);
@@ -231,7 +230,7 @@ public class GameModel implements
     }
 
     private boolean checkGameOver(int col, int row) {
-        if (playingField.getCells()[row][col].getMeaning() == MINE) {
+        if (playingField.getCells()[row][col].isMine()) {
             notifyListeners(new GameOver());
             return true;
         } else {
@@ -243,7 +242,7 @@ public class GameModel implements
         if (gameCounters.getOpenCells() == gameCounters.getOpenCellsToWin()) {
             notifyListeners(new GameOver());
             return true;
-        }else {
+        } else {
             return false;
         }
     }
@@ -260,7 +259,7 @@ public class GameModel implements
         notifyListeners(new Won(gameType));
     }
 
-    private void updateTheCellView(List<CellOutput> cellOutput) {
+    private void updateTheCellView(List<Cell> cellOutput) {
         notifyListeners(new UpdateTheCell(cellOutput));
     }
 

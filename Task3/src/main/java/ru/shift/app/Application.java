@@ -34,25 +34,25 @@ public class Application {
     //Model
     private static final GameCounters gameCounters = new GameCounters();
     private static final PlayingField playingField = new PlayingField();
-    private static final GameModel model = new GameModel(GameType.NOVICE , playingField , gameCounters);
+    private static final GameModel model = new GameModel(GameType.NOVICE, playingField, gameCounters);
 
     //Timer
     private static final Timer timer = new Timer(model);
-    private static final TimeObserver timeObserver = new TimeObserver(mainWindow,timer);
+    private static final TimeObserver timeObserver = new TimeObserver(mainWindow, timer);
 
     //GameRecord
     private static final RecordManager recordManager = new RecordManager(highScoresWindow, model, timer);
     private static final RecordController recordController = new RecordController(recordManager);
 
     //Observer
-    private static final GameOverObserver gameOverObserver = new GameOverObserver(playingField,model);
-    private static final BombCountObserver bombCountObserver = new BombCountObserver(mainWindow,model);
-    private static final FlagPlaningObserver flagPlaningObserver = new FlagPlaningObserver(mainWindow,model);
-    private static final GameLoseObserver gameLoseObserver = new GameLoseObserver(loseWindow,model);
-    private static final UpdateTheCellObserver updateTheCellObserver = new UpdateTheCellObserver(mainWindow,model,gameOverObserver);
-    private static final GameRecordObserver gameRecordObserver = new GameRecordObserver(recordsWindow,recordManager);
-    private static final GameWonObserver gameWonObserver = new GameWonObserver(winWindow,model);
-    private static final UpdateGameObserver updateGameObserver = new UpdateGameObserver(mainWindow,model);
+    private static final GameOverObserver gameOverObserver = new GameOverObserver(playingField, model);
+    private static final BombCountObserver bombCountObserver = new BombCountObserver(mainWindow, model);
+    private static final FlagPlaningObserver flagPlaningObserver = new FlagPlaningObserver(mainWindow, model);
+    private static final GameLoseObserver gameLoseObserver = new GameLoseObserver(loseWindow, model);
+    private static final UpdateTheCellObserver updateTheCellObserver = new UpdateTheCellObserver(mainWindow, model, gameOverObserver);
+    private static final GameRecordObserver gameRecordObserver = new GameRecordObserver(recordsWindow, recordManager);
+    private static final GameWonObserver gameWonObserver = new GameWonObserver(winWindow, model);
+    private static final UpdateGameObserver updateGameObserver = new UpdateGameObserver(mainWindow, model);
 
     //Controller
     private static final NewGameController newGameController = new NewGameController(model);

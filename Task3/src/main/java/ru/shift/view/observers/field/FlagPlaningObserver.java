@@ -10,7 +10,7 @@ import ru.shift.view.windows.MainWindow;
 public class FlagPlaningObserver extends Observer {
     private final MainWindow mainWindow;
 
-    public FlagPlaningObserver(MainWindow mainWindow,Publisher... publisher) {
+    public FlagPlaningObserver(MainWindow mainWindow, Publisher... publisher) {
         super(publisher);
         this.mainWindow = mainWindow;
     }
