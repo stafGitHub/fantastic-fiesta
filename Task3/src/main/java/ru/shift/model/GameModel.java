@@ -158,7 +158,7 @@ public class GameModel implements
                 }
 
 
-                cellOutput.add(gameField.getCells()[c][r]);
+                cellOutput.add(gameField.getCells()[r][c]);
 
                 if (gameField.getCells()[r][c].getMeaning() == EMPTY_COLUMN) {
                     openNeighbors(c, r, cellOutput);
@@ -238,7 +238,6 @@ public class GameModel implements
             return false;
         }
     }
-
 
     private boolean checkGameWinner() {
         if (gameCounters.getOpenCells() == gameCounters.getOpenCellsToWin()) {

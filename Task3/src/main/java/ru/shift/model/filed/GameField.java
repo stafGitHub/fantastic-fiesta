@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Random;
 
 @Slf4j
-public class GameField implements Field {
+public class GameField {
     @Getter
     private Cell[][] cells;
     private final Random random = new Random();
@@ -22,7 +22,7 @@ public class GameField implements Field {
         fillTheFieldWithNumbers();
     }
 
-    @Override
+
     public List<Cell> getField() {
         return Arrays.stream(cells)
                 .flatMap(Arrays::stream)

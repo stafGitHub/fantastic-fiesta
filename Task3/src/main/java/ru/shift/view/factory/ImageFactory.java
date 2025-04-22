@@ -6,6 +6,7 @@ import ru.shift.view.GameImage;
 public class ImageFactory {
 
     private ImageFactory() {
+        throw new IllegalStateException("Static class");
     }
 
     public static GameImage getImageForCell(Cell cell) {
@@ -13,6 +14,7 @@ public class ImageFactory {
         if (cell.isMine()) {
             return GameImage.BOMB;
         }
+
         if (cell.getMeaning() == Cell.EMPTY_COLUMN) {
             return GameImage.EMPTY;
         }

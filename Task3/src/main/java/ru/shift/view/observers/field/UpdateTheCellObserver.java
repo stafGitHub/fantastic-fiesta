@@ -31,13 +31,11 @@ public class UpdateTheCellObserver extends Observer {
                                     cell.getX(),
                                     image
                             );
-
                             log.debug("Установка результата во вью : y - {} , x - {} , img - {}",
                                     cell.getY(),
                                     cell.getX(),
                                     image);
-                        }
-                    });
+                        }});
         }
     }
 
