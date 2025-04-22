@@ -17,4 +17,8 @@ public class Cell {
     private boolean flag = false;
     @Setter
     private boolean open = false;
+    @Setter
+    private boolean mine = false;
+    @Setter
+    private boolean empty = false;
 }
