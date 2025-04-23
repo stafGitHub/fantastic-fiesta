@@ -1,6 +1,7 @@
 package ru.shift.view.factory;
 
 import ru.shift.model.dto.Cell;
+import ru.shift.model.dto.CellOutput;
 import ru.shift.view.GameImage;
 
 public class ImageFactory {
@@ -9,17 +10,17 @@ public class ImageFactory {
         throw new IllegalStateException("Static class");
     }
 
-    public static GameImage getImageForCell(Cell cell) {
+    public static GameImage getImageForCell(CellOutput cell) {
 
-        if (cell.isMine()) {
+        if (cell.mine()) {
             return GameImage.BOMB;
         }
 
-        if (cell.getMeaning() == Cell.EMPTY_COLUMN) {
+        if (cell.meaning() == Cell.EMPTY_COLUMN) {
             return GameImage.EMPTY;
         }
 
-        return switch (cell.getMeaning()) {
+        return switch (cell.meaning()) {
             case 1 -> GameImage.NUM_1;
             case 2 -> GameImage.NUM_2;
             case 3 -> GameImage.NUM_3;
@@ -28,7 +29,7 @@ public class ImageFactory {
             case 6 -> GameImage.NUM_6;
             case 7 -> GameImage.NUM_7;
             case 8 -> GameImage.NUM_8;
-            default -> throw new IllegalStateException("Unexpected value: " + cell.getMeaning());
+            default -> throw new IllegalStateException("Unexpected value: " + cell.meaning());
         };
     }
 }

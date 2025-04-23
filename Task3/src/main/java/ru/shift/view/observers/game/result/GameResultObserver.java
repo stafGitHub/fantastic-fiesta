@@ -4,7 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import ru.shift.events.Observer;
 import ru.shift.events.Publisher;
 import ru.shift.model.GameState;
-import ru.shift.model.dto.Cell;
+import ru.shift.model.dto.CellOutput;
 import ru.shift.model.events.GameEvent;
 import ru.shift.model.events.fields.UpdateTheCell;
 import ru.shift.model.events.game.result.GameResult;
@@ -52,11 +52,11 @@ public class GameResultObserver extends Observer implements Publisher {
     }
 
 
-    private List<Cell> findAllTheMines(GameResult gameResult) {
+    private List<CellOutput> findAllTheMines(GameResult gameResult) {
         log.info("Поиск мин");
 
         var listMines = gameResult.cells().stream()
-                .filter(Cell::isMine)
+                .filter(CellOutput::mine)
                 .toList();
 
         log.info("Поиск мин завершён");

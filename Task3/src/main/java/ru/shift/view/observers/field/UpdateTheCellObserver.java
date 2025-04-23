@@ -23,19 +23,20 @@ public class UpdateTheCellObserver extends Observer {
     public void onGameEvent(GameEvent gameEvent) {
         if (gameEvent instanceof UpdateTheCell updateTheCell) {
             updateTheCell.cellOutput()
-                    .forEach(cell -> {
-                        GameImage image = ImageFactory.getImageForCell(cell);
+                    .forEach(cellOutput -> {
+                        GameImage image = ImageFactory.getImageForCell(cellOutput);
                         if (image != null) {
                             mainWindow.setCellImage(
-                                    cell.getY(),
-                                    cell.getX(),
+                                    cellOutput.y(),
+                                    cellOutput.x(),
                                     image
                             );
                             log.debug("Установка результата во вью : y - {} , x - {} , img - {}",
-                                    cell.getY(),
-                                    cell.getX(),
+                                    cellOutput.y(),
+                                    cellOutput.x(),
                                     image);
-                        }});
+                        }
+                    });
         }
     }
 

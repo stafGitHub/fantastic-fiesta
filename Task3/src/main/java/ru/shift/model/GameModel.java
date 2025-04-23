@@ -8,6 +8,7 @@ import ru.shift.events.Observer;
 import ru.shift.events.Publisher;
 import ru.shift.model.counter.GameCounters;
 import ru.shift.model.dto.Cell;
+import ru.shift.model.dto.CellOutput;
 import ru.shift.model.events.GameEvent;
 import ru.shift.model.events.fields.FlagPlaning;
 import ru.shift.model.events.fields.UpdateBombCount;
@@ -48,7 +49,7 @@ public class GameModel implements
     @Override
     public void openCell(int row, int col) {
         log.info("openCellLeftButton");
-        if (gameState == GameState.WIN || gameState == GameState.LOSE || gameField.getCell(row,col).isFlag()) {
+        if (gameState == GameState.WIN || gameState == GameState.LOSE || gameField.getCell(row, col).isFlag()) {
             return;
         }
 
@@ -81,23 +82,23 @@ public class GameModel implements
     @Override
     public void openAround(int row, int col) {
         log.info("openCellWithMouseCell");
-        if (gameState == GameState.WIN || gameState == GameState.LOSE || gameField.getCell(row,col).isFlag()) {
+        if (gameState == GameState.WIN || gameState == GameState.LOSE || gameField.getCell(row, col).isFlag()) {
             return;
         }
 
-        var cellOutput = new ArrayList<Cell>();
+        var cells = new ArrayList<Cell>();
         var flags = countFlag(row, col);
 
-        if (flags < gameField.getCell(row,col).getMeaning() ||
-                (gameField.getCell(row,col).getMeaning() == EMPTY_COLUMN && gameField.getCell(row,col).isOpen()) ||
-                !gameField.getCell(row,col).isOpen()) {
+        if (flags < gameField.getCell(row, col).getMeaning() ||
+                (gameField.getCell(row, col).getMeaning() == EMPTY_COLUMN && gameField.getCell(row, col).isOpen()) ||
+                !gameField.getCell(row, col).isOpen()) {
             return;
         }
 
-        readingCellsBySquareCoordinates(row, col, cellOutput);
-        updateTheCellView(cellOutput);
+        readingCellsBySquareCoordinates(row, col, cells);
+        updateTheCellView(cells);
 
-        if (!checkingForBombs(cellOutput)) {
+        if (!checkingForBombs(cells)) {
             gameOver();
             gameLose();
             return;
@@ -110,16 +111,16 @@ public class GameModel implements
 
     @Override
     public void flagPlaning(int row, int col) {
-        if (gameField.getCell(row,col).isFlag()) {
-            gameField.getCell(row,col).setFlag(false);
+        if (gameField.getCell(row, col).isFlag()) {
+            gameField.getCell(row, col).setFlag(false);
             notifyListeners(new FlagPlaning(row, col, false));
             gameCounters.incrementRemainingFlags();
             updateBomb();
         } else {
-            if (gameField.getCell(row,col).isOpen() || gameCounters.getRemainingFlags() == 0) {
+            if (gameField.getCell(row, col).isOpen() || gameCounters.getRemainingFlags() == 0) {
                 return;
             }
-            gameField.getCell(row,col).setFlag(true);
+            gameField.getCell(row, col).setFlag(true);
             notifyListeners(new FlagPlaning(row, col, true));
             gameCounters.decrementRemainingFlags();
             updateBomb();
@@ -153,21 +154,21 @@ public class GameModel implements
         log.info("Чтение клеток вокруг координаты");
         for (int r = Math.max(0, row - 1); r <= Math.min(gameType.rows - 1, row + 1); r++) {
             for (int c = Math.max(0, col - 1); c <= Math.min(gameType.cols - 1, col + 1); c++) {
-                if (r == row && c == col || gameField.getCell(r,c).isFlag() || gameField.getCell(r,c).isOpen()) {
+                if (r == row && c == col || gameField.getCell(r, c).isFlag() || gameField.getCell(r, c).isOpen()) {
                     continue;
                 }
 
 
-                cellOutput.add(gameField.getCell(r,c));
+                cellOutput.add(gameField.getCell(r, c));
 
-                if (gameField.getCell(r,c).getMeaning() == EMPTY_COLUMN) {
+                if (gameField.getCell(r, c).getMeaning() == EMPTY_COLUMN) {
                     openNeighbors(c, r, cellOutput);
                 } else {
                     gameCounters.incrementOpenCells();
                 }
 
 
-                gameField.getCell(r,c).setOpen(true);
+                gameField.getCell(r, c).setOpen(true);
 
             }
         }
@@ -177,7 +178,7 @@ public class GameModel implements
     private boolean checkingForBombs(List<Cell> cells) {
         log.info("Проверка на наличие бомб {}", cells);
         var count = cells.stream()
-                .filter(cell -> !cell.isFlag())
+                .filter(cellOutput -> !cellOutput.isFlag())
                 .filter(Cell::isMine)
                 .count();
 
@@ -190,7 +191,7 @@ public class GameModel implements
         int flag = 0;
         for (int r = Math.max(0, row - 1); r <= Math.min(gameType.rows - 1, row + 1); r++) {
             for (int c = Math.max(0, col - 1); c <= Math.min(gameType.cols - 1, col + 1); c++) {
-                if (gameField.getCell(r,c).isFlag()) {
+                if (gameField.getCell(r, c).isFlag()) {
                     flag++;
                 }
             }
@@ -231,7 +232,7 @@ public class GameModel implements
     }
 
     private boolean checkGameOver(int col, int row) {
-        if (gameField.getCell(row,col).isMine()) {
+        if (gameField.getCell(row, col).isMine()) {
             gameOver();
             return true;
         } else {
@@ -255,19 +256,19 @@ public class GameModel implements
     private void gameLose() {
         log.info("Game over");
         gameState = GameState.LOSE;
-        var gameResult = new GameResult(GameState.LOSE, gameField.getField(), gameType);
+        var gameResult = new GameResult(GameState.LOSE, CellOutput.from(gameField.getField()), gameType);
         notifyListeners(gameResult);
     }
 
     private void gameWon() {
         log.info("Game won");
         gameState = GameState.WIN;
-        var gameResult = new GameResult(GameState.WIN, gameField.getField(), gameType);
+        var gameResult = new GameResult(GameState.WIN, CellOutput.from(gameField.getField()), gameType);
         notifyListeners(gameResult);
     }
 
     private void updateTheCellView(List<Cell> cellOutput) {
-        notifyListeners(new UpdateTheCell(cellOutput));
+        notifyListeners(new UpdateTheCell(CellOutput.from(cellOutput)));
     }
 
     private void updateBomb() {
