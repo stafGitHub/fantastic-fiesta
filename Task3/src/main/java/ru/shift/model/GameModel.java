@@ -48,7 +48,7 @@ public class GameModel implements
     @Override
     public void openCell(int row, int col) {
         log.info("openCellLeftButton");
-        if (gameState == GameState.WIN || gameState == GameState.LOSE || gameField.getCells()[row][col].isFlag()) {
+        if (gameState == GameState.WIN || gameState == GameState.LOSE || gameField.getCell(row,col).isFlag()) {
             return;
         }
 
@@ -81,16 +81,16 @@ public class GameModel implements
     @Override
     public void openAround(int row, int col) {
         log.info("openCellWithMouseCell");
-        if (gameState == GameState.WIN || gameState == GameState.LOSE || gameField.getCells()[row][col].isFlag()) {
+        if (gameState == GameState.WIN || gameState == GameState.LOSE || gameField.getCell(row,col).isFlag()) {
             return;
         }
 
         var cellOutput = new ArrayList<Cell>();
         var flags = countFlag(row, col);
 
-        if (flags < gameField.getCells()[row][col].getMeaning() ||
-                (gameField.getCells()[row][col].getMeaning() == EMPTY_COLUMN && gameField.getCells()[row][col].isOpen()) ||
-                !gameField.getCells()[row][col].isOpen()) {
+        if (flags < gameField.getCell(row,col).getMeaning() ||
+                (gameField.getCell(row,col).getMeaning() == EMPTY_COLUMN && gameField.getCell(row,col).isOpen()) ||
+                !gameField.getCell(row,col).isOpen()) {
             return;
         }
 
@@ -110,16 +110,16 @@ public class GameModel implements
 
     @Override
     public void flagPlaning(int row, int col) {
-        if (gameField.getCells()[row][col].isFlag()) {
-            gameField.getCells()[row][col].setFlag(false);
+        if (gameField.getCell(row,col).isFlag()) {
+            gameField.getCell(row,col).setFlag(false);
             notifyListeners(new FlagPlaning(row, col, false));
             gameCounters.incrementRemainingFlags();
             updateBomb();
         } else {
-            if (gameField.getCells()[row][col].isOpen() || gameCounters.getRemainingFlags() == 0) {
+            if (gameField.getCell(row,col).isOpen() || gameCounters.getRemainingFlags() == 0) {
                 return;
             }
-            gameField.getCells()[row][col].setFlag(true);
+            gameField.getCell(row,col).setFlag(true);
             notifyListeners(new FlagPlaning(row, col, true));
             gameCounters.decrementRemainingFlags();
             updateBomb();
@@ -153,21 +153,21 @@ public class GameModel implements
         log.info("Чтение клеток вокруг координаты");
         for (int r = Math.max(0, row - 1); r <= Math.min(gameType.rows - 1, row + 1); r++) {
             for (int c = Math.max(0, col - 1); c <= Math.min(gameType.cols - 1, col + 1); c++) {
-                if (r == row && c == col || gameField.getCells()[r][c].isFlag() || gameField.getCells()[r][c].isOpen()) {
+                if (r == row && c == col || gameField.getCell(r,c).isFlag() || gameField.getCell(r,c).isOpen()) {
                     continue;
                 }
 
 
-                cellOutput.add(gameField.getCells()[r][c]);
+                cellOutput.add(gameField.getCell(r,c));
 
-                if (gameField.getCells()[r][c].getMeaning() == EMPTY_COLUMN) {
+                if (gameField.getCell(r,c).getMeaning() == EMPTY_COLUMN) {
                     openNeighbors(c, r, cellOutput);
                 } else {
                     gameCounters.incrementOpenCells();
                 }
 
 
-                gameField.getCells()[r][c].setOpen(true);
+                gameField.getCell(r,c).setOpen(true);
 
             }
         }
@@ -190,7 +190,7 @@ public class GameModel implements
         int flag = 0;
         for (int r = Math.max(0, row - 1); r <= Math.min(gameType.rows - 1, row + 1); r++) {
             for (int c = Math.max(0, col - 1); c <= Math.min(gameType.cols - 1, col + 1); c++) {
-                if (gameField.getCells()[r][c].isFlag()) {
+                if (gameField.getCell(r,c).isFlag()) {
                     flag++;
                 }
             }
@@ -202,20 +202,20 @@ public class GameModel implements
 
     private void openNeighbors(int col, int row, List<Cell> cellOutput) {
         log.debug("openNeighbors : {} {}", col, row);
-        if (col < 0 || col >= gameType.cols || row < 0 || row >= gameType.rows || gameField.getCells()[row][col].isOpen()) {
+        if (col < 0 || col >= gameType.cols || row < 0 || row >= gameType.rows || gameField.getCell(row, col).isOpen()) {
             return;
         }
 
-        if (gameField.getCells()[row][col].isFlag()) {
-            gameField.getCells()[row][col].setFlag(false);
+        if (gameField.getCell(row, col).isFlag()) {
+            gameField.getCell(row, col).setFlag(false);
             gameCounters.incrementRemainingFlags();
             updateBomb();
         }
 
-        cellOutput.add(gameField.getCells()[row][col]);
+        cellOutput.add(gameField.getCell(row, col));
 
-        int cellValue = gameField.getCells()[row][col].getMeaning();
-        gameField.getCells()[row][col].setOpen(true);
+        int cellValue = gameField.getCell(row, col).getMeaning();
+        gameField.getCell(row, col).setOpen(true);
         gameCounters.incrementOpenCells();
 
         if (cellValue != EMPTY_COLUMN) {
@@ -231,7 +231,7 @@ public class GameModel implements
     }
 
     private boolean checkGameOver(int col, int row) {
-        if (gameField.getCells()[row][col].isMine()) {
+        if (gameField.getCell(row,col).isMine()) {
             gameOver();
             return true;
         } else {

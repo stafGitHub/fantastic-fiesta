@@ -1,6 +1,5 @@
 package ru.shift.model.filed;
 
-import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import ru.shift.model.GameType;
 import ru.shift.model.dto.Cell;
@@ -11,7 +10,6 @@ import java.util.Random;
 
 @Slf4j
 public class GameField {
-    @Getter
     private Cell[][] cells;
     private final Random random = new Random();
     private GameType gameType;
@@ -32,6 +30,10 @@ public class GameField {
     public void createField(GameType gameType) {
         this.gameType = gameType;
         initCells();
+    }
+
+    public Cell getCell(int row, int col) {
+        return cells[row][col];
     }
 
     private void initCells() {

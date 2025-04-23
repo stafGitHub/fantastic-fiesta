@@ -1,4 +1,4 @@
-package ru.shift.model.events.fields;
+package ru.shift.timer.events;
 
 import ru.shift.model.events.GameEvent;
 
