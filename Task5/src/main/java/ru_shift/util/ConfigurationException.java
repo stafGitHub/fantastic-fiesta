@@ -1,4 +1,4 @@
-package ru_shift.configuration;
+package ru_shift.util;
 
 public class ConfigurationException extends RuntimeException {
     public static final String ERROR_MESSAGE = "Ошибка загрузки конфигурации";

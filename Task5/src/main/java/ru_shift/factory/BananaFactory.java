@@ -4,7 +4,9 @@ import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import ru_shift.configuration.Config;
 import ru_shift.consumer.BananaConsumer;
+import ru_shift.consumer.Consumer;
 import ru_shift.producer.BananaProducer;
+import ru_shift.producer.Producer;
 import ru_shift.storage.BananaStorage;
 
 import java.util.ArrayList;
@@ -14,8 +16,8 @@ import java.util.List;
 public class BananaFactory {
     @Getter
     private final BananaStorage storage;
-    private final List<BananaProducer> producers;
-    private final List<BananaConsumer> consumers;
+    private final List<Producer> producers;
+    private final List<Consumer> consumers;
     private final List<Thread> threads;
 
     public BananaFactory(Config config) {
@@ -48,15 +50,15 @@ public class BananaFactory {
 
     public void restart() {
         log.info("Перезапуск производства");
-        producers.forEach(BananaProducer::restart);
-        consumers.forEach(BananaConsumer::restart);
+        producers.forEach(Producer::restart);
+        consumers.forEach(Consumer::restart);
     }
 
     public void shutdown() {
         log.info("Начало остановки производства");
 
-        producers.forEach(BananaProducer::shutdown);
-        consumers.forEach(BananaConsumer::shutdown);
+        producers.forEach(Producer::shutdown);
+        consumers.forEach(Consumer::shutdown);
 
         threads.forEach(Thread::interrupt);
 

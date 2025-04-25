@@ -2,9 +2,9 @@ package ru_shift;
 
 import lombok.extern.slf4j.Slf4j;
 import ru_shift.configuration.Config;
-import ru_shift.configuration.ConfigurationException;
+import ru_shift.util.ConfigurationException;
 import ru_shift.factory.BananaFactory;
-import ru_shift.factory.ConsoleProgramRestart;
+import ru_shift.util.ConsoleProgramRestart;
 
 @Slf4j
 public class Main {

@@ -1,4 +1,4 @@
-package ru_shift.factory;
+package ru_shift.util;
 
 import lombok.extern.slf4j.Slf4j;
 
