@@ -10,13 +10,16 @@ public class BananaProducer implements Producer {
     private final int productionTime;
     private final Storage storage;
     private volatile boolean isRunning = true;
+    private static final Object lock = new Object();
     private static int nextId = 1;
 
     public BananaProducer(int productionTime, Storage storage) {
-        this.id = nextId++;
-        this.productionTime = productionTime;
-        this.storage = storage;
-        log.info("Создан производитель {}", id);
+        synchronized (lock) {
+            this.id = nextId++;
+            this.productionTime = productionTime;
+            this.storage = storage;
+            log.info("Создан производитель {}", id);
+        }
     }
 
     @Override
@@ -46,5 +49,10 @@ public class BananaProducer implements Producer {
     @Override
     public int getProducerId() {
         return id;
+    }
+
+    @Override
+    public void restart() {
+        isRunning = true;
     }
 }

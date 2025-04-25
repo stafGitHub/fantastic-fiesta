@@ -10,13 +10,16 @@ public class BananaConsumer implements Consumer {
     private final int consumptionTime;
     private final Storage storage;
     private volatile boolean isRunning = true;
+    private static final Object lock = new Object();
     private static int nextId = 1;
 
     public BananaConsumer(int consumptionTime, Storage storage) {
-        this.id = nextId++;
-        this.consumptionTime = consumptionTime;
-        this.storage = storage;
-        log.info("Создан потребитель {}", id);
+        synchronized (lock) {
+            this.id = nextId++;
+            this.consumptionTime = consumptionTime;
+            this.storage = storage;
+            log.info("Создан потребитель {}", id);
+        }
     }
 
     @Override
@@ -45,5 +48,10 @@ public class BananaConsumer implements Consumer {
     @Override
     public int getConsumerId() {
         return id;
+    }
+
+    @Override
+    public void restart() {
+        isRunning = true;
     }
 }

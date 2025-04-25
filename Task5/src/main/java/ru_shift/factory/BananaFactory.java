@@ -1,5 +1,6 @@
 package ru_shift.factory;
 
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import ru_shift.configuration.Config;
 import ru_shift.consumer.BananaConsumer;
@@ -11,6 +12,7 @@ import java.util.List;
 
 @Slf4j
 public class BananaFactory {
+    @Getter
     private final BananaStorage storage;
     private final List<BananaProducer> producers;
     private final List<BananaConsumer> consumers;
@@ -44,8 +46,14 @@ public class BananaFactory {
         });
     }
 
+    public void restart() {
+        log.info("Перезапуск производства");
+        producers.forEach(BananaProducer::restart);
+        consumers.forEach(BananaConsumer::restart);
+    }
+
     public void shutdown() {
-        log.info("Начало завершения работы...");
+        log.info("Начало остановки производства");
 
         producers.forEach(BananaProducer::shutdown);
         consumers.forEach(BananaConsumer::shutdown);
@@ -54,16 +62,15 @@ public class BananaFactory {
 
         threads.forEach(t -> {
             try {
-                t.join(2);
-                if (t.isAlive()) {
-                    log.warn("Поток {} не завершился в течение таймаута", t.getName());
-                }
+                t.join();
             } catch (InterruptedException e) {
                 log.warn("Прерывание при ожидании завершения потока");
                 Thread.currentThread().interrupt();
             }
         });
 
-        log.info("Фабрика остановлена");
+        threads.clear();
+
+        log.info("Производство остановлено");
     }
 }

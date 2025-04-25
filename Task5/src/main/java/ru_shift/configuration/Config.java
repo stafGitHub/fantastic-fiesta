@@ -1,7 +1,9 @@
 package ru_shift.configuration;
 
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Getter
 public class Config {
     private final int producerCount;
@@ -10,13 +12,18 @@ public class Config {
     private final int consumerTime;
     private final int storageSize;
 
-    public Config(String configFile) throws ErrorConfiguration {
-        var property = UtilConfig.getProperty(configFile);
+    public Config(String configFile) throws ConfigurationException {
+        try {
+            var property = FileConfig.getProperty(configFile);
 
-        this.producerCount = UtilConfig.getPropertyElement(property, "producerCount");
-        this.consumerCount = UtilConfig.getPropertyElement(property, "consumerCount");
-        this.producerTime = UtilConfig.getPropertyElement(property, "producerTime");
-        this.consumerTime = UtilConfig.getPropertyElement(property, "consumerTime");
-        this.storageSize = UtilConfig.getPropertyElement(property, "storageSize");
+            this.producerCount = FileConfig.getPropertyElement(property, "producerCount");
+            this.consumerCount = FileConfig.getPropertyElement(property, "consumerCount");
+            this.producerTime = FileConfig.getPropertyElement(property, "producerTime");
+            this.consumerTime = FileConfig.getPropertyElement(property, "consumerTime");
+            this.storageSize = FileConfig.getPropertyElement(property, "storageSize");
+        } catch (ConfigurationException configurationException) {
+            log.warn("Ошибка создания : {}", configurationException.getMessage());
+            throw configurationException;
+        }
     }
 }

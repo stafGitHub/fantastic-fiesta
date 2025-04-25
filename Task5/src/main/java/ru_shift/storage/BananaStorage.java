@@ -2,6 +2,7 @@ package ru_shift.storage;
 
 import lombok.extern.slf4j.Slf4j;
 import ru_shift.resources.Resource;
+
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -44,4 +45,11 @@ public class BananaStorage implements Storage {
         }
     }
 
+    @Override
+    public String toString() {
+        return "BananaStorage{" +
+                "capacity=" + capacity +
+                ", storage=" + storage.size() +
+                '}';
+    }
 }
