@@ -10,7 +10,6 @@ public class BananaStorage implements Storage {
     private final int capacity;
     private final Queue<Resource> storage = new LinkedList<>();
     private final Object lock = new Object();
-    private volatile boolean isRunning = true;
 
     public BananaStorage(int capacity) {
         this.capacity = capacity;
@@ -20,13 +19,9 @@ public class BananaStorage implements Storage {
     @Override
     public void addResource(Resource resource) throws InterruptedException {
         synchronized (lock) {
-            while (isRunning && storage.size() >= capacity) {
+            while (storage.size() >= capacity) {
                 log.warn("Склад полон ({}), ожидание...", storage.size());
                 lock.wait();
-            }
-
-            if (!isRunning){
-                throw new InterruptedException("Работа склада остановлена");
             }
             storage.add(resource);
             log.info("Добавлен ресурс {}. На складе: {}/{}", resource, storage.size(), capacity);
@@ -37,13 +32,9 @@ public class BananaStorage implements Storage {
     @Override
     public Resource takeResource() throws InterruptedException {
         synchronized (lock) {
-            while (isRunning && storage.isEmpty()) {
+            while (storage.isEmpty()) {
                 log.warn("Склад пуст, ожидание...");
                 lock.wait();
-            }
-
-            if (!isRunning){
-                throw new InterruptedException("Работа склада остановлена");
             }
 
             Resource resource = storage.poll();
@@ -53,12 +44,4 @@ public class BananaStorage implements Storage {
         }
     }
 
-    @Override
-    public void shutdown() {
-        isRunning = false;
-        synchronized (lock) {
-            lock.notifyAll();
-        }
-        log.info("Склад остановлен");
-    }
 }

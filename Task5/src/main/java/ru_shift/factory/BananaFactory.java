@@ -1,6 +1,7 @@
 package ru_shift.factory;
 
 import lombok.extern.slf4j.Slf4j;
+import ru_shift.configuration.Config;
 import ru_shift.consumer.BananaConsumer;
 import ru_shift.producer.BananaProducer;
 import ru_shift.storage.BananaStorage;
@@ -15,7 +16,7 @@ public class BananaFactory {
     private final List<BananaConsumer> consumers;
     private final List<Thread> threads;
 
-    public BananaFactory(FactoryConfig config) {
+    public BananaFactory(Config config) {
         this.storage = new BananaStorage(config.getStorageSize());
         this.producers = new ArrayList<>();
         this.consumers = new ArrayList<>();
@@ -45,8 +46,6 @@ public class BananaFactory {
 
     public void shutdown() {
         log.info("Начало завершения работы...");
-
-        storage.shutdown();
 
         producers.forEach(BananaProducer::shutdown);
         consumers.forEach(BananaConsumer::shutdown);

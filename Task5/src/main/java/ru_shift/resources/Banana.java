@@ -8,10 +8,13 @@ import lombok.extern.slf4j.Slf4j;
 public class Banana implements Resource {
     private final int id;
     private static int nextId = 1;
+    private static final Object lock = new Object();
 
     public Banana() {
-        this.id = nextId++;
-        log.trace("Created new banana: {}", this);
+        synchronized (lock) {
+            this.id = nextId++;
+        }
+        log.trace("Создан новый банан: {}", this);
     }
 
     @Override

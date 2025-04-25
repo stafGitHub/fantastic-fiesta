@@ -1,0 +1,818 @@
+13:48:31 [INFO] [main] ru_shift.configuration.UtilConfig - Получено значение : producerCount - 10
+13:48:31 [INFO] [main] ru_shift.configuration.UtilConfig - Получено значение : consumerCount - 3
+13:48:31 [INFO] [main] ru_shift.configuration.UtilConfig - Получено значение : producerTime - 1500
+13:48:31 [INFO] [main] ru_shift.configuration.UtilConfig - Получено значение : consumerTime - 1500
+13:48:31 [INFO] [main] ru_shift.configuration.UtilConfig - Получено значение : storageSize - 200
+13:48:31 [INFO] [main] ru_shift.storage.BananaStorage - Склад создан, вместимость: 200
+13:48:31 [INFO] [main] ru_shift.producer.BananaProducer - Создан производитель 1
+13:48:31 [INFO] [main] ru_shift.producer.BananaProducer - Создан производитель 2
+13:48:31 [INFO] [main] ru_shift.producer.BananaProducer - Создан производитель 3
+13:48:31 [INFO] [main] ru_shift.producer.BananaProducer - Создан производитель 4
+13:48:31 [INFO] [main] ru_shift.producer.BananaProducer - Создан производитель 5
+13:48:31 [INFO] [main] ru_shift.producer.BananaProducer - Создан производитель 6
+13:48:31 [INFO] [main] ru_shift.producer.BananaProducer - Создан производитель 7
+13:48:31 [INFO] [main] ru_shift.producer.BananaProducer - Создан производитель 8
+13:48:31 [INFO] [main] ru_shift.producer.BananaProducer - Создан производитель 9
+13:48:31 [INFO] [main] ru_shift.producer.BananaProducer - Создан производитель 10
+13:48:31 [INFO] [main] ru_shift.consumer.BananaConsumer - Создан потребитель 1
+13:48:31 [INFO] [main] ru_shift.consumer.BananaConsumer - Создан потребитель 2
+13:48:31 [INFO] [main] ru_shift.consumer.BananaConsumer - Создан потребитель 3
+13:48:31 [INFO] [main] ru_shift.factory.BananaFactory - Запуск фабрики...
+13:48:31 [INFO] [Producer-5] ru_shift.producer.BananaProducer - Производитель 5 начал работу
+13:48:31 [INFO] [Producer-3] ru_shift.producer.BananaProducer - Производитель 3 начал работу
+13:48:31 [INFO] [Producer-4] ru_shift.producer.BananaProducer - Производитель 4 начал работу
+13:48:31 [INFO] [Producer-6] ru_shift.producer.BananaProducer - Производитель 6 начал работу
+13:48:31 [INFO] [Producer-2] ru_shift.producer.BananaProducer - Производитель 2 начал работу
+13:48:31 [INFO] [Producer-7] ru_shift.producer.BananaProducer - Производитель 7 начал работу
+13:48:31 [INFO] [Producer-8] ru_shift.producer.BananaProducer - Производитель 8 начал работу
+13:48:31 [INFO] [Producer-9] ru_shift.producer.BananaProducer - Производитель 9 начал работу
+13:48:31 [INFO] [Producer-1] ru_shift.producer.BananaProducer - Производитель 1 начал работу
+13:48:31 [INFO] [Producer-10] ru_shift.producer.BananaProducer - Производитель 10 начал работу
+13:48:31 [INFO] [Consumer-2] ru_shift.consumer.BananaConsumer - Потребитель 2 начал работу
+13:48:31 [INFO] [Consumer-1] ru_shift.consumer.BananaConsumer - Потребитель 1 начал работу
+13:48:31 [INFO] [Consumer-3] ru_shift.consumer.BananaConsumer - Потребитель 3 начал работу
+13:48:31 [WARN] [Consumer-2] ru_shift.storage.BananaStorage - Склад пуст, ожидание...
+13:48:31 [WARN] [Consumer-3] ru_shift.storage.BananaStorage - Склад пуст, ожидание...
+13:48:31 [WARN] [Consumer-1] ru_shift.storage.BananaStorage - Склад пуст, ожидание...
+13:48:33 [INFO] [Producer-3] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=2). На складе: 1/200
+13:48:33 [INFO] [Consumer-2] ru_shift.storage.BananaStorage - Забран ресурс Banana(id=2). На складе: 0/200
+13:48:33 [WARN] [Consumer-1] ru_shift.storage.BananaStorage - Склад пуст, ожидание...
+13:48:33 [WARN] [Consumer-3] ru_shift.storage.BananaStorage - Склад пуст, ожидание...
+13:48:33 [INFO] [Producer-10] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=9). На складе: 1/200
+13:48:33 [INFO] [Producer-4] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=8). На складе: 2/200
+13:48:33 [INFO] [Producer-7] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=5). На складе: 3/200
+13:48:33 [INFO] [Producer-6] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=1). На складе: 4/200
+13:48:33 [INFO] [Producer-8] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=7). На складе: 5/200
+13:48:33 [INFO] [Producer-9] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=2). На складе: 6/200
+13:48:33 [INFO] [Producer-1] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=6). На складе: 7/200
+13:48:33 [INFO] [Producer-2] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=3). На складе: 8/200
+13:48:33 [INFO] [Producer-5] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=4). На складе: 9/200
+13:48:33 [INFO] [Consumer-3] ru_shift.storage.BananaStorage - Забран ресурс Banana(id=9). На складе: 8/200
+13:48:33 [INFO] [Consumer-1] ru_shift.storage.BananaStorage - Забран ресурс Banana(id=8). На складе: 7/200
+13:48:34 [INFO] [Consumer-2] ru_shift.storage.BananaStorage - Забран ресурс Banana(id=5). На складе: 6/200
+13:48:34 [INFO] [Producer-3] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=10). На складе: 7/200
+13:48:34 [INFO] [Producer-4] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=11). На складе: 8/200
+13:48:34 [INFO] [Producer-6] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=13). На складе: 9/200
+13:48:34 [INFO] [Producer-10] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=14). На складе: 10/200
+13:48:34 [INFO] [Producer-7] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=12). На складе: 11/200
+13:48:34 [INFO] [Producer-5] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=15). На складе: 12/200
+13:48:34 [INFO] [Producer-2] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=19). На складе: 13/200
+13:48:34 [INFO] [Consumer-3] ru_shift.storage.BananaStorage - Забран ресурс Banana(id=1). На складе: 12/200
+13:48:34 [INFO] [Producer-1] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=18). На складе: 13/200
+13:48:34 [INFO] [Producer-9] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=17). На складе: 14/200
+13:48:34 [INFO] [Producer-8] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=16). На складе: 15/200
+13:48:34 [INFO] [Consumer-1] ru_shift.storage.BananaStorage - Забран ресурс Banana(id=7). На складе: 14/200
+13:48:36 [INFO] [Producer-3] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=20). На складе: 15/200
+13:48:36 [INFO] [Consumer-2] ru_shift.storage.BananaStorage - Забран ресурс Banana(id=2). На складе: 14/200
+13:48:36 [INFO] [Producer-7] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=21). На складе: 15/200
+13:48:36 [INFO] [Producer-2] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=25). На складе: 16/200
+13:48:36 [INFO] [Producer-6] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=26). На складе: 17/200
+13:48:36 [INFO] [Producer-10] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=24). На складе: 18/200
+13:48:36 [INFO] [Producer-5] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=22). На складе: 19/200
+13:48:36 [INFO] [Producer-4] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=23). На складе: 20/200
+13:48:36 [INFO] [Producer-1] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=28). На складе: 21/200
+13:48:36 [INFO] [Producer-9] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=27). На складе: 22/200
+13:48:36 [INFO] [Consumer-3] ru_shift.storage.BananaStorage - Забран ресурс Banana(id=6). На складе: 21/200
+13:48:36 [INFO] [Producer-8] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=29). На складе: 22/200
+13:48:36 [INFO] [Consumer-1] ru_shift.storage.BananaStorage - Забран ресурс Banana(id=3). На складе: 21/200
+13:48:37 [INFO] [Producer-7] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=30). На складе: 22/200
+13:48:37 [INFO] [Producer-10] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=31). На складе: 23/200
+13:48:37 [INFO] [Producer-3] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=33). На складе: 24/200
+13:48:37 [INFO] [Consumer-2] ru_shift.storage.BananaStorage - Забран ресурс Banana(id=4). На складе: 23/200
+13:48:37 [INFO] [Producer-2] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=32). На складе: 24/200
+13:48:37 [INFO] [Producer-6] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=34). На складе: 25/200
+13:48:37 [INFO] [Producer-5] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=35). На складе: 26/200
+13:48:37 [INFO] [Producer-4] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=36). На складе: 27/200
+13:48:37 [INFO] [Producer-1] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=37). На складе: 28/200
+13:48:37 [INFO] [Producer-8] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=38). На складе: 29/200
+13:48:37 [INFO] [Consumer-3] ru_shift.storage.BananaStorage - Забран ресурс Banana(id=10). На складе: 28/200
+13:48:37 [INFO] [Producer-9] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=38). На складе: 29/200
+13:48:37 [INFO] [Consumer-1] ru_shift.storage.BananaStorage - Забран ресурс Banana(id=11). На складе: 28/200
+13:48:39 [INFO] [Producer-4] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=39). На складе: 29/200
+13:48:39 [INFO] [Producer-6] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=42). На складе: 30/200
+13:48:39 [INFO] [Consumer-2] ru_shift.storage.BananaStorage - Забран ресурс Banana(id=13). На складе: 29/200
+13:48:39 [INFO] [Producer-5] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=41). На складе: 30/200
+13:48:39 [INFO] [Producer-2] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=39). На складе: 31/200
+13:48:39 [INFO] [Producer-7] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=39). На складе: 32/200
+13:48:39 [INFO] [Producer-1] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=40). На складе: 33/200
+13:48:39 [INFO] [Producer-10] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=39). На складе: 34/200
+13:48:39 [INFO] [Producer-3] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=39). На складе: 35/200
+13:48:39 [INFO] [Producer-8] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=43). На складе: 36/200
+13:48:39 [INFO] [Consumer-3] ru_shift.storage.BananaStorage - Забран ресурс Banana(id=14). На складе: 35/200
+13:48:39 [INFO] [Producer-9] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=44). На складе: 36/200
+13:48:39 [INFO] [Consumer-1] ru_shift.storage.BananaStorage - Забран ресурс Banana(id=12). На складе: 35/200
+13:48:40 [INFO] [Producer-5] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=45). На складе: 36/200
+13:48:40 [INFO] [Consumer-2] ru_shift.storage.BananaStorage - Забран ресурс Banana(id=15). На складе: 35/200
+13:48:40 [INFO] [Producer-7] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=51). На складе: 36/200
+13:48:40 [INFO] [Producer-3] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=51). На складе: 37/200
+13:48:40 [INFO] [Producer-6] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=50). На складе: 38/200
+13:48:40 [INFO] [Producer-4] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=49). На складе: 39/200
+13:48:40 [INFO] [Producer-2] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=48). На складе: 40/200
+13:48:40 [INFO] [Producer-1] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=47). На складе: 41/200
+13:48:40 [INFO] [Producer-10] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=46). На складе: 42/200
+13:48:40 [INFO] [Producer-8] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=52). На складе: 43/200
+13:48:40 [INFO] [Producer-9] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=53). На складе: 44/200
+13:48:40 [INFO] [Consumer-3] ru_shift.storage.BananaStorage - Забран ресурс Banana(id=19). На складе: 43/200
+13:48:40 [INFO] [Consumer-1] ru_shift.storage.BananaStorage - Забран ресурс Banana(id=18). На складе: 42/200
+13:48:42 [INFO] [Producer-3] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=56). На складе: 43/200
+13:48:42 [INFO] [Producer-5] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=54). На складе: 44/200
+13:48:42 [INFO] [Producer-2] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=58). На складе: 45/200
+13:48:42 [INFO] [Producer-6] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=58). На складе: 46/200
+13:48:42 [INFO] [Producer-4] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=57). На складе: 47/200
+13:48:42 [INFO] [Producer-7] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=55). На складе: 48/200
+13:48:42 [INFO] [Consumer-2] ru_shift.storage.BananaStorage - Забран ресурс Banana(id=17). На складе: 47/200
+13:48:42 [INFO] [Producer-1] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=59). На складе: 48/200
+13:48:42 [INFO] [Producer-10] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=60). На складе: 49/200
+13:48:42 [INFO] [Producer-8] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=61). На складе: 50/200
+13:48:42 [INFO] [Producer-9] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=62). На складе: 51/200
+13:48:42 [INFO] [Consumer-3] ru_shift.storage.BananaStorage - Забран ресурс Banana(id=16). На складе: 50/200
+13:48:42 [INFO] [Consumer-1] ru_shift.storage.BananaStorage - Забран ресурс Banana(id=20). На складе: 49/200
+13:48:43 [INFO] [Producer-6] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=63). На складе: 50/200
+13:48:43 [INFO] [Consumer-2] ru_shift.storage.BananaStorage - Забран ресурс Banana(id=21). На складе: 49/200
+13:48:43 [INFO] [Producer-1] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=65). На складе: 50/200
+13:48:43 [INFO] [Producer-3] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=64). На складе: 51/200
+13:48:43 [INFO] [Producer-5] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=63). На складе: 52/200
+13:48:43 [INFO] [Producer-4] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=63). На складе: 53/200
+13:48:43 [INFO] [Producer-7] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=63). На складе: 54/200
+13:48:43 [INFO] [Producer-2] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=63). На складе: 55/200
+13:48:43 [INFO] [Producer-10] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=66). На складе: 56/200
+13:48:43 [INFO] [Producer-9] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=67). На складе: 57/200
+13:48:43 [INFO] [Producer-8] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=66). На складе: 58/200
+13:48:43 [INFO] [Consumer-3] ru_shift.storage.BananaStorage - Забран ресурс Banana(id=25). На складе: 57/200
+13:48:43 [INFO] [Consumer-1] ru_shift.storage.BananaStorage - Забран ресурс Banana(id=26). На складе: 56/200
+13:52:55 [INFO] [main] ru_shift.configuration.UtilConfig - Получено значение : producerCount - 10
+13:52:55 [INFO] [main] ru_shift.configuration.UtilConfig - Получено значение : consumerCount - 3
+13:52:55 [INFO] [main] ru_shift.configuration.UtilConfig - Получено значение : producerTime - 1500
+13:52:55 [INFO] [main] ru_shift.configuration.UtilConfig - Получено значение : consumerTime - 1500
+13:53:16 [INFO] [main] ru_shift.configuration.UtilConfig - Получено значение : producerCount - 10
+13:53:16 [INFO] [main] ru_shift.configuration.UtilConfig - Получено значение : consumerCount - 3
+13:53:16 [INFO] [main] ru_shift.configuration.UtilConfig - Получено значение : producerTime - 1500
+13:53:16 [INFO] [main] ru_shift.configuration.UtilConfig - Получено значение : consumerTime - 1500
+13:53:16 [INFO] [main] ru_shift.configuration.UtilConfig - Значение преобразовано в положительное: storageSize - 100
+13:53:16 [INFO] [main] ru_shift.configuration.UtilConfig - Получено значение : storageSize - 100
+13:53:16 [INFO] [main] ru_shift.storage.BananaStorage - Склад создан, вместимость: 100
+13:53:16 [INFO] [main] ru_shift.producer.BananaProducer - Создан производитель 1
+13:53:16 [INFO] [main] ru_shift.producer.BananaProducer - Создан производитель 2
+13:53:16 [INFO] [main] ru_shift.producer.BananaProducer - Создан производитель 3
+13:53:16 [INFO] [main] ru_shift.producer.BananaProducer - Создан производитель 4
+13:53:16 [INFO] [main] ru_shift.producer.BananaProducer - Создан производитель 5
+13:53:16 [INFO] [main] ru_shift.producer.BananaProducer - Создан производитель 6
+13:53:16 [INFO] [main] ru_shift.producer.BananaProducer - Создан производитель 7
+13:53:16 [INFO] [main] ru_shift.producer.BananaProducer - Создан производитель 8
+13:53:16 [INFO] [main] ru_shift.producer.BananaProducer - Создан производитель 9
+13:53:16 [INFO] [main] ru_shift.producer.BananaProducer - Создан производитель 10
+13:53:16 [INFO] [main] ru_shift.consumer.BananaConsumer - Создан потребитель 1
+13:53:16 [INFO] [main] ru_shift.consumer.BananaConsumer - Создан потребитель 2
+13:53:16 [INFO] [main] ru_shift.consumer.BananaConsumer - Создан потребитель 3
+13:53:16 [INFO] [main] ru_shift.factory.BananaFactory - Запуск фабрики...
+13:53:16 [INFO] [Producer-1] ru_shift.producer.BananaProducer - Производитель 1 начал работу
+13:53:16 [INFO] [Producer-5] ru_shift.producer.BananaProducer - Производитель 5 начал работу
+13:53:16 [INFO] [Producer-4] ru_shift.producer.BananaProducer - Производитель 4 начал работу
+13:53:16 [INFO] [Producer-3] ru_shift.producer.BananaProducer - Производитель 3 начал работу
+13:53:16 [INFO] [Producer-2] ru_shift.producer.BananaProducer - Производитель 2 начал работу
+13:53:16 [INFO] [Producer-6] ru_shift.producer.BananaProducer - Производитель 6 начал работу
+13:53:16 [INFO] [Producer-8] ru_shift.producer.BananaProducer - Производитель 8 начал работу
+13:53:16 [INFO] [Producer-7] ru_shift.producer.BananaProducer - Производитель 7 начал работу
+13:53:16 [INFO] [Producer-9] ru_shift.producer.BananaProducer - Производитель 9 начал работу
+13:53:16 [INFO] [Producer-10] ru_shift.producer.BananaProducer - Производитель 10 начал работу
+13:53:16 [INFO] [Consumer-1] ru_shift.consumer.BananaConsumer - Потребитель 1 начал работу
+13:53:16 [WARN] [Consumer-1] ru_shift.storage.BananaStorage - Склад пуст, ожидание...
+13:53:16 [INFO] [Consumer-2] ru_shift.consumer.BananaConsumer - Потребитель 2 начал работу
+13:53:16 [INFO] [Consumer-3] ru_shift.consumer.BananaConsumer - Потребитель 3 начал работу
+13:53:16 [WARN] [Consumer-2] ru_shift.storage.BananaStorage - Склад пуст, ожидание...
+13:53:16 [WARN] [Consumer-3] ru_shift.storage.BananaStorage - Склад пуст, ожидание...
+13:53:17 [INFO] [Producer-6] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=2). На складе: 1/100
+13:53:17 [INFO] [Consumer-1] ru_shift.storage.BananaStorage - Забран ресурс Banana(id=2). На складе: 0/100
+13:53:17 [WARN] [Consumer-3] ru_shift.storage.BananaStorage - Склад пуст, ожидание...
+13:53:17 [WARN] [Consumer-2] ru_shift.storage.BananaStorage - Склад пуст, ожидание...
+13:53:17 [INFO] [Producer-7] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=10). На складе: 1/100
+13:53:17 [INFO] [Producer-8] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=9). На складе: 2/100
+13:53:17 [INFO] [Producer-4] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=7). На складе: 3/100
+13:53:17 [INFO] [Producer-2] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=8). На складе: 4/100
+13:53:17 [INFO] [Producer-9] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=5). На складе: 5/100
+13:53:17 [INFO] [Producer-5] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=3). На складе: 6/100
+13:53:17 [INFO] [Producer-3] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=6). На складе: 7/100
+13:53:17 [INFO] [Producer-1] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=4). На складе: 8/100
+13:53:17 [INFO] [Producer-10] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=1). На складе: 9/100
+13:53:17 [INFO] [Consumer-2] ru_shift.storage.BananaStorage - Забран ресурс Banana(id=10). На складе: 8/100
+13:53:17 [INFO] [Consumer-3] ru_shift.storage.BananaStorage - Забран ресурс Banana(id=9). На складе: 7/100
+13:53:19 [INFO] [Producer-6] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=11). На складе: 8/100
+13:53:19 [INFO] [Producer-8] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=12). На складе: 9/100
+13:53:19 [INFO] [Producer-7] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=13). На складе: 10/100
+13:53:19 [INFO] [Consumer-1] ru_shift.storage.BananaStorage - Забран ресурс Banana(id=7). На складе: 9/100
+13:53:19 [INFO] [Producer-5] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=14). На складе: 10/100
+13:53:19 [INFO] [Producer-9] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=18). На складе: 11/100
+13:53:19 [INFO] [Producer-1] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=17). На складе: 12/100
+13:53:19 [INFO] [Producer-3] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=16). На складе: 13/100
+13:53:19 [INFO] [Producer-4] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=16). На складе: 14/100
+13:53:19 [INFO] [Producer-2] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=15). На складе: 15/100
+13:53:19 [INFO] [Consumer-2] ru_shift.storage.BananaStorage - Забран ресурс Banana(id=8). На складе: 14/100
+13:53:19 [INFO] [Producer-10] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=19). На складе: 15/100
+13:53:19 [INFO] [Consumer-3] ru_shift.storage.BananaStorage - Забран ресурс Banana(id=5). На складе: 14/100
+13:53:20 [INFO] [Producer-6] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=20). На складе: 15/100
+13:53:20 [INFO] [Producer-8] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=21). На складе: 16/100
+13:53:20 [INFO] [Producer-7] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=22). На складе: 17/100
+13:53:20 [INFO] [Producer-5] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=23). На складе: 18/100
+13:53:20 [INFO] [Producer-4] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=26). На складе: 19/100
+13:53:20 [INFO] [Producer-3] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=25). На складе: 20/100
+13:53:20 [INFO] [Producer-9] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=25). На складе: 21/100
+13:53:20 [INFO] [Consumer-1] ru_shift.storage.BananaStorage - Забран ресурс Banana(id=3). На складе: 20/100
+13:53:20 [INFO] [Producer-1] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=24). На складе: 21/100
+13:53:20 [INFO] [Producer-2] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=27). На складе: 22/100
+13:53:20 [INFO] [Consumer-2] ru_shift.storage.BananaStorage - Забран ресурс Banana(id=6). На складе: 21/100
+13:53:20 [INFO] [Producer-10] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=28). На складе: 22/100
+13:53:20 [INFO] [Consumer-3] ru_shift.storage.BananaStorage - Забран ресурс Banana(id=4). На складе: 21/100
+13:53:56 [INFO] [main] ru_shift.configuration.UtilConfig - Получено значение : producerCount - 10
+13:53:56 [INFO] [main] ru_shift.configuration.UtilConfig - Получено значение : consumerCount - 3
+13:53:56 [INFO] [main] ru_shift.configuration.UtilConfig - Получено значение : producerTime - 1500
+13:53:56 [INFO] [main] ru_shift.configuration.UtilConfig - Получено значение : consumerTime - 1500
+13:53:56 [INFO] [main] ru_shift.configuration.UtilConfig - Значение преобразовано в положительное: storageSize - (-100)
+13:53:56 [INFO] [main] ru_shift.configuration.UtilConfig - Получено значение : storageSize - 100
+13:53:56 [INFO] [main] ru_shift.storage.BananaStorage - Склад создан, вместимость: 100
+13:53:56 [INFO] [main] ru_shift.producer.BananaProducer - Создан производитель 1
+13:53:56 [INFO] [main] ru_shift.producer.BananaProducer - Создан производитель 2
+13:53:56 [INFO] [main] ru_shift.producer.BananaProducer - Создан производитель 3
+13:53:56 [INFO] [main] ru_shift.producer.BananaProducer - Создан производитель 4
+13:53:56 [INFO] [main] ru_shift.producer.BananaProducer - Создан производитель 5
+13:53:56 [INFO] [main] ru_shift.producer.BananaProducer - Создан производитель 6
+13:53:56 [INFO] [main] ru_shift.producer.BananaProducer - Создан производитель 7
+13:53:56 [INFO] [main] ru_shift.producer.BananaProducer - Создан производитель 8
+13:53:56 [INFO] [main] ru_shift.producer.BananaProducer - Создан производитель 9
+13:53:56 [INFO] [main] ru_shift.producer.BananaProducer - Создан производитель 10
+13:53:56 [INFO] [main] ru_shift.consumer.BananaConsumer - Создан потребитель 1
+13:53:56 [INFO] [main] ru_shift.consumer.BananaConsumer - Создан потребитель 2
+13:53:56 [INFO] [main] ru_shift.consumer.BananaConsumer - Создан потребитель 3
+13:53:56 [INFO] [main] ru_shift.factory.BananaFactory - Запуск фабрики...
+13:53:56 [INFO] [Producer-1] ru_shift.producer.BananaProducer - Производитель 1 начал работу
+13:53:56 [INFO] [Producer-6] ru_shift.producer.BananaProducer - Производитель 6 начал работу
+13:53:56 [INFO] [Producer-3] ru_shift.producer.BananaProducer - Производитель 3 начал работу
+13:53:56 [INFO] [Producer-4] ru_shift.producer.BananaProducer - Производитель 4 начал работу
+13:53:56 [INFO] [Producer-7] ru_shift.producer.BananaProducer - Производитель 7 начал работу
+13:53:56 [INFO] [Producer-2] ru_shift.producer.BananaProducer - Производитель 2 начал работу
+13:53:56 [INFO] [Producer-5] ru_shift.producer.BananaProducer - Производитель 5 начал работу
+13:53:56 [INFO] [Producer-8] ru_shift.producer.BananaProducer - Производитель 8 начал работу
+13:53:56 [INFO] [Producer-9] ru_shift.producer.BananaProducer - Производитель 9 начал работу
+13:53:56 [INFO] [Producer-10] ru_shift.producer.BananaProducer - Производитель 10 начал работу
+13:53:56 [INFO] [Consumer-1] ru_shift.consumer.BananaConsumer - Потребитель 1 начал работу
+13:53:56 [INFO] [Consumer-2] ru_shift.consumer.BananaConsumer - Потребитель 2 начал работу
+13:53:56 [INFO] [Consumer-3] ru_shift.consumer.BananaConsumer - Потребитель 3 начал работу
+13:53:56 [WARN] [Consumer-1] ru_shift.storage.BananaStorage - Склад пуст, ожидание...
+13:53:56 [WARN] [Consumer-3] ru_shift.storage.BananaStorage - Склад пуст, ожидание...
+13:53:56 [WARN] [Consumer-2] ru_shift.storage.BananaStorage - Склад пуст, ожидание...
+13:53:58 [INFO] [Producer-6] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=1). На складе: 1/100
+13:53:58 [INFO] [Consumer-1] ru_shift.storage.BananaStorage - Забран ресурс Banana(id=1). На складе: 0/100
+13:53:58 [WARN] [Consumer-2] ru_shift.storage.BananaStorage - Склад пуст, ожидание...
+13:53:58 [WARN] [Consumer-3] ru_shift.storage.BananaStorage - Склад пуст, ожидание...
+13:53:58 [INFO] [Producer-10] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=10). На складе: 1/100
+13:53:58 [INFO] [Producer-7] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=9). На складе: 2/100
+13:53:58 [INFO] [Producer-5] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=7). На складе: 3/100
+13:53:58 [INFO] [Producer-1] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=8). На складе: 4/100
+13:53:58 [INFO] [Producer-9] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=6). На складе: 5/100
+13:53:58 [INFO] [Producer-4] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=3). На складе: 6/100
+13:53:58 [INFO] [Producer-8] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=5). На складе: 7/100
+13:53:58 [INFO] [Producer-2] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=2). На складе: 8/100
+13:53:58 [INFO] [Producer-3] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=4). На складе: 9/100
+13:53:58 [INFO] [Consumer-3] ru_shift.storage.BananaStorage - Забран ресурс Banana(id=10). На складе: 8/100
+13:53:58 [INFO] [Consumer-2] ru_shift.storage.BananaStorage - Забран ресурс Banana(id=9). На складе: 7/100
+13:54:32 [INFO] [main] ru_shift.configuration.UtilConfig - Получено значение : producerCount - 10
+13:54:32 [INFO] [main] ru_shift.configuration.UtilConfig - Получено значение : consumerCount - 3
+13:54:32 [INFO] [main] ru_shift.configuration.UtilConfig - Получено значение : producerTime - 1500
+13:54:32 [INFO] [main] ru_shift.configuration.UtilConfig - Получено значение : consumerTime - 1500
+13:54:32 [WARN] [main] ru_shift.configuration.UtilConfig - Значение должно быть числом : storageSize - ÑÑÐ¹
+13:54:46 [INFO] [main] ru_shift.configuration.UtilConfig - Получено значение : producerCount - 10
+13:54:46 [INFO] [main] ru_shift.configuration.UtilConfig - Получено значение : consumerCount - 3
+13:54:46 [INFO] [main] ru_shift.configuration.UtilConfig - Получено значение : producerTime - 1500
+13:54:46 [INFO] [main] ru_shift.configuration.UtilConfig - Получено значение : consumerTime - 1500
+13:54:46 [WARN] [main] ru_shift.configuration.UtilConfig - Значение должно быть числом : storageSize - xyi
+13:56:18 [INFO] [main] ru_shift.configuration.UtilConfig - Получено значение : producerCount - 10
+13:56:18 [INFO] [main] ru_shift.configuration.UtilConfig - Получено значение : consumerCount - 3
+13:56:18 [INFO] [main] ru_shift.configuration.UtilConfig - Получено значение : producerTime - 1500
+13:56:18 [INFO] [main] ru_shift.configuration.UtilConfig - Получено значение : consumerTime - 1500
+13:56:18 [WARN] [main] ru_shift.configuration.UtilConfig - Значение должно быть числом : storageSize - xyi
+13:56:31 [INFO] [main] ru_shift.configuration.UtilConfig - Получено значение : producerCount - 10
+13:56:31 [INFO] [main] ru_shift.configuration.UtilConfig - Получено значение : consumerCount - 3
+13:56:31 [INFO] [main] ru_shift.configuration.UtilConfig - Получено значение : producerTime - 1500
+13:56:31 [INFO] [main] ru_shift.configuration.UtilConfig - Получено значение : consumerTime - 1500
+13:58:59 [INFO] [main] ru_shift.configuration.UtilConfig - Получено значение : producerCount - 10
+13:58:59 [INFO] [main] ru_shift.configuration.UtilConfig - Получено значение : consumerCount - 3
+13:58:59 [INFO] [main] ru_shift.configuration.UtilConfig - Получено значение : producerTime - 1500
+13:58:59 [INFO] [main] ru_shift.configuration.UtilConfig - Получено значение : consumerTime - 1500
+13:59:09 [INFO] [main] ru_shift.configuration.UtilConfig - Получено значение : producerCount - 10
+13:59:09 [INFO] [main] ru_shift.configuration.UtilConfig - Получено значение : consumerCount - 3
+13:59:09 [INFO] [main] ru_shift.configuration.UtilConfig - Получено значение : producerTime - 1500
+13:59:09 [INFO] [main] ru_shift.configuration.UtilConfig - Получено значение : consumerTime - 1500
+13:59:09 [INFO] [main] ru_shift.configuration.UtilConfig - Получено значение : storageSize - 100
+13:59:09 [INFO] [main] ru_shift.storage.BananaStorage - Склад создан, вместимость: 100
+13:59:09 [INFO] [main] ru_shift.producer.BananaProducer - Создан производитель 1
+13:59:09 [INFO] [main] ru_shift.producer.BananaProducer - Создан производитель 2
+13:59:09 [INFO] [main] ru_shift.producer.BananaProducer - Создан производитель 3
+13:59:09 [INFO] [main] ru_shift.producer.BananaProducer - Создан производитель 4
+13:59:09 [INFO] [main] ru_shift.producer.BananaProducer - Создан производитель 5
+13:59:09 [INFO] [main] ru_shift.producer.BananaProducer - Создан производитель 6
+13:59:09 [INFO] [main] ru_shift.producer.BananaProducer - Создан производитель 7
+13:59:09 [INFO] [main] ru_shift.producer.BananaProducer - Создан производитель 8
+13:59:09 [INFO] [main] ru_shift.producer.BananaProducer - Создан производитель 9
+13:59:09 [INFO] [main] ru_shift.producer.BananaProducer - Создан производитель 10
+13:59:09 [INFO] [main] ru_shift.consumer.BananaConsumer - Создан потребитель 1
+13:59:09 [INFO] [main] ru_shift.consumer.BananaConsumer - Создан потребитель 2
+13:59:09 [INFO] [main] ru_shift.consumer.BananaConsumer - Создан потребитель 3
+13:59:09 [INFO] [main] ru_shift.factory.BananaFactory - Запуск фабрики...
+13:59:09 [INFO] [Producer-1] ru_shift.producer.BananaProducer - Производитель 1 начал работу
+13:59:09 [INFO] [Producer-7] ru_shift.producer.BananaProducer - Производитель 7 начал работу
+13:59:09 [INFO] [Producer-4] ru_shift.producer.BananaProducer - Производитель 4 начал работу
+13:59:09 [INFO] [Producer-5] ru_shift.producer.BananaProducer - Производитель 5 начал работу
+13:59:09 [INFO] [Producer-9] ru_shift.producer.BananaProducer - Производитель 9 начал работу
+13:59:09 [INFO] [Producer-3] ru_shift.producer.BananaProducer - Производитель 3 начал работу
+13:59:09 [INFO] [Producer-10] ru_shift.producer.BananaProducer - Производитель 10 начал работу
+13:59:09 [INFO] [Producer-8] ru_shift.producer.BananaProducer - Производитель 8 начал работу
+13:59:09 [INFO] [Producer-6] ru_shift.producer.BananaProducer - Производитель 6 начал работу
+13:59:09 [INFO] [Producer-2] ru_shift.producer.BananaProducer - Производитель 2 начал работу
+13:59:09 [INFO] [Consumer-1] ru_shift.consumer.BananaConsumer - Потребитель 1 начал работу
+13:59:09 [INFO] [Consumer-3] ru_shift.consumer.BananaConsumer - Потребитель 3 начал работу
+13:59:09 [INFO] [Consumer-2] ru_shift.consumer.BananaConsumer - Потребитель 2 начал работу
+13:59:09 [WARN] [Consumer-1] ru_shift.storage.BananaStorage - Склад пуст, ожидание...
+13:59:09 [WARN] [Consumer-2] ru_shift.storage.BananaStorage - Склад пуст, ожидание...
+13:59:09 [WARN] [Consumer-3] ru_shift.storage.BananaStorage - Склад пуст, ожидание...
+13:59:10 [INFO] [Producer-8] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=1). На складе: 1/100
+13:59:10 [INFO] [Consumer-1] ru_shift.storage.BananaStorage - Забран ресурс Banana(id=1). На складе: 0/100
+13:59:10 [WARN] [Consumer-3] ru_shift.storage.BananaStorage - Склад пуст, ожидание...
+13:59:10 [WARN] [Consumer-2] ru_shift.storage.BananaStorage - Склад пуст, ожидание...
+13:59:10 [INFO] [Producer-7] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=10). На складе: 1/100
+13:59:10 [INFO] [Producer-4] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=9). На складе: 2/100
+13:59:10 [INFO] [Producer-10] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=7). На складе: 3/100
+13:59:10 [INFO] [Producer-5] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=8). На складе: 4/100
+13:59:10 [INFO] [Producer-1] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=6). На складе: 5/100
+13:59:10 [INFO] [Producer-2] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=5). На складе: 6/100
+13:59:10 [INFO] [Producer-6] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=2). На складе: 7/100
+13:59:10 [INFO] [Producer-9] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=3). На складе: 8/100
+13:59:10 [INFO] [Producer-3] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=4). На складе: 9/100
+13:59:10 [INFO] [Consumer-2] ru_shift.storage.BananaStorage - Забран ресурс Banana(id=10). На складе: 8/100
+13:59:10 [INFO] [Consumer-3] ru_shift.storage.BananaStorage - Забран ресурс Banana(id=9). На складе: 7/100
+13:59:12 [INFO] [Producer-8] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=11). На складе: 8/100
+13:59:12 [INFO] [Producer-7] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=12). На складе: 9/100
+13:59:12 [INFO] [Consumer-1] ru_shift.storage.BananaStorage - Забран ресурс Banana(id=7). На складе: 8/100
+13:59:12 [INFO] [Producer-5] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=13). На складе: 9/100
+13:59:12 [INFO] [Producer-1] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=14). На складе: 10/100
+13:59:12 [INFO] [Producer-2] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=15). На складе: 11/100
+13:59:12 [INFO] [Producer-10] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=18). На складе: 12/100
+13:59:12 [INFO] [Producer-4] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=17). На складе: 13/100
+13:59:12 [INFO] [Producer-9] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=17). На складе: 14/100
+13:59:12 [INFO] [Producer-6] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=16). На складе: 15/100
+13:59:12 [INFO] [Producer-3] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=19). На складе: 16/100
+13:59:12 [INFO] [Consumer-2] ru_shift.storage.BananaStorage - Забран ресурс Banana(id=8). На складе: 15/100
+13:59:12 [INFO] [Consumer-3] ru_shift.storage.BananaStorage - Забран ресурс Banana(id=6). На складе: 14/100
+13:59:13 [INFO] [Producer-8] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=20). На складе: 15/100
+13:59:13 [INFO] [Consumer-1] ru_shift.storage.BananaStorage - Забран ресурс Banana(id=5). На складе: 14/100
+13:59:13 [INFO] [Producer-7] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=20). На складе: 15/100
+13:59:13 [INFO] [Producer-1] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=22). На складе: 16/100
+13:59:13 [INFO] [Producer-5] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=26). На складе: 17/100
+13:59:13 [INFO] [Producer-4] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=24). На складе: 18/100
+13:59:13 [INFO] [Producer-10] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=21). На складе: 19/100
+13:59:13 [INFO] [Producer-9] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=25). На складе: 20/100
+13:59:13 [INFO] [Producer-2] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=23). На складе: 21/100
+13:59:13 [INFO] [Producer-6] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=27). На складе: 22/100
+13:59:13 [INFO] [Consumer-2] ru_shift.storage.BananaStorage - Забран ресурс Banana(id=2). На складе: 21/100
+13:59:13 [INFO] [Consumer-3] ru_shift.storage.BananaStorage - Забран ресурс Banana(id=3). На складе: 20/100
+13:59:13 [INFO] [Producer-3] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=28). На складе: 21/100
+13:59:14 [INFO] [main] ru_shift.Main - Главный поток прерван
+13:59:15 [INFO] [Producer-10] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=29). На складе: 22/100
+13:59:15 [INFO] [Producer-1] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=31). На складе: 23/100
+13:59:15 [INFO] [Consumer-1] ru_shift.storage.BananaStorage - Забран ресурс Banana(id=4). На складе: 22/100
+13:59:15 [INFO] [Producer-8] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=29). На складе: 23/100
+13:59:15 [INFO] [Producer-7] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=30). На складе: 24/100
+13:59:15 [INFO] [Producer-4] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=32). На складе: 25/100
+13:59:15 [INFO] [Producer-9] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=29). На складе: 26/100
+13:59:15 [INFO] [Producer-5] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=33). На складе: 27/100
+13:59:15 [INFO] [Producer-2] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=34). На складе: 28/100
+13:59:15 [INFO] [Producer-6] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=35). На складе: 29/100
+13:59:15 [INFO] [Consumer-3] ru_shift.storage.BananaStorage - Забран ресурс Banana(id=11). На складе: 28/100
+13:59:15 [INFO] [Consumer-2] ru_shift.storage.BananaStorage - Забран ресурс Banana(id=12). На складе: 27/100
+13:59:15 [INFO] [Producer-3] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=36). На складе: 28/100
+13:59:16 [INFO] [Producer-7] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=37). На складе: 29/100
+13:59:16 [INFO] [Producer-1] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=38). На складе: 30/100
+13:59:16 [INFO] [Consumer-1] ru_shift.storage.BananaStorage - Забран ресурс Banana(id=13). На складе: 29/100
+13:59:16 [INFO] [Producer-4] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=39). На складе: 30/100
+13:59:16 [INFO] [Producer-10] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=42). На складе: 31/100
+13:59:16 [INFO] [Producer-9] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=40). На складе: 32/100
+13:59:16 [INFO] [Producer-8] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=41). На складе: 33/100
+13:59:16 [INFO] [Producer-2] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=43). На складе: 34/100
+13:59:16 [INFO] [Producer-5] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=44). На складе: 35/100
+13:59:16 [INFO] [Producer-6] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=45). На складе: 36/100
+13:59:16 [INFO] [Consumer-2] ru_shift.storage.BananaStorage - Забран ресурс Banana(id=14). На складе: 35/100
+13:59:16 [INFO] [Producer-3] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=46). На складе: 36/100
+13:59:16 [INFO] [Consumer-3] ru_shift.storage.BananaStorage - Забран ресурс Banana(id=15). На складе: 35/100
+13:59:18 [INFO] [Producer-9] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=47). На складе: 36/100
+13:59:18 [INFO] [Consumer-1] ru_shift.storage.BananaStorage - Забран ресурс Banana(id=18). На складе: 35/100
+13:59:18 [INFO] [Producer-4] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=54). На складе: 36/100
+13:59:18 [INFO] [Producer-8] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=52). На складе: 37/100
+13:59:18 [INFO] [Producer-5] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=53). На складе: 38/100
+13:59:18 [INFO] [Producer-2] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=51). На складе: 39/100
+13:59:18 [INFO] [Producer-6] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=50). На складе: 40/100
+13:59:18 [INFO] [Producer-1] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=49). На складе: 41/100
+13:59:18 [INFO] [Producer-7] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=48). На складе: 42/100
+13:59:18 [INFO] [Producer-10] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=47). На складе: 43/100
+13:59:18 [INFO] [Producer-3] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=55). На складе: 44/100
+13:59:18 [INFO] [Consumer-3] ru_shift.storage.BananaStorage - Забран ресурс Banana(id=17). На складе: 43/100
+13:59:18 [INFO] [Consumer-2] ru_shift.storage.BananaStorage - Забран ресурс Banana(id=17). На складе: 42/100
+13:59:19 [INFO] [Producer-9] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=56). На складе: 43/100
+13:59:19 [INFO] [Consumer-1] ru_shift.storage.BananaStorage - Забран ресурс Banana(id=16). На складе: 42/100
+13:59:19 [INFO] [Producer-8] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=57). На складе: 43/100
+13:59:19 [INFO] [Producer-6] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=60). На складе: 44/100
+13:59:19 [INFO] [Producer-5] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=59). На складе: 45/100
+13:59:19 [INFO] [Producer-10] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=58). На складе: 46/100
+13:59:19 [INFO] [Producer-4] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=59). На складе: 47/100
+13:59:19 [INFO] [Producer-2] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=62). На складе: 48/100
+13:59:19 [INFO] [Producer-7] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=61). На складе: 49/100
+13:59:19 [INFO] [Producer-1] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=61). На складе: 50/100
+13:59:19 [INFO] [Producer-3] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=63). На складе: 51/100
+13:59:19 [INFO] [Consumer-3] ru_shift.storage.BananaStorage - Забран ресурс Banana(id=19). На складе: 50/100
+13:59:19 [INFO] [Consumer-2] ru_shift.storage.BananaStorage - Забран ресурс Banana(id=20). На складе: 49/100
+13:59:21 [INFO] [Producer-9] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=64). На складе: 50/100
+13:59:21 [INFO] [Consumer-1] ru_shift.storage.BananaStorage - Забран ресурс Banana(id=20). На складе: 49/100
+13:59:21 [INFO] [Producer-10] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=65). На складе: 50/100
+13:59:21 [INFO] [Producer-1] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=72). На складе: 51/100
+13:59:21 [INFO] [Consumer-3] ru_shift.storage.BananaStorage - Забран ресурс Banana(id=22). На складе: 50/100
+13:59:21 [INFO] [Producer-7] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=73). На складе: 51/100
+13:59:21 [INFO] [Producer-2] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=71). На складе: 52/100
+13:59:21 [INFO] [Producer-4] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=70). На складе: 53/100
+13:59:21 [INFO] [Producer-3] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=68). На складе: 54/100
+13:59:21 [INFO] [Producer-6] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=66). На складе: 55/100
+13:59:21 [INFO] [Producer-5] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=69). На складе: 56/100
+13:59:21 [INFO] [Producer-8] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=67). На складе: 57/100
+13:59:21 [INFO] [Consumer-2] ru_shift.storage.BananaStorage - Забран ресурс Banana(id=26). На складе: 56/100
+13:59:22 [INFO] [Producer-9] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=74). На складе: 57/100
+13:59:22 [INFO] [Consumer-1] ru_shift.storage.BananaStorage - Забран ресурс Banana(id=24). На складе: 56/100
+13:59:22 [INFO] [Producer-10] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=75). На складе: 57/100
+13:59:22 [INFO] [Producer-5] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=81). На складе: 58/100
+13:59:22 [INFO] [Consumer-3] ru_shift.storage.BananaStorage - Забран ресурс Banana(id=21). На складе: 57/100
+13:59:22 [INFO] [Producer-6] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=80). На складе: 58/100
+13:59:22 [INFO] [Producer-8] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=79). На складе: 59/100
+13:59:22 [INFO] [Producer-4] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=78). На складе: 60/100
+13:59:22 [INFO] [Producer-3] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=77). На складе: 61/100
+13:59:22 [INFO] [Producer-2] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=76). На складе: 62/100
+13:59:22 [INFO] [Producer-1] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=75). На складе: 63/100
+13:59:22 [INFO] [Producer-7] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=75). На складе: 64/100
+13:59:22 [INFO] [Consumer-2] ru_shift.storage.BananaStorage - Забран ресурс Banana(id=25). На складе: 63/100
+13:59:24 [INFO] [Producer-9] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=82). На складе: 64/100
+13:59:24 [INFO] [Consumer-1] ru_shift.storage.BananaStorage - Забран ресурс Banana(id=23). На складе: 63/100
+13:59:24 [INFO] [Producer-10] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=83). На складе: 64/100
+13:59:24 [INFO] [Producer-7] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=90). На складе: 65/100
+13:59:24 [INFO] [Producer-2] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=89). На складе: 66/100
+13:59:24 [INFO] [Producer-6] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=88). На складе: 67/100
+13:59:24 [INFO] [Producer-3] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=87). На складе: 68/100
+13:59:24 [INFO] [Producer-1] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=86). На складе: 69/100
+13:59:24 [INFO] [Producer-4] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=85). На складе: 70/100
+13:59:24 [INFO] [Producer-8] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=84). На складе: 71/100
+13:59:24 [INFO] [Consumer-3] ru_shift.storage.BananaStorage - Забран ресурс Banana(id=27). На складе: 70/100
+13:59:24 [INFO] [Producer-5] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=83). На складе: 71/100
+13:59:24 [INFO] [Consumer-2] ru_shift.storage.BananaStorage - Забран ресурс Banana(id=28). На складе: 70/100
+13:59:25 [INFO] [Producer-9] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=91). На складе: 71/100
+13:59:25 [INFO] [Consumer-1] ru_shift.storage.BananaStorage - Забран ресурс Banana(id=29). На складе: 70/100
+13:59:25 [INFO] [Producer-10] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=92). На складе: 71/100
+13:59:25 [INFO] [Producer-6] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=93). На складе: 72/100
+13:59:25 [INFO] [Producer-2] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=95). На складе: 73/100
+13:59:25 [INFO] [Producer-7] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=94). На складе: 74/100
+13:59:25 [INFO] [Producer-3] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=97). На складе: 75/100
+13:59:25 [INFO] [Consumer-3] ru_shift.storage.BananaStorage - Забран ресурс Banana(id=31). На складе: 74/100
+13:59:25 [INFO] [Producer-4] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=100). На складе: 75/100
+13:59:25 [INFO] [Producer-1] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=96). На складе: 76/100
+13:59:25 [INFO] [Producer-8] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=99). На складе: 77/100
+13:59:25 [INFO] [Producer-5] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=98). На складе: 78/100
+13:59:25 [INFO] [Consumer-2] ru_shift.storage.BananaStorage - Забран ресурс Banana(id=29). На складе: 77/100
+13:59:27 [INFO] [Producer-9] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=101). На складе: 78/100
+13:59:27 [INFO] [Producer-10] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=102). На складе: 79/100
+13:59:27 [INFO] [Producer-6] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=103). На складе: 80/100
+13:59:27 [INFO] [Producer-7] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=104). На складе: 81/100
+13:59:27 [INFO] [Consumer-1] ru_shift.storage.BananaStorage - Забран ресурс Banana(id=30). На складе: 80/100
+13:59:27 [INFO] [Producer-2] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=105). На складе: 81/100
+13:59:27 [INFO] [Producer-3] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=106). На складе: 82/100
+13:59:27 [INFO] [Consumer-3] ru_shift.storage.BananaStorage - Забран ресурс Banana(id=32). На складе: 81/100
+13:59:27 [INFO] [Producer-4] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=109). На складе: 82/100
+13:59:27 [INFO] [Producer-8] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=108). На складе: 83/100
+13:59:27 [INFO] [Producer-1] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=107). На складе: 84/100
+13:59:27 [INFO] [Producer-5] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=110). На складе: 85/100
+13:59:27 [INFO] [Consumer-2] ru_shift.storage.BananaStorage - Забран ресурс Banana(id=29). На складе: 84/100
+13:59:28 [INFO] [Producer-10] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=111). На складе: 85/100
+13:59:28 [INFO] [Producer-6] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=112). На складе: 86/100
+13:59:28 [INFO] [Consumer-1] ru_shift.storage.BananaStorage - Забран ресурс Banana(id=33). На складе: 85/100
+13:59:28 [INFO] [Producer-7] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=113). На складе: 86/100
+13:59:28 [INFO] [Producer-9] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=114). На складе: 87/100
+13:59:28 [INFO] [Producer-2] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=115). На складе: 88/100
+13:59:28 [INFO] [Producer-3] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=116). На складе: 89/100
+13:59:28 [INFO] [Producer-4] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=117). На складе: 90/100
+13:59:28 [INFO] [Producer-8] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=118). На складе: 91/100
+13:59:28 [INFO] [Consumer-3] ru_shift.storage.BananaStorage - Забран ресурс Banana(id=34). На складе: 90/100
+13:59:28 [INFO] [Producer-1] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=119). На складе: 91/100
+13:59:28 [INFO] [Producer-5] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=120). На складе: 92/100
+13:59:28 [INFO] [Consumer-2] ru_shift.storage.BananaStorage - Забран ресурс Banana(id=35). На складе: 91/100
+13:59:30 [INFO] [Consumer-1] ru_shift.storage.BananaStorage - Забран ресурс Banana(id=36). На складе: 90/100
+13:59:30 [INFO] [Producer-6] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=122). На складе: 91/100
+13:59:30 [INFO] [Producer-10] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=121). На складе: 92/100
+13:59:30 [INFO] [Producer-9] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=123). На складе: 93/100
+13:59:30 [INFO] [Producer-2] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=127). На складе: 94/100
+13:59:30 [INFO] [Producer-7] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=126). На складе: 95/100
+13:59:30 [INFO] [Consumer-3] ru_shift.storage.BananaStorage - Забран ресурс Banana(id=37). На складе: 94/100
+13:59:30 [INFO] [Producer-8] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=125). На складе: 95/100
+13:59:30 [INFO] [Producer-3] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=124). На складе: 96/100
+13:59:30 [INFO] [Producer-4] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=123). На складе: 97/100
+13:59:30 [INFO] [Producer-1] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=128). На складе: 98/100
+13:59:30 [INFO] [Producer-5] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=129). На складе: 99/100
+13:59:30 [INFO] [Consumer-2] ru_shift.storage.BananaStorage - Забран ресурс Banana(id=38). На складе: 98/100
+13:59:31 [INFO] [Consumer-1] ru_shift.storage.BananaStorage - Забран ресурс Banana(id=39). На складе: 97/100
+13:59:31 [INFO] [Producer-10] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=130). На складе: 98/100
+13:59:31 [INFO] [Producer-6] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=131). На складе: 99/100
+13:59:31 [INFO] [Producer-8] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=132). На складе: 100/100
+13:59:31 [INFO] [Consumer-3] ru_shift.storage.BananaStorage - Забран ресурс Banana(id=42). На складе: 99/100
+13:59:31 [INFO] [Producer-2] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=136). На складе: 100/100
+13:59:31 [WARN] [Producer-3] ru_shift.storage.BananaStorage - Склад полон (100), ожидание...
+13:59:31 [WARN] [Producer-7] ru_shift.storage.BananaStorage - Склад полон (100), ожидание...
+13:59:31 [WARN] [Producer-9] ru_shift.storage.BananaStorage - Склад полон (100), ожидание...
+13:59:31 [WARN] [Producer-4] ru_shift.storage.BananaStorage - Склад полон (100), ожидание...
+13:59:31 [WARN] [Producer-1] ru_shift.storage.BananaStorage - Склад полон (100), ожидание...
+13:59:32 [WARN] [Producer-5] ru_shift.storage.BananaStorage - Склад полон (100), ожидание...
+13:59:32 [INFO] [Consumer-2] ru_shift.storage.BananaStorage - Забран ресурс Banana(id=40). На складе: 99/100
+13:59:32 [INFO] [Producer-3] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=135). На складе: 100/100
+13:59:32 [WARN] [Producer-5] ru_shift.storage.BananaStorage - Склад полон (100), ожидание...
+13:59:32 [WARN] [Producer-1] ru_shift.storage.BananaStorage - Склад полон (100), ожидание...
+13:59:32 [WARN] [Producer-4] ru_shift.storage.BananaStorage - Склад полон (100), ожидание...
+13:59:32 [WARN] [Producer-9] ru_shift.storage.BananaStorage - Склад полон (100), ожидание...
+13:59:32 [WARN] [Producer-7] ru_shift.storage.BananaStorage - Склад полон (100), ожидание...
+13:59:33 [WARN] [Producer-10] ru_shift.storage.BananaStorage - Склад полон (100), ожидание...
+13:59:33 [INFO] [Consumer-1] ru_shift.storage.BananaStorage - Забран ресурс Banana(id=41). На складе: 99/100
+13:59:33 [INFO] [Producer-6] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=141). На складе: 100/100
+13:59:33 [WARN] [Producer-10] ru_shift.storage.BananaStorage - Склад полон (100), ожидание...
+13:59:33 [WARN] [Producer-7] ru_shift.storage.BananaStorage - Склад полон (100), ожидание...
+13:59:33 [WARN] [Producer-9] ru_shift.storage.BananaStorage - Склад полон (100), ожидание...
+13:59:33 [WARN] [Producer-4] ru_shift.storage.BananaStorage - Склад полон (100), ожидание...
+13:59:33 [WARN] [Producer-1] ru_shift.storage.BananaStorage - Склад полон (100), ожидание...
+13:59:33 [WARN] [Producer-5] ru_shift.storage.BananaStorage - Склад полон (100), ожидание...
+13:59:33 [WARN] [Producer-8] ru_shift.storage.BananaStorage - Склад полон (100), ожидание...
+13:59:33 [WARN] [Producer-2] ru_shift.storage.BananaStorage - Склад полон (100), ожидание...
+13:59:33 [INFO] [Consumer-3] ru_shift.storage.BananaStorage - Забран ресурс Banana(id=43). На складе: 99/100
+13:59:33 [INFO] [Producer-10] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=140). На складе: 100/100
+13:59:33 [WARN] [Producer-2] ru_shift.storage.BananaStorage - Склад полон (100), ожидание...
+13:59:33 [WARN] [Producer-8] ru_shift.storage.BananaStorage - Склад полон (100), ожидание...
+13:59:33 [WARN] [Producer-5] ru_shift.storage.BananaStorage - Склад полон (100), ожидание...
+13:59:33 [WARN] [Producer-1] ru_shift.storage.BananaStorage - Склад полон (100), ожидание...
+13:59:33 [WARN] [Producer-4] ru_shift.storage.BananaStorage - Склад полон (100), ожидание...
+13:59:33 [WARN] [Producer-9] ru_shift.storage.BananaStorage - Склад полон (100), ожидание...
+13:59:33 [WARN] [Producer-7] ru_shift.storage.BananaStorage - Склад полон (100), ожидание...
+13:59:33 [WARN] [Producer-3] ru_shift.storage.BananaStorage - Склад полон (100), ожидание...
+13:59:33 [INFO] [Consumer-2] ru_shift.storage.BananaStorage - Забран ресурс Banana(id=44). На складе: 99/100
+13:59:33 [INFO] [Producer-2] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=143). На складе: 100/100
+13:59:33 [WARN] [Producer-3] ru_shift.storage.BananaStorage - Склад полон (100), ожидание...
+13:59:33 [WARN] [Producer-7] ru_shift.storage.BananaStorage - Склад полон (100), ожидание...
+13:59:33 [WARN] [Producer-9] ru_shift.storage.BananaStorage - Склад полон (100), ожидание...
+13:59:33 [WARN] [Producer-4] ru_shift.storage.BananaStorage - Склад полон (100), ожидание...
+13:59:33 [WARN] [Producer-1] ru_shift.storage.BananaStorage - Склад полон (100), ожидание...
+13:59:33 [WARN] [Producer-5] ru_shift.storage.BananaStorage - Склад полон (100), ожидание...
+13:59:33 [WARN] [Producer-8] ru_shift.storage.BananaStorage - Склад полон (100), ожидание...
+13:59:34 [INFO] [Consumer-1] ru_shift.storage.BananaStorage - Забран ресурс Banana(id=45). На складе: 99/100
+13:59:34 [INFO] [Producer-3] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=144). На складе: 100/100
+13:59:34 [WARN] [Producer-8] ru_shift.storage.BananaStorage - Склад полон (100), ожидание...
+13:59:34 [WARN] [Producer-5] ru_shift.storage.BananaStorage - Склад полон (100), ожидание...
+13:59:34 [WARN] [Producer-1] ru_shift.storage.BananaStorage - Склад полон (100), ожидание...
+13:59:34 [WARN] [Producer-4] ru_shift.storage.BananaStorage - Склад полон (100), ожидание...
+13:59:34 [WARN] [Producer-9] ru_shift.storage.BananaStorage - Склад полон (100), ожидание...
+13:59:34 [WARN] [Producer-7] ru_shift.storage.BananaStorage - Склад полон (100), ожидание...
+13:59:34 [WARN] [Producer-6] ru_shift.storage.BananaStorage - Склад полон (100), ожидание...
+13:59:35 [INFO] [Consumer-3] ru_shift.storage.BananaStorage - Забран ресурс Banana(id=46). На складе: 99/100
+13:59:35 [INFO] [Producer-8] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=142). На складе: 100/100
+13:59:35 [WARN] [Producer-6] ru_shift.storage.BananaStorage - Склад полон (100), ожидание...
+13:59:35 [WARN] [Producer-7] ru_shift.storage.BananaStorage - Склад полон (100), ожидание...
+13:59:35 [WARN] [Producer-9] ru_shift.storage.BananaStorage - Склад полон (100), ожидание...
+13:59:35 [WARN] [Producer-4] ru_shift.storage.BananaStorage - Склад полон (100), ожидание...
+13:59:35 [WARN] [Producer-1] ru_shift.storage.BananaStorage - Склад полон (100), ожидание...
+13:59:35 [WARN] [Producer-5] ru_shift.storage.BananaStorage - Склад полон (100), ожидание...
+13:59:35 [WARN] [Producer-10] ru_shift.storage.BananaStorage - Склад полон (100), ожидание...
+13:59:35 [WARN] [Producer-2] ru_shift.storage.BananaStorage - Склад полон (100), ожидание...
+13:59:35 [INFO] [Consumer-2] ru_shift.storage.BananaStorage - Забран ресурс Banana(id=47). На складе: 99/100
+13:59:35 [INFO] [Producer-6] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=145). На складе: 100/100
+13:59:35 [WARN] [Producer-2] ru_shift.storage.BananaStorage - Склад полон (100), ожидание...
+13:59:35 [WARN] [Producer-10] ru_shift.storage.BananaStorage - Склад полон (100), ожидание...
+13:59:35 [WARN] [Producer-5] ru_shift.storage.BananaStorage - Склад полон (100), ожидание...
+13:59:35 [WARN] [Producer-1] ru_shift.storage.BananaStorage - Склад полон (100), ожидание...
+13:59:35 [WARN] [Producer-4] ru_shift.storage.BananaStorage - Склад полон (100), ожидание...
+13:59:35 [WARN] [Producer-9] ru_shift.storage.BananaStorage - Склад полон (100), ожидание...
+13:59:35 [WARN] [Producer-7] ru_shift.storage.BananaStorage - Склад полон (100), ожидание...
+14:00:12 [INFO] [main] ru_shift.configuration.UtilConfig - Получено значение : producerCount - 10
+14:00:12 [INFO] [main] ru_shift.configuration.UtilConfig - Получено значение : consumerCount - 3
+14:00:12 [INFO] [main] ru_shift.configuration.UtilConfig - Получено значение : producerTime - 1500
+14:00:12 [INFO] [main] ru_shift.configuration.UtilConfig - Получено значение : consumerTime - 1500
+14:00:12 [INFO] [main] ru_shift.configuration.UtilConfig - Получено значение : storageSize - 100
+14:00:12 [INFO] [main] ru_shift.storage.BananaStorage - Склад создан, вместимость: 100
+14:00:12 [INFO] [main] ru_shift.producer.BananaProducer - Создан производитель 1
+14:00:12 [INFO] [main] ru_shift.producer.BananaProducer - Создан производитель 2
+14:00:12 [INFO] [main] ru_shift.producer.BananaProducer - Создан производитель 3
+14:00:12 [INFO] [main] ru_shift.producer.BananaProducer - Создан производитель 4
+14:00:12 [INFO] [main] ru_shift.producer.BananaProducer - Создан производитель 5
+14:00:12 [INFO] [main] ru_shift.producer.BananaProducer - Создан производитель 6
+14:00:12 [INFO] [main] ru_shift.producer.BananaProducer - Создан производитель 7
+14:00:12 [INFO] [main] ru_shift.producer.BananaProducer - Создан производитель 8
+14:00:12 [INFO] [main] ru_shift.producer.BananaProducer - Создан производитель 9
+14:00:12 [INFO] [main] ru_shift.producer.BananaProducer - Создан производитель 10
+14:00:12 [INFO] [main] ru_shift.consumer.BananaConsumer - Создан потребитель 1
+14:00:12 [INFO] [main] ru_shift.consumer.BananaConsumer - Создан потребитель 2
+14:00:12 [INFO] [main] ru_shift.consumer.BananaConsumer - Создан потребитель 3
+14:00:12 [INFO] [main] ru_shift.factory.BananaFactory - Запуск фабрики...
+14:00:12 [INFO] [Producer-1] ru_shift.producer.BananaProducer - Производитель 1 начал работу
+14:00:12 [INFO] [Producer-6] ru_shift.producer.BananaProducer - Производитель 6 начал работу
+14:00:12 [INFO] [Producer-3] ru_shift.producer.BananaProducer - Производитель 3 начал работу
+14:00:12 [INFO] [Producer-7] ru_shift.producer.BananaProducer - Производитель 7 начал работу
+14:00:12 [INFO] [Producer-8] ru_shift.producer.BananaProducer - Производитель 8 начал работу
+14:00:12 [INFO] [Producer-4] ru_shift.producer.BananaProducer - Производитель 4 начал работу
+14:00:12 [INFO] [Producer-2] ru_shift.producer.BananaProducer - Производитель 2 начал работу
+14:00:12 [INFO] [Producer-5] ru_shift.producer.BananaProducer - Производитель 5 начал работу
+14:00:12 [INFO] [Producer-9] ru_shift.producer.BananaProducer - Производитель 9 начал работу
+14:00:12 [INFO] [Producer-10] ru_shift.producer.BananaProducer - Производитель 10 начал работу
+14:00:12 [INFO] [Consumer-2] ru_shift.consumer.BananaConsumer - Потребитель 2 начал работу
+14:00:12 [INFO] [Consumer-3] ru_shift.consumer.BananaConsumer - Потребитель 3 начал работу
+14:00:12 [INFO] [Consumer-1] ru_shift.consumer.BananaConsumer - Потребитель 1 начал работу
+14:00:12 [WARN] [Consumer-2] ru_shift.storage.BananaStorage - Склад пуст, ожидание...
+14:00:12 [WARN] [Consumer-1] ru_shift.storage.BananaStorage - Склад пуст, ожидание...
+14:00:12 [WARN] [Consumer-3] ru_shift.storage.BananaStorage - Склад пуст, ожидание...
+14:00:14 [INFO] [Producer-5] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=3). На складе: 1/100
+14:00:14 [INFO] [Consumer-2] ru_shift.storage.BananaStorage - Забран ресурс Banana(id=3). На складе: 0/100
+14:00:14 [WARN] [Consumer-3] ru_shift.storage.BananaStorage - Склад пуст, ожидание...
+14:00:14 [WARN] [Consumer-1] ru_shift.storage.BananaStorage - Склад пуст, ожидание...
+14:00:14 [INFO] [Producer-9] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=9). На складе: 1/100
+14:00:14 [INFO] [Producer-4] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=8). На складе: 2/100
+14:00:14 [INFO] [Producer-6] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=7). На складе: 3/100
+14:00:14 [INFO] [Producer-10] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=4). На складе: 4/100
+14:00:14 [INFO] [Producer-7] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=5). На складе: 5/100
+14:00:14 [INFO] [Producer-1] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=6). На складе: 6/100
+14:00:14 [INFO] [Producer-8] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=3). На складе: 7/100
+14:00:14 [INFO] [Producer-3] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=2). На складе: 8/100
+14:00:14 [INFO] [Producer-2] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=1). На складе: 9/100
+14:00:14 [INFO] [Consumer-1] ru_shift.storage.BananaStorage - Забран ресурс Banana(id=9). На складе: 8/100
+14:00:14 [INFO] [Consumer-3] ru_shift.storage.BananaStorage - Забран ресурс Banana(id=8). На складе: 7/100
+14:00:15 [INFO] [Producer-5] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=10). На складе: 8/100
+14:00:15 [INFO] [Consumer-2] ru_shift.storage.BananaStorage - Забран ресурс Banana(id=7). На складе: 7/100
+14:00:15 [INFO] [Producer-3] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=13). На складе: 8/100
+14:00:15 [INFO] [Producer-6] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=16). На складе: 9/100
+14:00:15 [INFO] [Consumer-1] ru_shift.storage.BananaStorage - Забран ресурс Banana(id=4). На складе: 8/100
+14:00:15 [INFO] [Producer-4] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=15). На складе: 9/100
+14:00:15 [INFO] [Producer-7] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=14). На складе: 10/100
+14:00:15 [INFO] [Producer-9] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=12). На складе: 11/100
+14:00:15 [INFO] [Producer-10] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=12). На складе: 12/100
+14:00:15 [INFO] [Producer-8] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=11). На складе: 13/100
+14:00:15 [INFO] [Producer-2] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=13). На складе: 14/100
+14:00:15 [INFO] [Producer-1] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=13). На складе: 15/100
+14:00:15 [INFO] [Consumer-3] ru_shift.storage.BananaStorage - Забран ресурс Banana(id=5). На складе: 14/100
+14:00:17 [INFO] [Producer-5] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=17). На складе: 15/100
+14:00:17 [INFO] [Producer-6] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=18). На складе: 16/100
+14:00:17 [INFO] [Consumer-1] ru_shift.storage.BananaStorage - Забран ресурс Banana(id=6). На складе: 15/100
+14:00:17 [INFO] [Producer-9] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=19). На складе: 16/100
+14:00:17 [INFO] [Producer-3] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=22). На складе: 17/100
+14:00:17 [INFO] [Producer-7] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=20). На складе: 18/100
+14:00:17 [INFO] [Producer-4] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=21). На складе: 19/100
+14:00:17 [INFO] [Consumer-2] ru_shift.storage.BananaStorage - Забран ресурс Banana(id=3). На складе: 18/100
+14:00:17 [INFO] [Producer-1] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=25). На складе: 19/100
+14:00:17 [INFO] [Consumer-3] ru_shift.storage.BananaStorage - Забран ресурс Banana(id=2). На складе: 18/100
+14:00:17 [INFO] [Producer-8] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=26). На складе: 19/100
+14:00:17 [INFO] [Producer-10] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=24). На складе: 20/100
+14:00:17 [INFO] [Producer-2] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=23). На складе: 21/100
+14:00:17 [INFO] [main] ru_shift.Main - Главный поток прерван
+14:00:17 [INFO] [main] ru_shift.factory.BananaFactory - Начало завершения работы...
+14:00:17 [INFO] [main] ru_shift.storage.BananaStorage - Склад остановлен
+14:00:17 [WARN] [Producer-1] ru_shift.producer.BananaProducer - Производитель 1 прерван
+14:00:17 [WARN] [Producer-4] ru_shift.producer.BananaProducer - Производитель 4 прерван
+14:00:17 [WARN] [Producer-8] ru_shift.producer.BananaProducer - Производитель 8 прерван
+14:00:17 [WARN] [Producer-3] ru_shift.producer.BananaProducer - Производитель 3 прерван
+14:00:17 [WARN] [Producer-9] ru_shift.producer.BananaProducer - Производитель 9 прерван
+14:00:17 [WARN] [Producer-2] ru_shift.producer.BananaProducer - Производитель 2 прерван
+14:00:17 [INFO] [Producer-8] ru_shift.producer.BananaProducer - Производитель 8 завершил работу
+14:00:17 [WARN] [Producer-6] ru_shift.producer.BananaProducer - Производитель 6 прерван
+14:00:17 [WARN] [Producer-7] ru_shift.producer.BananaProducer - Производитель 7 прерван
+14:00:17 [INFO] [Producer-3] ru_shift.producer.BananaProducer - Производитель 3 завершил работу
+14:00:17 [WARN] [Consumer-1] ru_shift.consumer.BananaConsumer - Потребитель 1 прерван
+14:00:17 [WARN] [Producer-10] ru_shift.producer.BananaProducer - Производитель 10 прерван
+14:00:17 [WARN] [Consumer-2] ru_shift.consumer.BananaConsumer - Потребитель 2 прерван
+14:00:17 [INFO] [Producer-1] ru_shift.producer.BananaProducer - Производитель 1 завершил работу
+14:00:17 [WARN] [Consumer-3] ru_shift.consumer.BananaConsumer - Потребитель 3 прерван
+14:00:17 [INFO] [Consumer-2] ru_shift.consumer.BananaConsumer - Потребитель 2 завершил работу
+14:00:17 [INFO] [Producer-2] ru_shift.producer.BananaProducer - Производитель 2 завершил работу
+14:00:17 [INFO] [Consumer-1] ru_shift.consumer.BananaConsumer - Потребитель 1 завершил работу
+14:00:17 [INFO] [Producer-4] ru_shift.producer.BananaProducer - Производитель 4 завершил работу
+14:00:17 [INFO] [Producer-7] ru_shift.producer.BananaProducer - Производитель 7 завершил работу
+14:00:17 [WARN] [Producer-5] ru_shift.producer.BananaProducer - Производитель 5 прерван
+14:00:17 [INFO] [Producer-9] ru_shift.producer.BananaProducer - Производитель 9 завершил работу
+14:00:17 [INFO] [Producer-10] ru_shift.producer.BananaProducer - Производитель 10 завершил работу
+14:00:17 [INFO] [Producer-6] ru_shift.producer.BananaProducer - Производитель 6 завершил работу
+14:00:17 [INFO] [Producer-5] ru_shift.producer.BananaProducer - Производитель 5 завершил работу
+14:00:17 [INFO] [Consumer-3] ru_shift.consumer.BananaConsumer - Потребитель 3 завершил работу
+14:00:17 [INFO] [main] ru_shift.factory.BananaFactory - Фабрика остановлена
+14:17:59 [INFO] [main] ru_shift.configuration.UtilConfig - Получено значение : producerCount - 10
+14:17:59 [INFO] [main] ru_shift.configuration.UtilConfig - Получено значение : consumerCount - 3
+14:17:59 [INFO] [main] ru_shift.configuration.UtilConfig - Получено значение : producerTime - 1500
+14:17:59 [INFO] [main] ru_shift.configuration.UtilConfig - Получено значение : consumerTime - 1500
+14:17:59 [INFO] [main] ru_shift.configuration.UtilConfig - Получено значение : storageSize - 100
+14:17:59 [INFO] [main] ru_shift.storage.BananaStorage - Склад создан, вместимость: 100
+14:17:59 [INFO] [main] ru_shift.producer.BananaProducer - Создан производитель 1
+14:17:59 [INFO] [main] ru_shift.producer.BananaProducer - Создан производитель 2
+14:17:59 [INFO] [main] ru_shift.producer.BananaProducer - Создан производитель 3
+14:17:59 [INFO] [main] ru_shift.producer.BananaProducer - Создан производитель 4
+14:17:59 [INFO] [main] ru_shift.producer.BananaProducer - Создан производитель 5
+14:17:59 [INFO] [main] ru_shift.producer.BananaProducer - Создан производитель 6
+14:17:59 [INFO] [main] ru_shift.producer.BananaProducer - Создан производитель 7
+14:17:59 [INFO] [main] ru_shift.producer.BananaProducer - Создан производитель 8
+14:17:59 [INFO] [main] ru_shift.producer.BananaProducer - Создан производитель 9
+14:17:59 [INFO] [main] ru_shift.producer.BananaProducer - Создан производитель 10
+14:17:59 [INFO] [main] ru_shift.consumer.BananaConsumer - Создан потребитель 1
+14:17:59 [INFO] [main] ru_shift.consumer.BananaConsumer - Создан потребитель 2
+14:17:59 [INFO] [main] ru_shift.consumer.BananaConsumer - Создан потребитель 3
+14:17:59 [INFO] [main] ru_shift.factory.BananaFactory - Запуск фабрики...
+14:17:59 [INFO] [Producer-3] ru_shift.producer.BananaProducer - Производитель 3 начал работу
+14:17:59 [INFO] [Producer-1] ru_shift.producer.BananaProducer - Производитель 1 начал работу
+14:17:59 [INFO] [Producer-5] ru_shift.producer.BananaProducer - Производитель 5 начал работу
+14:17:59 [INFO] [Producer-6] ru_shift.producer.BananaProducer - Производитель 6 начал работу
+14:17:59 [INFO] [Producer-4] ru_shift.producer.BananaProducer - Производитель 4 начал работу
+14:17:59 [INFO] [Producer-2] ru_shift.producer.BananaProducer - Производитель 2 начал работу
+14:17:59 [INFO] [Producer-7] ru_shift.producer.BananaProducer - Производитель 7 начал работу
+14:17:59 [INFO] [Producer-8] ru_shift.producer.BananaProducer - Производитель 8 начал работу
+14:17:59 [INFO] [Producer-9] ru_shift.producer.BananaProducer - Производитель 9 начал работу
+14:17:59 [INFO] [Producer-10] ru_shift.producer.BananaProducer - Производитель 10 начал работу
+14:17:59 [INFO] [Consumer-2] ru_shift.consumer.BananaConsumer - Потребитель 2 начал работу
+14:17:59 [INFO] [Consumer-1] ru_shift.consumer.BananaConsumer - Потребитель 1 начал работу
+14:17:59 [WARN] [Consumer-2] ru_shift.storage.BananaStorage - Склад пуст, ожидание...
+14:17:59 [INFO] [Consumer-3] ru_shift.consumer.BananaConsumer - Потребитель 3 начал работу
+14:17:59 [WARN] [Consumer-1] ru_shift.storage.BananaStorage - Склад пуст, ожидание...
+14:17:59 [WARN] [Consumer-3] ru_shift.storage.BananaStorage - Склад пуст, ожидание...
+14:18:00 [INFO] [Producer-1] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=3). На складе: 1/100
+14:18:00 [INFO] [Consumer-2] ru_shift.storage.BananaStorage - Забран ресурс Banana(id=3). На складе: 0/100
+14:18:00 [WARN] [Consumer-3] ru_shift.storage.BananaStorage - Склад пуст, ожидание...
+14:18:00 [WARN] [Consumer-1] ru_shift.storage.BananaStorage - Склад пуст, ожидание...
+14:18:00 [INFO] [Producer-2] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=10). На складе: 1/100
+14:18:00 [INFO] [Producer-6] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=9). На складе: 2/100
+14:18:00 [INFO] [Producer-4] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=6). На складе: 3/100
+14:18:00 [INFO] [Producer-7] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=8). На складе: 4/100
+14:18:00 [INFO] [Producer-10] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=5). На складе: 5/100
+14:18:00 [INFO] [Producer-3] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=4). На складе: 6/100
+14:18:00 [INFO] [Producer-5] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=1). На складе: 7/100
+14:18:00 [INFO] [Producer-9] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=2). На складе: 8/100
+14:18:00 [INFO] [Producer-8] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=7). На складе: 9/100
+14:18:00 [INFO] [Consumer-1] ru_shift.storage.BananaStorage - Забран ресурс Banana(id=10). На складе: 8/100
+14:18:00 [INFO] [Consumer-3] ru_shift.storage.BananaStorage - Забран ресурс Banana(id=9). На складе: 7/100
+14:18:02 [INFO] [Producer-1] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=11). На складе: 8/100
+14:18:02 [INFO] [Producer-2] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=12). На складе: 9/100
+14:18:02 [INFO] [Consumer-2] ru_shift.storage.BananaStorage - Забран ресурс Banana(id=6). На складе: 8/100
+14:18:02 [INFO] [Producer-4] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=13). На складе: 9/100
+14:18:02 [INFO] [Producer-6] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=14). На складе: 10/100
+14:18:02 [INFO] [Producer-3] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=15). На складе: 11/100
+14:18:02 [INFO] [Producer-9] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=17). На складе: 12/100
+14:18:02 [INFO] [Producer-10] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=19). На складе: 13/100
+14:18:02 [INFO] [Consumer-1] ru_shift.storage.BananaStorage - Забран ресурс Banana(id=8). На складе: 12/100
+14:18:02 [INFO] [Producer-5] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=20). На складе: 13/100
+14:18:02 [INFO] [Consumer-3] ru_shift.storage.BananaStorage - Забран ресурс Banana(id=5). На складе: 12/100
+14:18:02 [INFO] [Producer-7] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=16). На складе: 13/100
+14:18:02 [INFO] [Producer-8] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=18). На складе: 14/100
+14:18:03 [INFO] [Producer-2] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=21). На складе: 15/100
+14:18:03 [INFO] [Consumer-2] ru_shift.storage.BananaStorage - Забран ресурс Banana(id=4). На складе: 14/100
+14:18:03 [INFO] [Producer-4] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=22). На складе: 15/100
+14:18:03 [INFO] [Consumer-1] ru_shift.storage.BananaStorage - Забран ресурс Banana(id=1). На складе: 14/100
+14:18:03 [INFO] [Producer-7] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=25). На складе: 15/100
+14:18:03 [INFO] [Producer-1] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=23). На складе: 16/100
+14:18:03 [INFO] [Consumer-3] ru_shift.storage.BananaStorage - Забран ресурс Banana(id=2). На складе: 15/100
+14:18:03 [INFO] [Producer-6] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=24). На складе: 16/100
+14:18:03 [INFO] [Producer-5] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=26). На складе: 17/100
+14:18:03 [INFO] [Producer-3] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=28). На складе: 18/100
+14:18:03 [INFO] [Producer-8] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=29). На складе: 19/100
+14:18:03 [INFO] [Producer-10] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=30). На складе: 20/100
+14:18:03 [INFO] [Producer-9] ru_shift.storage.BananaStorage - Добавлен ресурс Banana(id=27). На складе: 21/100
+14:18:04 [INFO] [main] ru_shift.factory.BananaFactory - Начало завершения работы...
+14:18:04 [WARN] [Producer-5] ru_shift.producer.BananaProducer - Производитель 5 прерван
+14:18:04 [WARN] [Consumer-1] ru_shift.consumer.BananaConsumer - Потребитель 1 прерван
+14:18:04 [WARN] [Producer-7] ru_shift.producer.BananaProducer - Производитель 7 прерван
+14:18:04 [INFO] [Producer-5] ru_shift.producer.BananaProducer - Производитель 5 завершил работу
+14:18:04 [WARN] [Producer-10] ru_shift.producer.BananaProducer - Производитель 10 прерван
+14:18:04 [WARN] [Producer-1] ru_shift.producer.BananaProducer - Производитель 1 прерван
+14:18:04 [INFO] [Consumer-1] ru_shift.consumer.BananaConsumer - Потребитель 1 завершил работу
+14:18:04 [WARN] [Producer-6] ru_shift.producer.BananaProducer - Производитель 6 прерван
+14:18:04 [WARN] [Consumer-2] ru_shift.consumer.BananaConsumer - Потребитель 2 прерван
+14:18:04 [INFO] [Producer-7] ru_shift.producer.BananaProducer - Производитель 7 завершил работу
+14:18:04 [WARN] [Consumer-3] ru_shift.consumer.BananaConsumer - Потребитель 3 прерван
+14:18:04 [WARN] [Producer-8] ru_shift.producer.BananaProducer - Производитель 8 прерван
+14:18:04 [WARN] [Producer-9] ru_shift.producer.BananaProducer - Производитель 9 прерван
+14:18:04 [WARN] [Producer-2] ru_shift.producer.BananaProducer - Производитель 2 прерван
+14:18:04 [WARN] [Producer-3] ru_shift.producer.BananaProducer - Производитель 3 прерван
+14:18:04 [WARN] [Producer-4] ru_shift.producer.BananaProducer - Производитель 4 прерван
+14:18:04 [INFO] [Producer-10] ru_shift.producer.BananaProducer - Производитель 10 завершил работу
+14:18:04 [INFO] [Producer-1] ru_shift.producer.BananaProducer - Производитель 1 завершил работу
+14:18:04 [INFO] [Producer-2] ru_shift.producer.BananaProducer - Производитель 2 завершил работу
+14:18:04 [INFO] [Producer-6] ru_shift.producer.BananaProducer - Производитель 6 завершил работу
+14:18:04 [INFO] [Consumer-2] ru_shift.consumer.BananaConsumer - Потребитель 2 завершил работу
+14:18:04 [INFO] [Consumer-3] ru_shift.consumer.BananaConsumer - Потребитель 3 завершил работу
+14:18:04 [INFO] [Producer-8] ru_shift.producer.BananaProducer - Производитель 8 завершил работу
+14:18:04 [INFO] [Producer-9] ru_shift.producer.BananaProducer - Производитель 9 завершил работу
+14:18:04 [INFO] [Producer-3] ru_shift.producer.BananaProducer - Производитель 3 завершил работу
+14:18:04 [INFO] [Producer-4] ru_shift.producer.BananaProducer - Производитель 4 завершил работу
+14:18:04 [INFO] [main] ru_shift.factory.BananaFactory - Фабрика остановлена
+14:21:55 [INFO] [main] ru_shift.configuration.UtilConfig - Получено значение : producerCount - 10
+14:21:55 [INFO] [main] ru_shift.configuration.UtilConfig - Получено значение : consumerCount - 3
+14:21:55 [INFO] [main] ru_shift.configuration.UtilConfig - Получено значение : producerTime - 1500
+14:21:55 [INFO] [main] ru_shift.configuration.UtilConfig - Получено значение : consumerTime - 1500
+14:22:49 [INFO] [main] ru_shift.configuration.UtilConfig - Получено значение : producerCount - 10
+14:22:49 [INFO] [main] ru_shift.configuration.UtilConfig - Получено значение : consumerCount - 3
+14:22:49 [INFO] [main] ru_shift.configuration.UtilConfig - Получено значение : producerTime - 1500
+14:22:49 [INFO] [main] ru_shift.configuration.UtilConfig - Получено значение : consumerTime - 1500
+14:22:49 [WARN] [main] ru_shift.Main - Значение должно быть числом : storageSize - 100sa
