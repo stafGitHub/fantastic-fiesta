@@ -9,7 +9,6 @@ public class BananaProducer implements Producer {
     private final int id;
     private final int productionTime;
     private final Storage storage;
-    private volatile boolean isRunning = true;
     private static final Object lock = new Object();
     private static int nextId = 1;
 
@@ -26,7 +25,7 @@ public class BananaProducer implements Producer {
     public void run() {
         log.info("Производитель {} начал работу", id);
         try {
-            while (isRunning && !Thread.currentThread().isInterrupted()) {
+            while (!Thread.currentThread().isInterrupted()) {
                 Thread.sleep(productionTime);
                 Banana banana = new Banana();
                 storage.addResource(banana);
@@ -40,19 +39,9 @@ public class BananaProducer implements Producer {
         }
     }
 
-    @Override
-    public void shutdown() {
-        log.debug("Остановка производителя {}", id);
-        isRunning = false;
-    }
 
     @Override
     public int getProducerId() {
         return id;
-    }
-
-    @Override
-    public void restart() {
-        isRunning = true;
     }
 }

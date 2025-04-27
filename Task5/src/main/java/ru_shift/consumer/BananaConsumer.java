@@ -9,7 +9,6 @@ public class BananaConsumer implements Consumer {
     private final int id;
     private final int consumptionTime;
     private final Storage storage;
-    private volatile boolean isRunning = true;
     private static final Object lock = new Object();
     private static int nextId = 1;
 
@@ -26,7 +25,7 @@ public class BananaConsumer implements Consumer {
     public void run() {
         log.info("Потребитель {} начал работу", id);
         try {
-            while (isRunning && !Thread.currentThread().isInterrupted()) {
+            while (!Thread.currentThread().isInterrupted()) {
                 Resource resource = storage.takeResource();
                 Thread.sleep(consumptionTime);
                 log.debug("Обработан ресурс {}", resource.getId());
@@ -40,18 +39,8 @@ public class BananaConsumer implements Consumer {
     }
 
     @Override
-    public void shutdown() {
-        log.debug("Остановка потребителя {}", id);
-        isRunning = false;
-    }
-
-    @Override
     public int getConsumerId() {
         return id;
     }
 
-    @Override
-    public void restart() {
-        isRunning = true;
-    }
 }

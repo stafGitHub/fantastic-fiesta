@@ -8,10 +8,6 @@ import java.util.Scanner;
 public class ConsoleProgramRestart {
     private static final Scanner scanner = new Scanner(System.in);
 
-    private ConsoleProgramRestart() {
-        throw new UnsupportedOperationException("Это служебный класс, и его экземпляр не может быть создан.");
-    }
-
     public static boolean restart() {
         while (true) {
             log.info("Продолжить использование производства? 1: продолжить, 0: завершить");

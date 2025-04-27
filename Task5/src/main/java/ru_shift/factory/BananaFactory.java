@@ -2,7 +2,7 @@ package ru_shift.factory;
 
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
-import ru_shift.configuration.Config;
+import ru_shift.configuration.ConfigurationProperties;
 import ru_shift.consumer.BananaConsumer;
 import ru_shift.consumer.Consumer;
 import ru_shift.producer.BananaProducer;
@@ -20,17 +20,17 @@ public class BananaFactory {
     private final List<Consumer> consumers;
     private final List<Thread> threads;
 
-    public BananaFactory(Config config) {
-        this.storage = new BananaStorage(config.getStorageSize());
+    public BananaFactory(ConfigurationProperties configurationProperties) {
+        this.storage = new BananaStorage(configurationProperties.storageSize());
         this.producers = new ArrayList<>();
         this.consumers = new ArrayList<>();
         this.threads = new ArrayList<>();
 
-        for (int i = 0; i < config.getProducerCount(); i++) {
-            producers.add(new BananaProducer(config.getProducerTime(), storage));
+        for (int i = 0; i < configurationProperties.producerCount(); i++) {
+            producers.add(new BananaProducer(configurationProperties.producerTime(), storage));
         }
-        for (int i = 0; i < config.getConsumerCount(); i++) {
-            consumers.add(new BananaConsumer(config.getConsumerTime(), storage));
+        for (int i = 0; i < configurationProperties.consumerCount(); i++) {
+            consumers.add(new BananaConsumer(configurationProperties.consumerTime(), storage));
         }
     }
 
@@ -48,25 +48,15 @@ public class BananaFactory {
         });
     }
 
-    public void restart() {
-        log.info("Перезапуск производства");
-        producers.forEach(Producer::restart);
-        consumers.forEach(Consumer::restart);
-    }
-
     public void shutdown() {
         log.info("Начало остановки производства");
-
-        producers.forEach(Producer::shutdown);
-        consumers.forEach(Consumer::shutdown);
-
         threads.forEach(Thread::interrupt);
 
         threads.forEach(t -> {
             try {
                 t.join();
             } catch (InterruptedException e) {
-                log.warn("Прерывание при ожидании завершения потока");
+                log.error("Прерывание при ожидании завершения потока {}", t.getName(), e);
                 Thread.currentThread().interrupt();
             }
         });
