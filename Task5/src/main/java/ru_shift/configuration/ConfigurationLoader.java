@@ -9,7 +9,10 @@ import java.util.Properties;
 
 
 @Slf4j
-public class ConfigurationLoader {
+public final class ConfigurationLoader {
+    private ConfigurationLoader() {
+    }
+
     public static ConfigurationProperties getProperties(String fileName) throws ConfigurationException {
         Properties properties = readProperties(fileName);
         return new ConfigurationProperties(
