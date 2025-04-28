@@ -5,9 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Future;
+import java.util.concurrent.*;
 
 @RequiredArgsConstructor
 @Slf4j
@@ -23,24 +21,27 @@ public class TaskExecutor {
         return futures;
     }
 
-    public List<Task> awaitCompletion(List<Future<Task>> futures) throws InterruptedException, ExecutionException {
+    public List<Task> awaitCompletion(List<Future<Task>> futures, long timeout, TimeUnit unit)
+            throws InterruptedException, ExecutionException, TimeoutException {
+
         List<Task> results = new ArrayList<>();
-        for (Future<Task> future : futures) {
-            try {
-                results.add(future.get());
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
-                futures.forEach(f -> f.cancel(true));
-                throw e;
-            } catch (ExecutionException e) {
-                futures.forEach(f -> f.cancel(true));
-                throw e;
+
+        try {
+            for (Future<Task> future : futures) {
+                results.add(future.get(timeout, unit));
             }
+            return results;
+        } catch (TimeoutException | InterruptedException | ExecutionException e) {
+            cancelAll(futures);
+            throw e;
         }
-        return results;
     }
 
-    public void shutdown() {
-        executor.shutdown();
+    public void shutdownNow() {
+        executor.shutdownNow();
+    }
+
+    private void cancelAll(List<Future<Task>> futures) {
+        futures.forEach(f -> f.cancel(true));
     }
 }
