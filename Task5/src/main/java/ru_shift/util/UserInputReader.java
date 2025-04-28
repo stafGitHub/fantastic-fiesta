@@ -5,13 +5,13 @@ import lombok.extern.slf4j.Slf4j;
 import java.util.Scanner;
 
 @Slf4j
-public final class ConsoleProgramRestart {
+public final class UserInputReader {
     private static final Scanner scanner = new Scanner(System.in);
 
-    private ConsoleProgramRestart() {
+    private UserInputReader() {
     }
 
-    public static boolean restart() {
+    public static boolean shouldContinue() {
         while (true) {
             log.info("Продолжить использование производства? 1: продолжить, 0: завершить");
             String text = scanner.nextLine();

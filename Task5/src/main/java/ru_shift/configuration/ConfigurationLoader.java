@@ -42,13 +42,16 @@ public final class ConfigurationLoader {
 
     private static int getPropertyElement(Properties properties, String key) throws ConfigurationException {
         var propertyElement = properties.get(key);
+
+        if (propertyElement == null) {
+            throw new ConfigurationException("Значение не может быть пустым : %s - %s".formatted(key, null));
+        }
+
         try {
             var number = Integer.parseInt(propertyElement.toString());
-            if (number == 0) {
-                throw new ConfigurationException("Значение не может быть 0: %s".formatted(key));
-            }
-            if (number < 0) {
-                throw new ConfigurationException("Число должно быть положительным %s : %s".formatted(key, number));
+
+            if (number <= 0) {
+                throw new ConfigurationException("Число должно быть положительным (>0) %s : %s".formatted(key, number));
             }
 
             log.info("Получено значение : {} - {}", key, number);
@@ -56,8 +59,6 @@ public final class ConfigurationLoader {
             return number;
         } catch (NumberFormatException e) {
             throw new ConfigurationException("Значение должно быть числом : %s - %s".formatted(key, propertyElement));
-        } catch (NullPointerException e) {
-            throw new ConfigurationException("Значение не может быть пустым : %s - %s".formatted(key, propertyElement));
         }
     }
 }

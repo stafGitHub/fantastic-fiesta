@@ -5,7 +5,7 @@ import ru_shift.configuration.ConfigurationLoader;
 import ru_shift.configuration.ConfigurationProperties;
 import ru_shift.exceptions.ConfigurationException;
 import ru_shift.factory.BananaFactory;
-import ru_shift.util.ConsoleProgramRestart;
+import ru_shift.util.UserInputReader;
 
 @Slf4j
 public class Main {
@@ -34,7 +34,7 @@ public class Main {
                 Thread.sleep(RUNTIME_TIME);
                 factory.shutdown();
                 log.info("Состояние склада {}", factory.getStorage());
-            } while (ConsoleProgramRestart.restart());
+            } while (UserInputReader.shouldContinue());
 
         } catch (InterruptedException e) {
             log.info("Главный поток прерван");
