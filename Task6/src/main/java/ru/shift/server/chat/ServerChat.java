@@ -2,8 +2,12 @@ package ru.shift.server.chat;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import ru.shift.common.protocol.ApplicationProtocol;
 import ru.shift.server.chat.endpoints.EndpointFactory;
 import ru.shift.server.chat.session.UserSession;
+import ru.shift.server.expections.ConnectException;
+import ru.shift.server.expections.JsonException;
+import ru.shift.server.expections.MessageException;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -22,13 +26,7 @@ public class ServerChat {
             log.info("Сервер создан {}:{}", serverSocket.getLocalSocketAddress(), serverSocket.getLocalPort());
             while (true) {
                 Socket clienSocket = serverSocket.accept();
-                pool.submit(() -> {
-                    try {
-                        requestProcessing(new UserSession(clienSocket));
-                    } catch (Exception e) {
-                        throw new RuntimeException(e);
-                    }
-                });
+                pool.submit(() -> requestProcessing(new UserSession(clienSocket)));
             }
 
         } catch (IOException e) {
@@ -36,7 +34,7 @@ public class ServerChat {
         }
     }
 
-    private void requestProcessing(UserSession session) throws Exception {
+    private void requestProcessing(UserSession session) {
         try (session) {
             while (session.getSocket().isConnected()) {
                 var message = session.getMessage();
@@ -44,6 +42,17 @@ public class ServerChat {
                 var endpoint = EndpointFactory.create(protocol);
                 endpoint.process(session, message);
             }
+        } catch (MessageException | ConnectException | JsonException e) {
+            log.warn(e.getMessage() , e);
+            log.warn("Сессия закрыта {}",session.getSocket().getRemoteSocketAddress());
+
+            if (session.getUserName() != null) {
+                EndpointFactory.create(ApplicationProtocol.LOGOUT).process(session,null);
+                log.warn("{} удалён",session.getUserName());
+            }
+
+        } catch (IOException e) {
+            log.warn(e.getMessage() , e);
         }
     }
 }

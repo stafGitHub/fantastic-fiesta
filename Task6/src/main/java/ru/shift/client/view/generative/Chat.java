@@ -2,7 +2,7 @@
  * Created by JFormDesigner on Tue Apr 29 16:19:11 OMST 2025
  */
 
-package ru.shift.client.view;
+package ru.shift.client.view.generative;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
@@ -72,7 +72,7 @@ public class Chat extends JFrame {
                 }
                 Chat.add(textPane);
 
-                //======== UserMessage ========
+                //======== Message ========
                 {
                     Message.setPreferredSize(new Dimension(900, 31));
                     Message.setMinimumSize(new Dimension(900, 31));

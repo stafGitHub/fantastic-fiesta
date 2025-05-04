@@ -1,16 +1,17 @@
 package ru.shift.server.chat.endpoints;
 
-import ru.shift.server.chat.repository.ChatRome;
-import ru.shift.server.chat.session.UserSession;
 import ru.shift.common.protocol.ApplicationProtocol;
-import ru.shift.common.protocol.message.UserMessage;
+import ru.shift.common.protocol.message.ClientMessage;
+import ru.shift.server.chat.session.Manager;
+import ru.shift.server.chat.session.SessionManager;
+import ru.shift.server.chat.session.UserSession;
 
 public class LogOutEndpoint implements Endpoint {
-    private final ChatRome chatRome = ChatRome.INSTANCE;
+    private static final Manager sessionManager = SessionManager.INSTANCE;
 
     @Override
-    public void process(UserSession session, UserMessage message) {
-        chatRome.removeUser(message.body());
+    public void process(UserSession session, ClientMessage message) {
+        sessionManager.removeUser(session.getUserName());
     }
 
     @Override

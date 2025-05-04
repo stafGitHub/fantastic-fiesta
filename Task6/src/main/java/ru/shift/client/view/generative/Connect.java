@@ -2,7 +2,7 @@
  * Created by JFormDesigner on Tue Apr 29 16:05:16 OMST 2025
  */
 
-package ru.shift.client.view;
+package ru.shift.client.view.generative;
 
 import net.miginfocom.swing.MigLayout;
 
@@ -25,8 +25,6 @@ public class Connect extends JFrame {
         ConnectPanel = new JPanel();
         label1 = new JLabel();
         formattedTextField1 = new JFormattedTextField();
-        label2 = new JLabel();
-        formattedTextField2 = new JFormattedTextField();
         button1 = new JButton();
 
         //======== this ========
@@ -88,11 +86,6 @@ public class Connect extends JFrame {
                 formattedTextField1.setPreferredSize(new Dimension(200, 34));
                 ConnectPanel.add(formattedTextField1, "cell 2 2 6 1");
 
-                //---- label2 ----
-                label2.setText("\u041d\u0438\u043a\u043d\u0435\u0439\u043c");
-                ConnectPanel.add(label2, "cell 1 3");
-                ConnectPanel.add(formattedTextField2, "cell 2 3 6 1");
-
                 //---- button1 ----
                 button1.setText("\u041f\u043e\u0434\u043a\u043b\u044e\u0447\u0438\u0442\u044c\u0441\u044f");
                 ConnectPanel.add(button1, "cell 3 6");
@@ -112,8 +105,6 @@ public class Connect extends JFrame {
     protected JPanel ConnectPanel;
     protected JLabel label1;
     protected JFormattedTextField formattedTextField1;
-    protected JLabel label2;
-    protected JFormattedTextField formattedTextField2;
     protected JButton button1;
     // JFormDesigner - End of variables declaration  //GEN-END:variables  @formatter:on
 }

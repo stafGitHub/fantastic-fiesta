@@ -3,49 +3,55 @@ package ru.shift.server.chat.endpoints;
 
 import lombok.extern.slf4j.Slf4j;
 import ru.shift.common.protocol.ApplicationProtocol;
-import ru.shift.common.protocol.message.UserMessage;
-import ru.shift.common.protocol.message.output.ChatMessage;
-import ru.shift.common.protocol.message.output.RegisterMessage;
-import ru.shift.common.protocol.message.status.ProcessingStatus;
-import ru.shift.server.chat.MessageSender;
-import ru.shift.server.chat.repository.ChatRome;
+import ru.shift.common.protocol.SystemMessageStatus;
+import ru.shift.common.protocol.message.ClientMessage;
+import ru.shift.common.protocol.message.output.LoginMessageError;
+import ru.shift.common.protocol.message.output.LoginMessageSuccess;
+import ru.shift.common.protocol.message.output.ServerMessage;
+import ru.shift.common.protocol.message.output.SystemMessage;
+import ru.shift.server.chat.session.Manager;
+import ru.shift.server.chat.session.SessionManager;
 import ru.shift.server.chat.session.UserSession;
+import ru.shift.server.expections.ConnectException;
 import ru.shift.server.expections.MessageException;
 
-import java.io.IOException;
 import java.util.UUID;
 
 @Slf4j
 
 public class AuthEndpoint implements Endpoint {
 
-    private final ChatRome chatRome = ChatRome.INSTANCE;
-    private final MessageSender messageSender = new MessageSender(chatRome);
+    private static final Manager sessionManager = SessionManager.INSTANCE;
 
     @Override
-    public void process(UserSession session, UserMessage message) throws MessageException {
-        if (!chatRome.userExists(message.body())) {
+    public void process(UserSession session, ClientMessage message) throws MessageException {
+        if (!sessionManager.userExists(message.body())) {
             session.setUserName(message.body());
             session.setSessionId(session.getUserName() + UUID.randomUUID());
 
-            try {
-                session.sendMessage(new RegisterMessage(ApplicationProtocol.LOGIN, ProcessingStatus.OK, session.getSessionId()));
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
 
-            chatRome.addUser(session);
-            log.info("{} подключился", message.body());
-            messageSender.broadcastMessage(new ChatMessage(session.getUserName(),
-                    "подключился",
-                    ApplicationProtocol.SEND_MESSAGE)
-            );
+            sendMessage(session, new LoginMessageSuccess(ApplicationProtocol.LOGIN, session.getSessionId()));
+
+
+            sessionManager.addUser(session);
+
+            log.info("{} подключился", session.getUserName());
+
+            sessionManager.broadcastMessage(new SystemMessage(
+                    ApplicationProtocol.SEND_MESSAGE,
+                    SystemMessageStatus.LOGIN,
+                    session.getUserName()));
         } else {
-            try {
-                session.sendMessage(new RegisterMessage(ApplicationProtocol.LOGIN,ProcessingStatus.ERROR,null));
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+            sendMessage(session, new LoginMessageError(ApplicationProtocol.LOGIN));
+        }
+    }
+
+    private void sendMessage(UserSession session, ServerMessage message) throws MessageException {
+        try {
+            session.sendMessage(message);
+        } catch (ConnectException e) {
+            log.warn("Не удалось отправить {} : {}", message.getClass(), e.getMessage());
+            throw new MessageException(e.getMessage());
         }
     }
 

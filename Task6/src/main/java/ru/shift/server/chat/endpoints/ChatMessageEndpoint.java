@@ -2,41 +2,27 @@ package ru.shift.server.chat.endpoints;
 
 import lombok.extern.slf4j.Slf4j;
 import ru.shift.common.protocol.ApplicationProtocol;
-import ru.shift.common.protocol.message.UserMessage;
-import ru.shift.common.protocol.message.output.ServerMessage;
-import ru.shift.common.protocol.message.status.ProcessingStatus;
-import ru.shift.server.chat.MessageSender;
-import ru.shift.server.chat.repository.ChatRome;
+import ru.shift.common.protocol.message.ClientMessage;
+import ru.shift.common.protocol.message.output.SendMessage;
+import ru.shift.server.chat.session.Manager;
+import ru.shift.server.chat.session.SessionManager;
 import ru.shift.server.chat.session.UserSession;
 import ru.shift.server.expections.MessageException;
 
-import java.io.IOException;
+import java.util.Calendar;
 
 @Slf4j
 public class ChatMessageEndpoint implements Endpoint {
-    private final ChatRome chatRome = ChatRome.INSTANCE;
-    private final MessageSender messageSender = new MessageSender(chatRome);
+    private static final Manager sessionManager = SessionManager.INSTANCE;
 
     @Override
-    public void process(UserSession session, UserMessage message) throws MessageException {
+    public void process(UserSession session, ClientMessage message) throws MessageException {
         log.info("Message received: {}", message.body());
-        messageSender.broadcastMessage(new UserMessage(
+        sessionManager.broadcastMessage(new SendMessage(
                 ApplicationProtocol.SEND_MESSAGE,
-                message.body()
+                message.body(),
+                Calendar.getInstance()
         ));
-
-        try {
-            session.sendStatusMessage(new ServerMessage(ProcessingStatus.OK));
-        } catch (IOException e) {
-
-            try {
-                session.sendStatusMessage(new ServerMessage(ProcessingStatus.ERROR));
-            } catch (IOException ex) {
-                throw new MessageException(ex.getMessage());
-            }
-
-            throw new MessageException(e.getMessage());
-        }
     }
 
     @Override
