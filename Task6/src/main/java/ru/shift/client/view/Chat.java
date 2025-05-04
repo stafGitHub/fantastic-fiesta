@@ -4,11 +4,9 @@
 
 package ru.shift.client.view;
 
-import java.awt.*;
 import javax.swing.*;
-import javax.swing.border.*;
-
-import net.miginfocom.swing.*;
+import javax.swing.border.TitledBorder;
+import java.awt.*;
 
 /**
  * @author sasha
@@ -74,7 +72,7 @@ public class Chat extends JFrame {
                 }
                 Chat.add(textPane);
 
-                //======== Message ========
+                //======== UserMessage ========
                 {
                     Message.setPreferredSize(new Dimension(900, 31));
                     Message.setMinimumSize(new Dimension(900, 31));

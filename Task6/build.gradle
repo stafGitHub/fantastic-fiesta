@@ -12,11 +12,16 @@ repositories {
 dependencies {
     implementation 'ch.qos.logback:logback-classic:1.4.12'
 
-    compileOnly 'org.projectlombok:lombok:1.18.30'
-    annotationProcessor 'org.projectlombok:lombok:1.18.30'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.15.2'
+    implementation 'com.fasterxml.jackson.core:jackson-annotations:2.15.2'
+    implementation 'com.fasterxml.jackson.core:jackson-core:2.15.2'
     implementation 'com.miglayout:miglayout-swing:5.0'
-    runtimeOnly 'com.formdev:flatlaf-intellij-themes:3.5.2'
     implementation 'com.formdev:flatlaf-extras:3.5.2'
+
+    annotationProcessor 'org.projectlombok:lombok:1.18.30'
+    compileOnly 'org.projectlombok:lombok:1.18.30'
+    runtimeOnly 'com.formdev:flatlaf-intellij-themes:3.5.2'
+
     testImplementation platform('org.junit:junit-bom:5.10.0')
     testImplementation 'org.junit.jupiter:junit-jupiter'
 }
