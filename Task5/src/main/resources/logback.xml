@@ -1,0 +1,43 @@
+<configuration>
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <target>System.out</target>
+        <filter class="ch.qos.logback.core.filter.EvaluatorFilter">
+            <evaluator class="ch.qos.logback.classic.boolex.JaninoEventEvaluator">
+                <expression>message.contains("!YELLOW!")</expression>
+            </evaluator>
+            <onMatch>DENY</onMatch>
+            <onMismatch>NEUTRAL</onMismatch>
+        </filter>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>%green(%d{HH:mm:ss}) %highlight([%level]) %highlight([%thread] %logger{36} -) %highlight(%msg%n)</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="YELLOW_CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <target>System.out</target>
+        <filter class="ch.qos.logback.core.filter.EvaluatorFilter">
+            <evaluator class="ch.qos.logback.classic.boolex.JaninoEventEvaluator">
+                <expression>message.contains("!YELLOW!")</expression>
+            </evaluator>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>%yellow(%d{HH:mm:ss}) %highlight([%level]) %yellow([%thread] %logger{36} - %replace(%msg){'!YELLOW!',''}%n)</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="FILE" class="ch.qos.logback.core.FileAppender">
+        <file>Task5/application.log</file>
+        <append>true</append>
+        <encoder>
+            <pattern>%d{HH:mm:ss} [%level] [%thread] %logger{36} - %replace(%msg){'!YELLOW!',''}%n</pattern>
+        </encoder>
+    </appender>
+
+    <root level="${log.level:-INFO}">
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="YELLOW_CONSOLE" />
+        <appender-ref ref="FILE" />
+    </root>
+</configuration>
