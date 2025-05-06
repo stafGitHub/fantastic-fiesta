@@ -18,7 +18,7 @@ new FormModel {
 					add( new FormContainer( "javax.swing.JScrollPane", new FormLayoutManager( class javax.swing.JScrollPane ) ) {
 						name: "ScrolPanel"
 						add( new FormComponent( "javax.swing.JList" ) {
-							name: "ListUsers"
+							name: "listUsers"
 							"preferredSize": new java.awt.Dimension( 150, 1000 )
 							"layoutOrientation": 1
 						} )

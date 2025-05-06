@@ -13,7 +13,6 @@ import ru.shift.common.protocol.message.output.LoginMessageSuccess;
 import java.util.Calendar;
 
 public class ConnectNamePresenter extends Observer implements Presenter {
-    private final UserConnect userConnect = UserConnect.INSTANCE;
     private final WindowManager windowManager = WindowManager.INSTANCE;
 
     public ConnectNamePresenter() {
@@ -32,10 +31,10 @@ public class ConnectNamePresenter extends Observer implements Presenter {
     public void event(Event event) {
         if (event instanceof Message serverMessage){
             var message = serverMessage.serverMessage();
-
             if (message instanceof LoginMessageSuccess){
                 windowManager.getConnectNameView().setVisible(false);
                 windowManager.getChatView().setVisible(true);
+                userConnect.sendMessage(new ClientMessage(ApplicationProtocol.GET_USERS,null,Calendar.getInstance()));
             }else if (message instanceof LoginMessageError loginMessageError){
                 windowManager.getConnectNameView().showError(loginMessageError.toString());
             }

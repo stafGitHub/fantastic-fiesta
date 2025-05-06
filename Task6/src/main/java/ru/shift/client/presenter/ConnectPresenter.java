@@ -1,12 +1,10 @@
 package ru.shift.client.presenter;
 
-import ru.shift.client.model.UserConnect;
 import ru.shift.client.view.WindowManager;
 
 import java.io.IOException;
 
 public class ConnectPresenter implements Presenter {
-    private final UserConnect userConnect = UserConnect.INSTANCE;
     private final WindowManager windowManager = WindowManager.INSTANCE;
 
     public ConnectPresenter() {

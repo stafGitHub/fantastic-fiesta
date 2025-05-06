@@ -5,6 +5,8 @@ import ru.shift.common.protocol.message.output.ServerMessage;
 import ru.shift.server.expections.ConnectException;
 import ru.shift.server.expections.MessageException;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Slf4j
@@ -47,7 +49,9 @@ public enum SessionManager implements Manager {
     }
 
     @Override
-    public ConcurrentHashMap<String, UserSession> getAllUsers() {
-        return users;
+    public List<String> getAllUsers() {
+        return new ArrayList<>(users.keySet());
     }
+
+
 }

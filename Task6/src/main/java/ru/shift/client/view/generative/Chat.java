@@ -21,7 +21,7 @@ public class Chat extends JFrame {
         dialogPane = new JPanel();
         Users = new JPanel();
         ScrolPanel = new JScrollPane();
-        ListUsers = new JList();
+        listUsers = new JList();
         Chat = new JPanel();
         textPane = new JScrollPane();
         ChatPane = new JTextPane();
@@ -50,10 +50,10 @@ public class Chat extends JFrame {
                 //======== ScrolPanel ========
                 {
 
-                    //---- ListUsers ----
-                    ListUsers.setPreferredSize(new Dimension(150, 1000));
-                    ListUsers.setLayoutOrientation(JList.VERTICAL_WRAP);
-                    ScrolPanel.setViewportView(ListUsers);
+                    //---- listUsers ----
+                    listUsers.setPreferredSize(new Dimension(150, 1000));
+                    listUsers.setLayoutOrientation(JList.VERTICAL_WRAP);
+                    ScrolPanel.setViewportView(listUsers);
                 }
                 Users.add(ScrolPanel);
             }
@@ -102,7 +102,7 @@ public class Chat extends JFrame {
     protected JPanel dialogPane;
     protected JPanel Users;
     protected JScrollPane ScrolPanel;
-    protected JList ListUsers;
+    protected JList listUsers;
     protected JPanel Chat;
     protected JScrollPane textPane;
     protected JTextPane ChatPane;

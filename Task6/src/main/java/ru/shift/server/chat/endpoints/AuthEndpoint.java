@@ -9,8 +9,6 @@ import ru.shift.common.protocol.message.output.LoginMessageError;
 import ru.shift.common.protocol.message.output.LoginMessageSuccess;
 import ru.shift.common.protocol.message.output.ServerMessage;
 import ru.shift.common.protocol.message.output.SystemMessage;
-import ru.shift.server.chat.session.Manager;
-import ru.shift.server.chat.session.SessionManager;
 import ru.shift.server.chat.session.UserSession;
 import ru.shift.server.expections.ConnectException;
 import ru.shift.server.expections.MessageException;
@@ -20,9 +18,6 @@ import java.util.UUID;
 @Slf4j
 
 public class AuthEndpoint implements Endpoint {
-
-    private static final Manager sessionManager = SessionManager.INSTANCE;
-
     @Override
     public void process(UserSession session, ClientMessage message) throws MessageException {
         if (!sessionManager.userExists(message.body())) {

@@ -2,6 +2,7 @@ package ru.shift.server.chat.session;
 
 import ru.shift.common.protocol.message.output.ServerMessage;
 
+import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
 public interface Manager {
@@ -13,5 +14,5 @@ public interface Manager {
 
     void broadcastMessage(ServerMessage message);
 
-    ConcurrentHashMap<String, UserSession> getAllUsers();
+    List<String> getAllUsers();
 }
