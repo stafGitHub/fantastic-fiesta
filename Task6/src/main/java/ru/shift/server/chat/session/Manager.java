@@ -1,9 +1,8 @@
 package ru.shift.server.chat.session;
 
-import ru.shift.common.protocol.message.output.ServerMessage;
+import ru.shift.common.network.responce.ServerMessage;
 
 import java.util.List;
-import java.util.concurrent.ConcurrentHashMap;
 
 public interface Manager {
     boolean userExists(String username);

@@ -1,6 +1,6 @@
 package ru.shift.server.chat.endpoints;
 
-import ru.shift.common.protocol.ApplicationProtocol;
+import ru.shift.common.network.ApplicationProtocol;
 
 import java.util.Map;
 import java.util.ServiceLoader;

@@ -1,4 +1,4 @@
-package ru.shift.common.protocol;
+package ru.shift.common.network;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

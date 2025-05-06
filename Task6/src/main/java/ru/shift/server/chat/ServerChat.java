@@ -2,7 +2,7 @@ package ru.shift.server.chat;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import ru.shift.common.protocol.ApplicationProtocol;
+import ru.shift.common.network.ApplicationProtocol;
 import ru.shift.server.chat.endpoints.EndpointFactory;
 import ru.shift.server.chat.session.UserSession;
 import ru.shift.server.expections.ConnectException;
@@ -36,23 +36,20 @@ public class ServerChat {
 
     private void requestProcessing(UserSession session) {
         try (session) {
-            while (session.getSocket().isConnected()) {
+            while (!session.getSocket().isClosed()) {
                 var message = session.getMessage();
                 var protocol = message.protocol();
                 var endpoint = EndpointFactory.create(protocol);
                 endpoint.process(session, message);
             }
         } catch (MessageException | ConnectException | JsonException e) {
-            log.warn(e.getMessage() , e);
-            log.warn("Сессия закрыта {}",session.getSocket().getRemoteSocketAddress());
-
-            if (session.getUserName() != null) {
-                EndpointFactory.create(ApplicationProtocol.LOGOUT).process(session,null);
-                log.warn("{} удалён",session.getUserName());
-            }
+            log.warn(e.getMessage(), e);
+            log.warn("Сессия закрыта {}", session.getSocket().getRemoteSocketAddress());
+            EndpointFactory.create(ApplicationProtocol.LOGOUT).process(session, null);
+            log.warn("{} удалён", session.getUserName());
 
         } catch (IOException e) {
-            log.warn(e.getMessage() , e);
+            log.warn(e.getMessage(), e);
         }
     }
 }

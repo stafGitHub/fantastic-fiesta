@@ -1,4 +1,4 @@
-package ru.shift.common.protocol;
+package ru.shift.common.network;
 
 public enum ApplicationProtocol {
     LOGIN,

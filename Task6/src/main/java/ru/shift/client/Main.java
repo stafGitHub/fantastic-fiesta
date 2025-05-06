@@ -14,7 +14,8 @@ public class Main {
     public static void main(String[] args) {
         try {
             UIManager.setLookAndFeel("com.formdev.flatlaf.FlatDarculaLaf");
-        } catch (Exception ignored) {}
+        } catch (Exception ignored) {
+        }
 
         var connectPresenter = new ConnectPresenter();
         var connectNamePresenter = new ConnectNamePresenter();

@@ -1,4 +1,4 @@
-package ru.shift.common.protocol.message.output;
+package ru.shift.common.network.responce;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;

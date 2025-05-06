@@ -2,13 +2,13 @@ package ru.shift.server.chat.endpoints;
 
 
 import lombok.extern.slf4j.Slf4j;
-import ru.shift.common.protocol.ApplicationProtocol;
-import ru.shift.common.protocol.SystemMessageStatus;
-import ru.shift.common.protocol.message.ClientMessage;
-import ru.shift.common.protocol.message.output.LoginMessageError;
-import ru.shift.common.protocol.message.output.LoginMessageSuccess;
-import ru.shift.common.protocol.message.output.ServerMessage;
-import ru.shift.common.protocol.message.output.SystemMessage;
+import ru.shift.common.network.ApplicationProtocol;
+import ru.shift.common.network.SystemMessageStatus;
+import ru.shift.common.network.request.ClientMessage;
+import ru.shift.common.network.responce.LoginMessageError;
+import ru.shift.common.network.responce.LoginMessageSuccess;
+import ru.shift.common.network.responce.ServerMessage;
+import ru.shift.common.network.responce.SystemMessage;
 import ru.shift.server.chat.session.UserSession;
 import ru.shift.server.expections.ConnectException;
 import ru.shift.server.expections.MessageException;
@@ -25,7 +25,7 @@ public class AuthEndpoint implements Endpoint {
             session.setSessionId(session.getUserName() + UUID.randomUUID());
 
 
-            sendMessage(session, new LoginMessageSuccess(ApplicationProtocol.LOGIN, session.getSessionId()));
+            sendMessage(session, new LoginMessageSuccess());
 
 
             sessionManager.addUser(session);
@@ -33,11 +33,10 @@ public class AuthEndpoint implements Endpoint {
             log.info("{} подключился", session.getUserName());
 
             sessionManager.broadcastMessage(new SystemMessage(
-                    ApplicationProtocol.SEND_MESSAGE,
                     SystemMessageStatus.LOGIN,
                     session.getUserName()));
         } else {
-            sendMessage(session, new LoginMessageError(ApplicationProtocol.LOGIN));
+            sendMessage(session, new LoginMessageError());
         }
     }
 

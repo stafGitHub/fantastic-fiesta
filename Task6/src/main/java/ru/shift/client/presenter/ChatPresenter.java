@@ -6,14 +6,12 @@ import ru.shift.client.model.UserConnect;
 import ru.shift.client.model.event.Message;
 import ru.shift.client.view.WindowManager;
 import ru.shift.client.view.concrete.ChatView;
-import ru.shift.common.protocol.ApplicationProtocol;
-import ru.shift.common.protocol.message.ClientMessage;
-import ru.shift.common.protocol.message.output.SendMessage;
-import ru.shift.common.protocol.message.output.ServerMessage;
-import ru.shift.common.protocol.message.output.SystemMessage;
-import ru.shift.common.protocol.message.output.UsersMessage;
-
-import java.util.Calendar;
+import ru.shift.common.network.ApplicationProtocol;
+import ru.shift.common.network.request.ClientMessage;
+import ru.shift.common.network.responce.SendMessage;
+import ru.shift.common.network.responce.ServerMessage;
+import ru.shift.common.network.responce.SystemMessage;
+import ru.shift.common.network.responce.UsersMessage;
 
 public class ChatPresenter extends Observer implements Presenter {
     public final ChatView chatView = WindowManager.INSTANCE.getChatView();
@@ -29,7 +27,7 @@ public class ChatPresenter extends Observer implements Presenter {
             ServerMessage serverMessage = message.serverMessage();
 
             if (serverMessage instanceof SendMessage sendMessage) {
-                chatView.addMessage(sendMessage.body());
+                chatView.addMessage(sendMessage.localDate().toString()+"-"+sendMessage.name()+": "+sendMessage.body());
             }
 
             if (serverMessage instanceof UsersMessage usersMessage) {
@@ -52,6 +50,6 @@ public class ChatPresenter extends Observer implements Presenter {
     @Override
     public void onButtonClick() {
         var messages = chatView.getMessages();
-        userConnect.sendMessage(new ClientMessage(ApplicationProtocol.SEND_MESSAGE, messages, Calendar.getInstance()));
+        userConnect.sendMessage(new ClientMessage(ApplicationProtocol.SEND_MESSAGE, messages));
     }
 }
