@@ -14,16 +14,8 @@ public class ConnectView extends Connect {
         return formattedTextField1.getText();
     }
 
-    public void setServerAddress(String address) {
-        formattedTextField1.setText(address);
-    }
-
-    public JButton getConnectButton() {
-        return button1;
-    }
-
     public void addActionListener(Presenter presenter) {
-        button1.addActionListener(e -> presenter.onMouseClicked());
+        button1.addActionListener(e -> presenter.onButtonClick());
     }
 
     public void showError(String message) {

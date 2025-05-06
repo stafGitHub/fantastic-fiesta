@@ -14,16 +14,8 @@ public class ConnectNameView extends ConnectName {
         return textField1.getText();
     }
 
-    public void setUserName(String name) {
-        textField1.setText(name);
-    }
-
     public void addActionListener(Presenter presenter) {
-        okButton.addActionListener(e -> presenter.onMouseClicked());
-    }
-
-    public JButton getOkButton() {
-        return okButton;
+        okButton.addActionListener(e -> presenter.onButtonClick());
     }
 
     public void showError(String message) {

@@ -1,21 +1,27 @@
 package ru.shift.client.presenter;
 
-import ru.shift.client.model.HttpClient;
-import ru.shift.client.view.concrete.ConnectView;
+import ru.shift.client.model.UserConnect;
+import ru.shift.client.view.WindowManager;
+
+import java.io.IOException;
 
 public class ConnectPresenter implements Presenter {
-    private final ConnectView view;
-    private final HttpClient client;
+    private final UserConnect userConnect = UserConnect.INSTANCE;
+    private final WindowManager windowManager = WindowManager.INSTANCE;
 
-    public ConnectPresenter(ConnectView view, HttpClient client) {
-        this.view = view;
-        this.client = client;
-        view.addActionListener(this);
+    public ConnectPresenter() {
+        windowManager.getConnectView().addActionListener(this);
     }
 
     @Override
-    public void onMouseClicked() {
-        String serverAddress = view.getServerAddress();
-        client.connect(serverAddress);
+    public void onButtonClick() {
+        var split = windowManager.getConnectView().getServerAddress().split(":");
+        try {
+            userConnect.connect(split[0], Integer.parseInt(split[1]));
+            windowManager.getConnectView().setVisible(false);
+            windowManager.getConnectNameView().setVisible(true);
+        } catch (IOException e) {
+            windowManager.getConnectView().showError("Сервер не найден");
+        }
     }
 }

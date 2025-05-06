@@ -1,5 +1,5 @@
 package ru.shift.client.presenter;
 
 public interface Presenter {
-    void onMouseClicked();
+    void onButtonClick();
 }

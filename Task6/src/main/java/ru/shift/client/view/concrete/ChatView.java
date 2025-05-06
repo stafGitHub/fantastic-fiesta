@@ -2,35 +2,19 @@ package ru.shift.client.view.concrete;
 
 import ru.shift.client.presenter.Presenter;
 import ru.shift.client.view.generative.Chat;
-import javax.swing.*;
+
+import java.util.List;
 
 public class ChatView extends Chat {
     public ChatView() {
         super();
     }
 
-    public String getMessage() {
-        return messageField.getText();
-    }
-
-    public void setMessage(String message) {
-        messageField.setText(message);
-    }
-
-    public JButton getSendButton() {
-        return PushButton;
-    }
-
-    public JList getUsersList() {
-        return ListUsers;
-    }
-
-    public JTextPane getChatPane() {
-        return ChatPane;
+    public void addUser(List<String> users) {
     }
 
     public void addActionListener(Presenter presenter) {
-        PushButton.addActionListener(e -> presenter.onMouseClicked());
+        PushButton.addActionListener(e -> presenter.onButtonClick());
     }
 
     public void addMessage(String message) {
@@ -38,7 +22,9 @@ public class ChatView extends Chat {
         ChatPane.setText(current + (current.isEmpty() ? "" : "\n") + message);
     }
 
-    public void clearMessages() {
-        ChatPane.setText("");
+    public String getMessages() {
+       return messageField.getText();
     }
+
+
 }
