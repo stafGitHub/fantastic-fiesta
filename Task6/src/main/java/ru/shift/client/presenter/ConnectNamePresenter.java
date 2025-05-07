@@ -29,10 +29,12 @@ public class ConnectNamePresenter extends Observer implements Presenter {
     public void event(Event event) {
         if (event instanceof Message serverMessage) {
             var message = serverMessage.serverMessage();
+
             if (message instanceof LoginMessageSuccess) {
                 windowManager.getConnectNameView().setVisible(false);
                 windowManager.getChatView().setVisible(true);
                 userConnect.sendMessage(new ClientMessage(ApplicationProtocol.GET_USERS, null));
+
             } else if (message instanceof LoginMessageError loginMessageError) {
                 windowManager.getConnectNameView().showError(loginMessageError.toString());
             }

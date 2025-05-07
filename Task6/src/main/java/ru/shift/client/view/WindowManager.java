@@ -11,7 +11,6 @@ import ru.shift.common.network.request.ClientMessage;
 import javax.swing.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.util.Calendar;
 
 @Getter
 public enum WindowManager {
