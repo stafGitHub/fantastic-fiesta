@@ -6,8 +6,8 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import ru.shift.common.network.request.ClientMessage;
-import ru.shift.common.network.responce.ServerMessage;
+import ru.shift.common.network.message.ClientMessage;
+import ru.shift.common.network.message.ServerMessage;
 import ru.shift.server.expections.ConnectException;
 import ru.shift.server.expections.JsonException;
 
@@ -47,7 +47,9 @@ public class UserSession implements AutoCloseable {
 
     public ServerMessage getMessage() throws ConnectException, JsonException {
         try {
-            return objectMapper.readValue(reader.readLine(), ServerMessage.class);
+            String rawMessage = reader.readLine();
+            log.debug("Получено сообщение от сервера: {}", rawMessage);
+            return objectMapper.readValue(rawMessage, ServerMessage.class);
         } catch (JsonProcessingException e) {
             log.warn("Ошибка чтения json : {}", e.getMessage());
             throw new JsonException(e.getMessage());
@@ -59,7 +61,9 @@ public class UserSession implements AutoCloseable {
 
     public void sendMessage(ClientMessage message) throws ConnectException {
         try {
-            writer.println(objectMapper.writeValueAsString(message));
+            String jsonMessage = objectMapper.writeValueAsString(message);
+            log.debug("Отправка сообщения на сервер: {}", jsonMessage);
+            writer.println(jsonMessage);
         } catch (IOException e) {
             log.warn("Ошибка отправки json : {}", e.getMessage());
             throw new ConnectException(e.getMessage());

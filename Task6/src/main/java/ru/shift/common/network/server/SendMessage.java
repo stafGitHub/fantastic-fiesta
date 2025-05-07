@@ -1,6 +1,7 @@
-package ru.shift.common.network.responce;
+package ru.shift.common.network.server;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import ru.shift.common.network.message.ServerMessage;
 
 import java.time.LocalDate;
 

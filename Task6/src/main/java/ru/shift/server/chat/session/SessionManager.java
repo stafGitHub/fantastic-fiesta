@@ -1,7 +1,7 @@
 package ru.shift.server.chat.session;
 
 import lombok.extern.slf4j.Slf4j;
-import ru.shift.common.network.responce.ServerMessage;
+import ru.shift.common.network.message.ServerMessage;
 import ru.shift.server.expections.ConnectException;
 import ru.shift.server.expections.MessageException;
 

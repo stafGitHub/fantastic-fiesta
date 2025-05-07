@@ -1,7 +1,8 @@
-package ru.shift.common.network.responce;
+package ru.shift.common.network.message;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import ru.shift.common.network.server.*;
 
 import java.io.Serializable;
 

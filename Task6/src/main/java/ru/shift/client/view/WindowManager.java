@@ -1,29 +1,48 @@
 package ru.shift.client.view;
 
-import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
+import ru.shift.client.event.Event;
+import ru.shift.client.event.Observer;
+import ru.shift.client.event.Publisher;
 import ru.shift.client.model.UserConnect;
-import ru.shift.client.view.concrete.ChatView;
-import ru.shift.client.view.concrete.ConnectNameView;
-import ru.shift.client.view.concrete.ConnectView;
+import ru.shift.client.presenter.event.NextWindow;
 import ru.shift.common.network.ApplicationProtocol;
-import ru.shift.common.network.request.ClientMessage;
+import ru.shift.common.network.message.ClientMessage;
 
 import javax.swing.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
+import java.util.List;
 
-@Getter
-public enum WindowManager {
-    INSTANCE;
+@Slf4j
+public class WindowManager extends Observer {
+    private final List<JFrame> windows = new ArrayList<>();
 
-    private final ConnectView connectView = new ConnectView();
-    private final ConnectNameView connectNameView = new ConnectNameView();
-    private final ChatView chatView = new ChatView();
+    public WindowManager(Publisher... publisher) {
+        super(publisher);
+    }
 
-    {
-        setupWindowClosing(connectView);
-        setupWindowClosing(connectNameView);
-        setupWindowClosing(chatView);
+    private int currentWindow = 0;
+
+    @Override
+    public void event(Event event) {
+        if (event instanceof NextWindow) {
+            currentWindow++;
+            var jFrame = windows.get(currentWindow);
+            jFrame.setVisible(true);
+            log.info("Переключение окна {} -> {}",
+                    windows.get(currentWindow - 1).getClass().getSimpleName(),
+                    windows.get(currentWindow).getTitle().getClass().getSimpleName());
+        }
+    }
+
+    public void chainWindow(JFrame... window) {
+        for (JFrame jFrame : window) {
+            setupWindowClosing(jFrame);
+            windows.add(jFrame);
+        }
+
     }
 
     private void setupWindowClosing(JFrame window) {
@@ -40,5 +59,9 @@ public enum WindowManager {
 
             }
         });
+    }
+
+    public void run(){
+        SwingUtilities.invokeLater(()-> windows.get(currentWindow).setVisible(true));
     }
 }

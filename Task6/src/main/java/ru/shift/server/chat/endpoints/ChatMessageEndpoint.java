@@ -2,8 +2,8 @@ package ru.shift.server.chat.endpoints;
 
 import lombok.extern.slf4j.Slf4j;
 import ru.shift.common.network.ApplicationProtocol;
-import ru.shift.common.network.request.ClientMessage;
-import ru.shift.common.network.responce.SendMessage;
+import ru.shift.common.network.message.ClientMessage;
+import ru.shift.common.network.server.SendMessage;
 import ru.shift.server.chat.session.UserSession;
 import ru.shift.server.expections.MessageException;
 

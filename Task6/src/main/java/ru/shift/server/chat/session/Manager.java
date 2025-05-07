@@ -1,6 +1,6 @@
 package ru.shift.server.chat.session;
 
-import ru.shift.common.network.responce.ServerMessage;
+import ru.shift.common.network.message.ServerMessage;
 
 import java.util.List;
 

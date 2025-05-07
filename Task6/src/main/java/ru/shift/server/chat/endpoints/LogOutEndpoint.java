@@ -3,8 +3,8 @@ package ru.shift.server.chat.endpoints;
 import lombok.extern.slf4j.Slf4j;
 import ru.shift.common.network.ApplicationProtocol;
 import ru.shift.common.network.SystemMessageStatus;
-import ru.shift.common.network.request.ClientMessage;
-import ru.shift.common.network.responce.SystemMessage;
+import ru.shift.common.network.message.ClientMessage;
+import ru.shift.common.network.server.SystemMessage;
 import ru.shift.server.chat.session.UserSession;
 
 import java.io.IOException;

@@ -1,28 +1,36 @@
 package ru.shift.client.presenter;
 
+import lombok.extern.slf4j.Slf4j;
 import ru.shift.client.event.Event;
 import ru.shift.client.event.Observer;
-import ru.shift.client.model.UserConnect;
+import ru.shift.client.event.Publisher;
 import ru.shift.client.model.event.Message;
-import ru.shift.client.view.WindowManager;
+import ru.shift.client.presenter.event.NextWindow;
+import ru.shift.client.view.concrete.ConnectNameView;
 import ru.shift.common.network.ApplicationProtocol;
-import ru.shift.common.network.request.ClientMessage;
-import ru.shift.common.network.responce.LoginMessageError;
-import ru.shift.common.network.responce.LoginMessageSuccess;
+import ru.shift.common.network.message.ClientMessage;
+import ru.shift.common.network.server.LoginMessageError;
+import ru.shift.common.network.server.LoginMessageSuccess;
 
-public class ConnectNamePresenter extends Observer implements Presenter {
-    private final WindowManager windowManager = WindowManager.INSTANCE;
+import java.util.ArrayList;
+import java.util.List;
 
-    public ConnectNamePresenter() {
-        super(UserConnect.INSTANCE);
-        windowManager.getConnectNameView().addActionListener(this);
+@Slf4j
+public class ConnectNamePresenter extends Observer implements Presenter, Publisher {
+    private final ConnectNameView connectNameView;
+    private final List<Observer> observers = new ArrayList<>();
+
+    public ConnectNamePresenter(ConnectNameView connectNameView) {
+        super(userConnect);
+        this.connectNameView = connectNameView;
+        connectNameView.addActionListener(this);
     }
 
     @Override
     public void onButtonClick() {
-        var userName = windowManager.getConnectNameView().getUserName();
+        var userName = connectNameView.getUserName();
+        log.info("Попытка входа с именем пользователя: {}", userName);
         userConnect.sendMessage(new ClientMessage(ApplicationProtocol.LOGIN, userName));
-
     }
 
     @Override
@@ -31,13 +39,26 @@ public class ConnectNamePresenter extends Observer implements Presenter {
             var message = serverMessage.serverMessage();
 
             if (message instanceof LoginMessageSuccess) {
-                windowManager.getConnectNameView().setVisible(false);
-                windowManager.getChatView().setVisible(true);
+                log.info("Успешный вход: {}", message);
+                connectNameView.setVisible(false);
                 userConnect.sendMessage(new ClientMessage(ApplicationProtocol.GET_USERS, null));
+                notifyListeners(new NextWindow());
 
             } else if (message instanceof LoginMessageError loginMessageError) {
-                windowManager.getConnectNameView().showError(loginMessageError.toString());
+                log.warn("Ошибка входа: {}", loginMessageError);
+                connectNameView.showError(loginMessageError.toString());
             }
         }
     }
+
+    @Override
+    public void notifyListeners(Event event) {
+        observers.forEach(observer -> observer.event(event));
+    }
+
+    @Override
+    public void addListener(Observer observer) {
+        observers.add(observer);
+    }
+
 }

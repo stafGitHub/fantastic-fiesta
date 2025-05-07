@@ -1,4 +1,4 @@
-package ru.shift.common.network.request;
+package ru.shift.common.network.message;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import ru.shift.common.network.ApplicationProtocol;

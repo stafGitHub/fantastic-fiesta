@@ -14,7 +14,7 @@ public abstract class Observer {
     public abstract void event(Event event);
 
     void subscribe(Publisher publisher) {
-        log.debug("{} подписался на {}", this, publisher);
+        log.info("{} подписался на {}", this, publisher);
         publisher.addListener(this);
     }
 
