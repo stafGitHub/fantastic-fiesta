@@ -1,0 +1,17 @@
+plugins {
+    id 'java'
+}
+
+group = 'ru_shift'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation project(':Task6:common')
+    implementation 'com.miglayout:miglayout-swing:5.0'
+    implementation 'com.formdev:flatlaf-extras:3.5.2'
+    runtimeOnly 'com.formdev:flatlaf-intellij-themes:3.5.2'
+}
