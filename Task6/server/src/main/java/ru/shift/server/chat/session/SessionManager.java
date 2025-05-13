@@ -11,9 +11,7 @@ import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Slf4j
-public enum SessionManager implements Manager {
-    INSTANCE;
-
+public class SessionManager implements Manager {
     private final ConcurrentHashMap<String, UserSession> users = new ConcurrentHashMap<>();
 
     @Override
@@ -61,6 +59,4 @@ public enum SessionManager implements Manager {
     public List<String> getAllUsers() {
         return new ArrayList<>(users.keySet());
     }
-
-
 }

@@ -7,10 +7,8 @@ import ru.shift.network.message.ClientMessage;
 import ru.shift.network.model.SystemMessage;
 import ru.shift.server.chat.session.UserSession;
 
-import java.io.IOException;
-
 @Slf4j
-public class LogOutEndpoint implements Endpoint {
+public class LogoutEndpoint implements Endpoint {
     @Override
     public void process(UserSession session, ClientMessage message) {
         if (session.getUserName() != null) {
