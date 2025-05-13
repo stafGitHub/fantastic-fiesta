@@ -1,5 +1,5 @@
 <configuration>
-    <appender sender="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <target>System.out</target>
         <filter class="ch.qos.logback.core.filter.EvaluatorFilter">
             <evaluator class="ch.qos.logback.classic.boolex.JaninoEventEvaluator">
@@ -13,7 +13,7 @@
         </encoder>
     </appender>
 
-    <appender sender="YELLOW_CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+    <appender name="YELLOW_CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <target>System.out</target>
         <filter class="ch.qos.logback.core.filter.EvaluatorFilter">
             <evaluator class="ch.qos.logback.classic.boolex.JaninoEventEvaluator">
@@ -27,7 +27,7 @@
         </encoder>
     </appender>
 
-    <appender sender="FILE" class="ch.qos.logback.core.FileAppender">
+    <appender name="FILE" class="ch.qos.logback.core.FileAppender">
         <file>Task5/application.log</file>
         <append>true</append>
         <encoder>

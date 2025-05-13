@@ -1,5 +1,5 @@
 <configuration>
-    <appender sender="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <target>System.out</target>
         <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
             <pattern>%green(%d{HH:mm:ss}) %highlight([%level]) %highlight([%thread] %logger{36} -) %highlight(%msg%n)</pattern>
