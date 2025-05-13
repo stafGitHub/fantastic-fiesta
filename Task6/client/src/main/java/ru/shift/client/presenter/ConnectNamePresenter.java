@@ -7,7 +7,7 @@ import ru.shift.client.event.Publisher;
 import ru.shift.client.model.event.Message;
 import ru.shift.client.presenter.event.NextWindow;
 import ru.shift.client.view.concrete.ConnectNameView;
-import ru.shift.network.RequestType;
+import ru.shift.network.MessageType;
 import ru.shift.network.message.ClientMessage;
 import ru.shift.network.model.LoginMessageError;
 import ru.shift.network.model.LoginMessageSuccess;
@@ -30,7 +30,7 @@ public class ConnectNamePresenter extends Observer implements Presenter, Publish
     public void onButtonClick() {
         var userName = connectNameView.getUserName();
         log.info("Попытка входа с именем пользователя: {}", userName);
-        userConnect.sendMessage(new ClientMessage(RequestType.LOGIN, userName));
+        userConnect.sendMessage(new ClientMessage(MessageType.LOGIN, userName));
     }
 
     @Override
@@ -41,7 +41,7 @@ public class ConnectNamePresenter extends Observer implements Presenter, Publish
             if (message instanceof LoginMessageSuccess) {
                 log.info("Успешный вход: {}", message);
                 connectNameView.setVisible(false);
-                userConnect.sendMessage(new ClientMessage(RequestType.GET_USERS, null));
+                userConnect.sendMessage(new ClientMessage(MessageType.GET_USERS, null));
                 notifyListeners(new NextWindow());
 
             } else if (message instanceof LoginMessageError loginMessageError) {

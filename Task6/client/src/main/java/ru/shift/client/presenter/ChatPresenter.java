@@ -5,10 +5,10 @@ import ru.shift.client.event.Event;
 import ru.shift.client.event.Observer;
 import ru.shift.client.model.event.Message;
 import ru.shift.client.view.concrete.ChatView;
-import ru.shift.network.RequestType;
+import ru.shift.network.MessageType;
 import ru.shift.network.message.ClientMessage;
 import ru.shift.network.message.ServerMessage;
-import ru.shift.network.model.SendMessage;
+import ru.shift.network.model.ChatMessage;
 import ru.shift.network.model.SystemMessage;
 import ru.shift.network.model.UsersMessage;
 
@@ -27,9 +27,9 @@ public class ChatPresenter extends Observer implements Presenter {
         if (event instanceof Message message) {
             ServerMessage serverMessage = message.serverMessage();
 
-            if (serverMessage instanceof SendMessage sendMessage) {
-                log.info("Получено сообщение: {}", sendMessage);
-                chatView.addMessage(sendMessage.localDate().toString() + "-" + sendMessage.name() + ": " + sendMessage.body());
+            if (serverMessage instanceof ChatMessage chatMessage) {
+                log.info("Получено сообщение: {}", chatMessage);
+                chatView.addMessage(chatMessage.departureDate().toString() + "-" + chatMessage.sender() + ": " + chatMessage.message());
             }
 
             if (serverMessage instanceof UsersMessage usersMessage) {
@@ -40,16 +40,16 @@ public class ChatPresenter extends Observer implements Presenter {
             if (serverMessage instanceof SystemMessage systemMessage) {
                 log.info("Получено системное сообщение: {}", systemMessage);
                 var systemMessageStatus = systemMessage.systemMessageStatus();
-                chatView.addMessage(systemMessage.systemMessageStatus().getMessage() + systemMessage.name());
+                chatView.addMessage(systemMessage.systemMessageStatus().getMessage() + systemMessage.sender());
 
                 switch (systemMessageStatus) {
                     case LOGIN -> {
-                        chatView.addUser(systemMessage.name());
-                        log.info("Добавлен пользователь: {}", systemMessage.name());
+                        chatView.addUser(systemMessage.sender());
+                        log.info("Добавлен пользователь: {}", systemMessage.sender());
                     }
                     case LOGOUT -> {
-                        chatView.removeUser(systemMessage.name());
-                        log.info("Пользователь удалён: {}", systemMessage.name());
+                        chatView.removeUser(systemMessage.sender());
+                        log.info("Пользователь удалён: {}", systemMessage.sender());
                     }
                 }
             }
@@ -60,6 +60,6 @@ public class ChatPresenter extends Observer implements Presenter {
     public void onButtonClick() {
         var messages = chatView.getMessages();
         log.info("Отправка сообщения: {}", messages);
-        userConnect.sendMessage(new ClientMessage(RequestType.SEND_MESSAGE, messages));
+        userConnect.sendMessage(new ClientMessage(MessageType.CHAT_MESSAGE, messages));
     }
 }

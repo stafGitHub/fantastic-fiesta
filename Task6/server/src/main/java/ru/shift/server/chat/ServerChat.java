@@ -2,7 +2,7 @@ package ru.shift.server.chat;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import ru.shift.network.RequestType;
+import ru.shift.network.MessageType;
 import ru.shift.server.chat.endpoints.EndpointFactory;
 import ru.shift.server.chat.session.UserSession;
 import ru.shift.server.expections.ConnectException;
@@ -38,14 +38,14 @@ public class ServerChat {
         try (session) {
             while (!session.getSocket().isClosed()) {
                 var message = session.getMessage();
-                var protocol = message.protocol();
+                var protocol = message.messageType();
                 var endpoint = EndpointFactory.create(protocol);
                 endpoint.process(session, message);
             }
         } catch (MessageException | ConnectException | JsonException e) {
             log.warn(e.getMessage(), e);
             log.warn("Сессия закрыта {}", session.getSocket().getRemoteSocketAddress());
-            EndpointFactory.create(RequestType.LOGOUT).process(session, null);
+            EndpointFactory.create(MessageType.LOGOUT).process(session, null);
             log.warn("{} удалён", session.getUserName());
 
         } catch (IOException e) {

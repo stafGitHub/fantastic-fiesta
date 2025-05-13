@@ -2,7 +2,7 @@ package ru.shift.server.chat.endpoints;
 
 
 import lombok.extern.slf4j.Slf4j;
-import ru.shift.network.RequestType;
+import ru.shift.network.MessageType;
 import ru.shift.network.SystemMessageStatus;
 import ru.shift.network.message.ClientMessage;
 import ru.shift.network.message.ServerMessage;
@@ -50,7 +50,7 @@ public class AuthEndpoint implements Endpoint {
     }
 
     @Override
-    public RequestType getProtocol() {
-        return RequestType.LOGIN;
+    public MessageType getProtocol() {
+        return MessageType.LOGIN;
     }
 }

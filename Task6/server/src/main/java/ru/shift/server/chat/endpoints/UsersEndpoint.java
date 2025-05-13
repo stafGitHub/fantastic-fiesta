@@ -2,7 +2,7 @@ package ru.shift.server.chat.endpoints;
 
 
 import lombok.extern.slf4j.Slf4j;
-import ru.shift.network.RequestType;
+import ru.shift.network.MessageType;
 import ru.shift.network.message.ClientMessage;
 import ru.shift.network.model.UsersMessage;
 import ru.shift.server.chat.session.UserSession;
@@ -24,7 +24,7 @@ public class UsersEndpoint implements Endpoint {
     }
 
     @Override
-    public RequestType getProtocol() {
-        return RequestType.GET_USERS;
+    public MessageType getProtocol() {
+        return MessageType.GET_USERS;
     }
 }
