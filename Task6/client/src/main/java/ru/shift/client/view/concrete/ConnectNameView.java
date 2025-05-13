@@ -11,7 +11,7 @@ public class ConnectNameView extends ConnectName {
     }
 
     public String getUserName() {
-        return textField1.getText();
+        return jTextField.getText();
     }
 
     public void addActionListener(Presenter presenter) {

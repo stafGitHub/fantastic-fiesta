@@ -19,15 +19,15 @@ public class Chat extends JFrame {
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents  @formatter:off
         dialogPane = new JPanel();
-        Users = new JPanel();
-        ScrolPanel = new JScrollPane();
+        usersPanel = new JPanel();
+        jScrollPane = new JScrollPane();
         listUsers = new JList();
-        Chat = new JPanel();
+        chatPanel = new JPanel();
         textPane = new JScrollPane();
-        ChatPane = new JTextPane();
-        Message = new JPanel();
+        chatPane = new JTextPane();
+        messagePanel = new JPanel();
         messageField = new JTextField();
-        PushButton = new JButton();
+        pushButton = new JButton();
 
         //======== this ========
         setMinimumSize(new Dimension(800, 500));
@@ -41,11 +41,11 @@ public class Chat extends JFrame {
 
             //======== Users ========
             {
-                Users.setMinimumSize(null);
-                Users.setPreferredSize(new Dimension(200, 88));
-                Users.setBorder(new TitledBorder("\u041f\u043e\u043b\u044c\u0437\u043e\u0432\u0430\u0442\u0435\u043b\u0438"));
-                Users.setForeground(Color.black);
-                Users.setLayout(new BoxLayout(Users, BoxLayout.X_AXIS));
+                usersPanel.setMinimumSize(null);
+                usersPanel.setPreferredSize(new Dimension(200, 88));
+                usersPanel.setBorder(new TitledBorder("\u041f\u043e\u043b\u044c\u0437\u043e\u0432\u0430\u0442\u0435\u043b\u0438"));
+                usersPanel.setForeground(Color.black);
+                usersPanel.setLayout(new BoxLayout(usersPanel, BoxLayout.X_AXIS));
 
                 //======== ScrolPanel ========
                 {
@@ -53,44 +53,45 @@ public class Chat extends JFrame {
                     //---- listUsers ----
                     listUsers.setPreferredSize(new Dimension(150, 1000));
                     listUsers.setLayoutOrientation(JList.VERTICAL_WRAP);
-                    ScrolPanel.setViewportView(listUsers);
+                    jScrollPane.setViewportView(listUsers);
                 }
-                Users.add(ScrolPanel);
+                usersPanel.add(jScrollPane);
             }
-            dialogPane.add(Users, BorderLayout.LINE_START);
+            dialogPane.add(usersPanel, BorderLayout.LINE_START);
 
             //======== Chat ========
             {
-                Chat.setBorder(new TitledBorder("\u0427\u0430\u0442"));
-                Chat.setMinimumSize(new Dimension(910, 30));
-                Chat.setMaximumSize(new Dimension(2147483647, 30));
-                Chat.setLayout(new BoxLayout(Chat, BoxLayout.Y_AXIS));
+                chatPanel.setBorder(new TitledBorder("\u0427\u0430\u0442"));
+                chatPanel.setMinimumSize(new Dimension(910, 30));
+                chatPanel.setMaximumSize(new Dimension(2147483647, 30));
+                chatPanel.setLayout(new BoxLayout(chatPanel, BoxLayout.Y_AXIS));
+                chatPane.setEditable(false);
 
                 //======== textPane ========
                 {
-                    textPane.setViewportView(ChatPane);
+                    textPane.setViewportView(chatPane);
                 }
-                Chat.add(textPane);
+                chatPanel.add(textPane);
 
                 //======== Message ========
                 {
-                    Message.setPreferredSize(new Dimension(900, 31));
-                    Message.setMinimumSize(new Dimension(900, 31));
-                    Message.setMaximumSize(new Dimension(2147483647, 30));
-                    Message.setLayout(new BoxLayout(Message, BoxLayout.X_AXIS));
+                    messagePanel.setPreferredSize(new Dimension(900, 31));
+                    messagePanel.setMinimumSize(new Dimension(900, 31));
+                    messagePanel.setMaximumSize(new Dimension(2147483647, 30));
+                    messagePanel.setLayout(new BoxLayout(messagePanel, BoxLayout.X_AXIS));
 
                     //---- messageField ----
                     messageField.setPreferredSize(new Dimension(200, 31));
                     messageField.setMinimumSize(new Dimension(900, 31));
-                    Message.add(messageField);
+                    messagePanel.add(messageField);
 
                     //---- PushButton ----
-                    PushButton.setText("push");
-                    Message.add(PushButton);
+                    pushButton.setText("push");
+                    messagePanel.add(pushButton);
                 }
-                Chat.add(Message);
+                chatPanel.add(messagePanel);
             }
-            dialogPane.add(Chat, BorderLayout.CENTER);
+            dialogPane.add(chatPanel, BorderLayout.CENTER);
         }
         contentPane.add(dialogPane, BorderLayout.CENTER);
         pack();
@@ -100,14 +101,14 @@ public class Chat extends JFrame {
 
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables  @formatter:off
     protected JPanel dialogPane;
-    protected JPanel Users;
-    protected JScrollPane ScrolPanel;
+    protected JPanel usersPanel;
+    protected JScrollPane jScrollPane;
     protected JList listUsers;
-    protected JPanel Chat;
+    protected JPanel chatPanel;
     protected JScrollPane textPane;
-    protected JTextPane ChatPane;
-    protected JPanel Message;
+    protected JTextPane chatPane;
+    protected JPanel messagePanel;
     protected JTextField messageField;
-    protected JButton PushButton;
+    protected JButton pushButton;
     // JFormDesigner - End of variables declaration  //GEN-END:variables  @formatter:on
 }

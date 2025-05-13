@@ -49,12 +49,12 @@ public class ChatView extends Chat {
 
 
     public void addActionListener(Presenter presenter) {
-        PushButton.addActionListener(e -> presenter.onButtonClick());
+        pushButton.addActionListener(e -> presenter.onButtonClick());
     }
 
     public void addMessage(String message) {
-        String current = ChatPane.getText();
-        ChatPane.setText(current + (current.isEmpty() ? "" : "\n") + message);
+        String current = chatPane.getText();
+        chatPane.setText(current + (current.isEmpty() ? "" : "\n") + message);
     }
 
     public String getMessages() {

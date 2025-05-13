@@ -21,9 +21,9 @@ public class ConnectName extends JFrame {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents  @formatter:off
         dialogPane = new JPanel();
         contentPanel = new JPanel();
-        panel1 = new JPanel();
-        label1 = new JLabel();
-        textField1 = new JTextField();
+        jPanel = new JPanel();
+        jLabel = new JLabel();
+        jTextField = new JTextField();
         buttonBar = new JPanel();
         okButton = new JButton();
 
@@ -43,7 +43,7 @@ public class ConnectName extends JFrame {
 
                 //======== panel1 ========
                 {
-                    panel1.setLayout(new MigLayout(
+                    jPanel.setLayout(new MigLayout(
                         "hidemode 3",
                         // columns
                         "[]" +
@@ -66,14 +66,14 @@ public class ConnectName extends JFrame {
                         "[]"));
 
                     //---- label1 ----
-                    label1.setText("\u0418\u043c\u044f");
-                    panel1.add(label1, "cell 2 4");
+                    jLabel.setText("\u0418\u043c\u044f");
+                    jPanel.add(jLabel, "cell 2 4");
 
                     //---- textField1 ----
-                    textField1.setPreferredSize(new Dimension(200, 34));
-                    panel1.add(textField1, "cell 4 4 8 1");
+                    jTextField.setPreferredSize(new Dimension(200, 34));
+                    jPanel.add(jTextField, "cell 4 4 8 1");
                 }
-                contentPanel.add(panel1);
+                contentPanel.add(jPanel);
             }
             dialogPane.add(contentPanel, BorderLayout.CENTER);
 
@@ -96,9 +96,9 @@ public class ConnectName extends JFrame {
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables  @formatter:off
     protected JPanel dialogPane;
     protected JPanel contentPanel;
-    protected JPanel panel1;
-    protected JLabel label1;
-    protected JTextField textField1;
+    protected JPanel jPanel;
+    protected JLabel jLabel;
+    protected JTextField jTextField;
     protected JPanel buttonBar;
     protected JButton okButton;
     // JFormDesigner - End of variables declaration  //GEN-END:variables  @formatter:on
