@@ -13,7 +13,6 @@ import javax.swing.*;
 
 @Slf4j
 public class Client {
-
     public static void main(String[] args) {
         log.info("Запуск клиента...");
         try {

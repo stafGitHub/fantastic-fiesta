@@ -1,11 +1,10 @@
 package ru.shift.server.chat.endpoints;
 
 import lombok.extern.slf4j.Slf4j;
-import ru.shift.network.ApplicationProtocol;
+import ru.shift.network.RequestType;
 import ru.shift.network.message.ClientMessage;
 import ru.shift.network.model.SendMessage;
 import ru.shift.server.chat.session.UserSession;
-import ru.shift.server.expections.MessageException;
 
 import java.time.LocalDate;
 
@@ -23,7 +22,7 @@ public class ChatMessageEndpoint implements Endpoint {
     }
 
     @Override
-    public ApplicationProtocol getProtocol() {
-        return ApplicationProtocol.SEND_MESSAGE;
+    public RequestType getProtocol() {
+        return RequestType.SEND_MESSAGE;
     }
 }

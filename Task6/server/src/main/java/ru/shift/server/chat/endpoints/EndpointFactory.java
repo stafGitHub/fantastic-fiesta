@@ -1,6 +1,6 @@
 package ru.shift.server.chat.endpoints;
 
-import ru.shift.network.ApplicationProtocol;
+import ru.shift.network.RequestType;
 
 import java.util.Map;
 import java.util.ServiceLoader;
@@ -8,11 +8,11 @@ import java.util.ServiceLoader;
 import static java.util.stream.Collectors.toMap;
 
 public interface EndpointFactory {
-    Map<ApplicationProtocol, Endpoint> factories = ServiceLoader.load(Endpoint.class).stream()
+    Map<RequestType, Endpoint> factories = ServiceLoader.load(Endpoint.class).stream()
             .map(ServiceLoader.Provider::get)
             .collect(toMap(Endpoint::getProtocol, e -> e));
 
-    static Endpoint create(ApplicationProtocol protocol) {
+    static Endpoint create(RequestType protocol) {
         return factories.get(protocol);
     }
 }

@@ -5,7 +5,7 @@ import ru.shift.client.event.Event;
 import ru.shift.client.event.Observer;
 import ru.shift.client.model.event.Message;
 import ru.shift.client.view.concrete.ChatView;
-import ru.shift.network.ApplicationProtocol;
+import ru.shift.network.RequestType;
 import ru.shift.network.message.ClientMessage;
 import ru.shift.network.message.ServerMessage;
 import ru.shift.network.model.SendMessage;
@@ -60,6 +60,6 @@ public class ChatPresenter extends Observer implements Presenter {
     public void onButtonClick() {
         var messages = chatView.getMessages();
         log.info("Отправка сообщения: {}", messages);
-        userConnect.sendMessage(new ClientMessage(ApplicationProtocol.SEND_MESSAGE, messages));
+        userConnect.sendMessage(new ClientMessage(RequestType.SEND_MESSAGE, messages));
     }
 }

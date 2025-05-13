@@ -1,11 +1,10 @@
 package ru.shift.network.message;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import ru.shift.network.ApplicationProtocol;
+import ru.shift.network.RequestType;
 
 import java.io.Serializable;
 
-public record ClientMessage(@JsonProperty("protocol") ApplicationProtocol protocol,
+public record ClientMessage(@JsonProperty("protocol") RequestType protocol,
                             @JsonProperty("body") String body) implements Serializable {
-
 }

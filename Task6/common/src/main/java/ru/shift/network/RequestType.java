@@ -1,6 +1,6 @@
 package ru.shift.network;
 
-public enum ApplicationProtocol {
+public enum RequestType {
     LOGIN,
     LOGOUT,
     SEND_MESSAGE,

@@ -6,7 +6,7 @@ import ru.shift.client.event.Observer;
 import ru.shift.client.event.Publisher;
 import ru.shift.client.model.UserConnect;
 import ru.shift.client.presenter.event.NextWindow;
-import ru.shift.network.ApplicationProtocol;
+import ru.shift.network.RequestType;
 import ru.shift.network.message.ClientMessage;
 
 import javax.swing.*;
@@ -53,7 +53,7 @@ public class WindowManager extends Observer {
                 log.info("Закрытие окна: {}", windows.get(currentWindow).getClass().getSimpleName());
 
                 if (UserConnect.INSTANCE.isConnected()) {
-                    UserConnect.INSTANCE.sendMessage(new ClientMessage(ApplicationProtocol.LOGOUT, null));
+                    UserConnect.INSTANCE.sendMessage(new ClientMessage(RequestType.LOGOUT, null));
                 }
 
                 UserConnect.INSTANCE.shutdown();

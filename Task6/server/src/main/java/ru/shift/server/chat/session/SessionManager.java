@@ -3,7 +3,6 @@ package ru.shift.server.chat.session;
 import lombok.extern.slf4j.Slf4j;
 import ru.shift.network.message.ServerMessage;
 import ru.shift.server.expections.ConnectException;
-import ru.shift.server.expections.MessageException;
 
 import java.util.ArrayList;
 import java.util.List;
