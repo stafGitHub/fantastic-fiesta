@@ -4,61 +4,55 @@ import lombok.extern.slf4j.Slf4j;
 import ru.shift.server.expections.ConfigurationException;
 
 import java.io.IOException;
-import java.util.Map;
+import java.io.InputStream;
 import java.util.Properties;
-import java.util.function.Function;
 
 @Slf4j
 public class ConfigurationLoader {
-    private static final Map<Class<? extends Number>, Function<String, ?>> NUMBER_PARSERS = Map.of(
-            Integer.class, Integer::parseInt,
-            Double.class, Double::parseDouble,
-            Long.class, Long::parseLong,
-            Float.class, Float::parseFloat
-    );
 
     private ConfigurationLoader() {
     }
 
     public static Configuration getConfiguration(String fileName) {
         var properties = loadProperties(fileName);
-        return new Configuration(getPropertyValue(properties, ConfigurationKeys.PORT.getKey(), Integer.class));
+        return new Configuration(getPropertyValue(properties, ConfigurationKeys.PORT.getKey()));
     }
 
     private static Properties loadProperties(String fileName) throws ConfigurationException {
-        Properties properties = new Properties();
-        try {
-            properties.load(ConfigurationLoader.class.getClassLoader().getResourceAsStream(fileName));
+        try (InputStream input = ConfigurationLoader.class.getClassLoader().getResourceAsStream(fileName)) {
+            if (input == null) {
+                throw new ConfigurationException("Файл загрузки не найден в classpath: " + fileName);
+            }
+
+            Properties properties = new Properties();
+            properties.load(input);
+
             return properties;
         } catch (IOException e) {
             throw new ConfigurationException(e.getMessage());
         }
     }
 
-    private static <T extends Number> T getPropertyValue(Properties properties,
-                                                         String key,
-                                                         Class<T> clazz) throws ConfigurationException {
-        String propertyValue = properties.getProperty(key);
+    private static int getPropertyValue(Properties properties,
+                                        String key) throws ConfigurationException {
+        var propertyElement = properties.get(key);
 
-        if (propertyValue == null) {
-            throw new ConfigurationException(key + ": обязательный параметр отсутствует");
+        if (propertyElement == null) {
+            throw new ConfigurationException("Значение не может быть пустым : %s - %s".formatted(key, null));
         }
-
-        Number number;
 
         try {
-            number = (Number) NUMBER_PARSERS.get(clazz).apply(propertyValue);
+            var number = Integer.parseInt(propertyElement.toString());
+
+            if (number <= 0) {
+                throw new ConfigurationException("Число должно быть положительным (>0) %s : %s".formatted(key, number));
+            }
+
+            log.info("Получено значение : {} - {}", key, number);
+
+            return number;
         } catch (NumberFormatException e) {
-
-            throw new ConfigurationException(
-                    "Значение указанно не корректно " + key + ": " + e.getMessage() + " --> " + clazz.getName()
-            );
+            throw new ConfigurationException("Значение должно быть целым числом : %s - %s".formatted(key, propertyElement));
         }
-
-        if (number.doubleValue() <= 0) {
-            throw new ConfigurationException(key + ": " + number + ": значение должно быть положительным");
-        }
-        log.info("Параметр получен {} : {}", key, propertyValue);
-        return clazz.cast(number);
     }
 }
