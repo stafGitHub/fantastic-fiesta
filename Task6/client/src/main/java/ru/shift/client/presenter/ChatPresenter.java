@@ -40,14 +40,15 @@ public class ChatPresenter extends Observer implements Presenter {
             if (serverMessage instanceof SystemMessage systemMessage) {
                 log.info("Получено системное сообщение: {}", systemMessage);
                 var systemMessageStatus = systemMessage.getMessageStatus();
-                chatView.addMessage(systemMessage.getMessageStatus().name() + systemMessage.getSender());
 
                 switch (systemMessageStatus) {
                     case LOGIN -> {
+                        chatView.addMessage("Подключился: " + systemMessage.getSender());
                         chatView.addUser(systemMessage.getSender());
                         log.info("Добавлен пользователь: {}", systemMessage.getSender());
                     }
                     case LOGOUT -> {
+                        chatView.addMessage("Отключился: " + systemMessage.getSender());
                         chatView.removeUser(systemMessage.getSender());
                         log.info("Пользователь удалён: {}", systemMessage.getSender());
                     }
