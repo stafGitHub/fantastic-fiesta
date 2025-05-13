@@ -15,10 +15,23 @@ public class ConnectNameView extends ConnectName {
     }
 
     public void addActionListener(Presenter presenter) {
-        okButton.addActionListener(e -> presenter.onButtonClick());
+        okButton.addActionListener(e -> {
+            if (validateName()) {
+                presenter.onButtonClick();
+            }
+        });
     }
 
     public void showError(String message) {
         JOptionPane.showMessageDialog(this, message, "Ошибка", JOptionPane.ERROR_MESSAGE);
+    }
+
+    private boolean validateName() {
+        String name = getUserName().trim();
+        if (name.isEmpty()) {
+            showError("Имя пользователя не может быть пустым");
+            return false;
+        }
+        return true;
     }
 }

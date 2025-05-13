@@ -46,7 +46,7 @@ public class ConnectNamePresenter extends Observer implements Presenter, Publish
 
             } else if (message instanceof LoginMessageError loginMessageError) {
                 log.warn("Ошибка входа: {}", loginMessageError);
-                connectNameView.showError(loginMessageError.toString());
+                connectNameView.showError(loginMessageError.getException());
             }
         }
     }

@@ -7,7 +7,6 @@ import ru.shift.network.message.ClientMessage;
 import ru.shift.network.message.ServerMessage;
 import ru.shift.server.chat.session.SessionManager;
 import ru.shift.server.chat.session.UserSession;
-import ru.shift.server.expections.MessageException;
 
 @Slf4j
 public abstract class AbstractEndpoint<T extends ServerMessage> implements Endpoint {
@@ -20,31 +19,25 @@ public abstract class AbstractEndpoint<T extends ServerMessage> implements Endpo
         this.sessionManager = sessionManager;
     }
 
-    protected abstract T processMessage(UserSession session, ClientMessage message) throws MessageException;
+    protected abstract T processMessage(UserSession session, ClientMessage message) throws ConnectException;
 
     @Override
-    public final void process(UserSession session, ClientMessage message) throws MessageException {
+    public final void process(UserSession session, ClientMessage message) throws ConnectException {
+        log.info("Обработка сообщения {} , {}", messageType, message.body());
         try {
-            log.info("Обработка сообщения {} , {}", messageType, message.body());
-
             T response = processMessage(session, message);
-
             if (response != null) {
                 sendMessage(session, response);
             }
-        } catch (MessageException e) {
-            log.warn("Ошибка обработки сообщения от {}: {}", session.getUserName(), e.getMessage());
+        } catch (ConnectException e) {
+            log.info("Не удалось отправить сообщение: {}", e.getMessage(), e);
             throw e;
         }
+
     }
 
-    protected final void sendMessage(UserSession session, ServerMessage message) throws MessageException {
-        try {
-            session.sendMessage(message);
-        } catch (ConnectException e) {
-            log.warn("Не удалось отправить {} для {}: {}", message.getClass(), session.getUserName(), e.getMessage());
-            throw new MessageException(e.getMessage());
-        }
+    protected final void sendMessage(UserSession session, ServerMessage message) throws ConnectException {
+        session.sendMessage(message);
     }
 
 }

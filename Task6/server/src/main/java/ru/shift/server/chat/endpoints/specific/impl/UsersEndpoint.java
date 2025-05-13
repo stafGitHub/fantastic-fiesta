@@ -8,7 +8,6 @@ import ru.shift.network.model.UsersMessage;
 import ru.shift.server.chat.endpoints.AbstractEndpoint;
 import ru.shift.server.chat.session.SessionManager;
 import ru.shift.server.chat.session.UserSession;
-import ru.shift.server.expections.MessageException;
 
 import java.time.LocalDate;
 
@@ -20,7 +19,7 @@ public class UsersEndpoint extends AbstractEndpoint<UsersMessage> {
     }
 
     @Override
-    protected UsersMessage processMessage(UserSession session, ClientMessage message) throws MessageException {
+    protected UsersMessage processMessage(UserSession session, ClientMessage message) {
         return new UsersMessage(LocalDate.now(), sessionManager.getAllUsers());
     }
 

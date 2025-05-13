@@ -8,7 +8,6 @@ import ru.shift.network.model.SystemMessage;
 import ru.shift.server.chat.endpoints.AbstractEndpoint;
 import ru.shift.server.chat.session.SessionManager;
 import ru.shift.server.chat.session.UserSession;
-import ru.shift.server.expections.MessageException;
 
 import java.time.LocalDate;
 
@@ -20,7 +19,7 @@ public class LogoutEndpoint extends AbstractEndpoint<SystemMessage> {
     }
 
     @Override
-    protected SystemMessage processMessage(UserSession session, ClientMessage message) throws MessageException {
+    protected SystemMessage processMessage(UserSession session, ClientMessage message) {
         if (session.getUserName() != null) {
             sessionManager.removeUser(session.getUserName());
             log.info("Пользователь: {} - удалён", session.getUserName());

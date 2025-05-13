@@ -8,7 +8,6 @@ import ru.shift.network.exception.JsonException;
 import ru.shift.network.message.ClientMessage;
 import ru.shift.server.chat.endpoints.factory.EndpointsFactory;
 import ru.shift.server.chat.session.UserSession;
-import ru.shift.server.expections.MessageException;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -27,9 +26,15 @@ public class ServerChat {
             log.info("Сервер создан {}:{}", serverSocket.getLocalSocketAddress(), serverSocket.getLocalPort());
             while (true) {
                 Socket clienSocket = serverSocket.accept();
-                pool.submit(() -> requestProcessing(new UserSession(clienSocket, ClientMessage.class)));
-            }
 
+                pool.submit(() -> {
+                    try {
+                        requestProcessing(new UserSession(clienSocket, ClientMessage.class));
+                    } catch (ConnectException e) {
+                        log.warn("Пользователь отключился: {}", e.getMessage(),e);
+                    }
+                });
+            }
         } catch (IOException e) {
             pool.shutdown();
         }
@@ -43,11 +48,14 @@ public class ServerChat {
                 var endpoint = EndpointsFactory.getEndpointByMessageType(protocol);
                 endpoint.process(session, message);
             }
-        } catch (MessageException | ConnectException | JsonException e) {
+        } catch (ConnectException | JsonException e) {
             log.warn(e.getMessage(), e);
-            log.warn("Сессия закрыта {}", session.getSocket().getRemoteSocketAddress());
-            EndpointsFactory.getEndpointByMessageType(MessageType.LOGOUT).process(session, null);
-            log.warn("{} удалён", session.getUserName());
+
+            try {
+                EndpointsFactory.getEndpointByMessageType(MessageType.LOGOUT).process(session, null);
+            } catch (ConnectException exception){
+                log.warn(exception.getMessage(), exception);
+            }
 
         } catch (IOException e) {
             log.warn(e.getMessage(), e);

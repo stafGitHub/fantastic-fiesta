@@ -26,12 +26,12 @@ public enum UserConnect implements Publisher {
     private final ExecutorService executor = Executors.newSingleThreadExecutor();
     private final List<Observer> observers = new CopyOnWriteArrayList<>();
 
-    public void connect(String host, int port) throws IOException {
+    public void connect(String host, int port) throws IOException , ConnectException {
         log.info("Попытка подключения к серверу {}:{}", host, port);
         try {
             userSession = new UserSession(new Socket(host, port), ServerMessage.class);
             userSession.setServerAddress(host + port);
-        } catch (IOException e) {
+        } catch (IOException | ConnectException e) {
             log.error("Ошибка подключения: {}", e.getMessage(), e);
             throw e;
         }
@@ -47,12 +47,14 @@ public enum UserConnect implements Publisher {
                     if (message == null) {
                         break;
                     }
+
                     log.info("Обработка сообщения: {}", message);
                     notifyListeners(new Message(message));
                 } catch (JsonException e) {
-                    log.error("Ошибка обработки сообщения: {}", e.getMessage(), e);
+                    log.warn("Ошибка обработки сообщения: {}", e.getMessage(), e);
                 } catch (ConnectException e) {
-                    log.error(e.getMessage(), e);
+                    //TODO : сделать переподключение
+                    log.warn(e.getMessage(), e);
                     System.exit(1);
                 }
             }
@@ -76,7 +78,12 @@ public enum UserConnect implements Publisher {
 
     public void sendMessage(ClientMessage message) {
         log.info("Отправка сообщения на сервер: {}", message);
-        userSession.sendMessage(message);
+        try {
+            userSession.sendMessage(message);
+        }catch (ConnectException e) {
+            log.error(e.getMessage(), e);
+            shutdown();
+        }
     }
 
     @Override

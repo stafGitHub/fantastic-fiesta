@@ -6,6 +6,7 @@ import ru.shift.client.event.Observer;
 import ru.shift.client.event.Publisher;
 import ru.shift.client.presenter.event.NextWindow;
 import ru.shift.client.view.concrete.ConnectView;
+import ru.shift.network.exception.ConnectException;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -30,8 +31,8 @@ public class ConnectPresenter implements Presenter, Publisher {
             connectView.setVisible(false);
             notifyListeners(new NextWindow());
 
-        } catch (IOException | IndexOutOfBoundsException e) {
-            log.error("Ошибка подключения: {}", e.getMessage(), e);
+        } catch (IOException | IndexOutOfBoundsException | ConnectException e) {
+            log.warn("Ошибка подключения: {}", e.getMessage(), e);
             connectView.showError("Сервер не найден");
         }
     }
