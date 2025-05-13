@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import ru.shift.network.message.ClientMessage;
 import ru.shift.network.message.ServerMessage;
@@ -20,8 +21,8 @@ public class UserSession implements AutoCloseable {
     private final Socket socket;
     private final PrintWriter writer;
     private final BufferedReader reader;
+    @Setter
     private String userName;
-    private String sessionId;
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     public UserSession(Socket socket) throws ConnectException {
@@ -64,13 +65,4 @@ public class UserSession implements AutoCloseable {
         }
     }
 
-    public void setUserName(String userName) {
-        log.info("Имя : {}, установленно", userName);
-        this.userName = userName;
-    }
-
-    public void setSessionId(String sessionId) {
-        log.info("SessionId {}, установленна", sessionId);
-        this.sessionId = sessionId;
-    }
 }

@@ -3,6 +3,7 @@ package ru.shift.server.chat.session;
 import lombok.extern.slf4j.Slf4j;
 import ru.shift.network.message.ServerMessage;
 import ru.shift.server.expections.ConnectException;
+import ru.shift.server.expections.UserAlreadyExists;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,8 +21,11 @@ public enum SessionManager implements Manager {
     }
 
     @Override
-    public void addUser(UserSession session) {
-        users.put(session.getUserName(), session);
+    public void addUser(UserSession session) throws UserAlreadyExists {
+        var userSession = users.putIfAbsent(session.getUserName(), session);
+        if (userSession != null) {
+            throw new UserAlreadyExists("Пользователь " + session.getUserName() + "уже существует");
+        }
     }
 
     @Override

@@ -12,32 +12,31 @@ import ru.shift.network.model.SystemMessage;
 import ru.shift.server.chat.session.UserSession;
 import ru.shift.server.expections.ConnectException;
 import ru.shift.server.expections.MessageException;
-
-import java.util.UUID;
+import ru.shift.server.expections.UserAlreadyExists;
 
 @Slf4j
 
 public class AuthEndpoint implements Endpoint {
     @Override
     public void process(UserSession session, ClientMessage message) throws MessageException {
-        if (!sessionManager.userExists(message.body())) {
-            session.setUserName(message.body());
-            session.setSessionId(session.getUserName() + UUID.randomUUID());
+        session.setUserName(message.body());
 
-
-            sendMessage(session, new LoginMessageSuccess());
-
-
+        try {
             sessionManager.addUser(session);
-
-            log.info("{} подключился", session.getUserName());
-
-            sessionManager.broadcastMessage(new SystemMessage(
-                    SystemMessageStatus.LOGIN,
-                    session.getUserName()));
-        } else {
-            sendMessage(session, new LoginMessageError());
+        } catch (UserAlreadyExists e) {
+            sendMessage(session, new LoginMessageError(e.getMessage()));
+            return;
         }
+
+        sendMessage(session, new LoginMessageSuccess());
+
+        log.info("{} подключился", session.getUserName());
+
+        sessionManager.broadcastMessage(new SystemMessage(
+                SystemMessageStatus.LOGIN,
+                session.getUserName())
+        );
+
     }
 
     private void sendMessage(UserSession session, ServerMessage message) throws MessageException {

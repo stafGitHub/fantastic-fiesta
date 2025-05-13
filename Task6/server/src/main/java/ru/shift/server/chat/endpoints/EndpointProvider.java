@@ -7,12 +7,12 @@ import java.util.ServiceLoader;
 
 import static java.util.stream.Collectors.toMap;
 
-public interface EndpointFactory {
+public interface EndpointProvider {
     Map<MessageType, Endpoint> factories = ServiceLoader.load(Endpoint.class).stream()
             .map(ServiceLoader.Provider::get)
             .collect(toMap(Endpoint::getProtocol, e -> e));
 
-    static Endpoint create(MessageType protocol) {
+    static Endpoint getEndpointByMessageType(MessageType protocol) {
         return factories.get(protocol);
     }
 }
