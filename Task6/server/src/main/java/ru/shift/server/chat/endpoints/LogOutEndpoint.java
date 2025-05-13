@@ -18,12 +18,6 @@ public class LogOutEndpoint implements Endpoint {
             log.info("Пользователь: {} - удалён", session.getUserName());
             sessionManager.broadcastMessage(new SystemMessage(SystemMessageStatus.LOGOUT, session.getUserName()));
         }
-
-        try {
-            session.getSocket().close();
-        } catch (IOException e) {
-            log.info("Не удалось закрыть соединение: {}", e.getMessage());
-        }
     }
 
     @Override

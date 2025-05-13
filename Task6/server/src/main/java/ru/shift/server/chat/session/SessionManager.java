@@ -5,6 +5,7 @@ import ru.shift.network.message.ServerMessage;
 import ru.shift.server.expections.ConnectException;
 import ru.shift.server.expections.UserAlreadyExists;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
@@ -30,7 +31,13 @@ public enum SessionManager implements Manager {
 
     @Override
     public void removeUser(String username) {
-        users.remove(username);
+        var removedUser = users.remove(username);
+
+        try {
+            removedUser.getSocket().close();
+        } catch (IOException e) {
+            log.info("Не удалось закрыть соединение: {}", e.getMessage());
+        }
     }
 
     @Override
