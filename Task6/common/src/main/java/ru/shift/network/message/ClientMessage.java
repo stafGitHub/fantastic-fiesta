@@ -6,5 +6,5 @@ import ru.shift.network.MessageType;
 import java.io.Serializable;
 
 public record ClientMessage(@JsonProperty("messageType") MessageType messageType,
-                            @JsonProperty("message") String body) implements Serializable {
+                            @JsonProperty("message") String body) implements Serializable ,Message {
 }

@@ -1,4 +1,4 @@
-package ru.shift.client.exceptions;
+package ru.shift.network.exception;
 
 public class ConnectException extends RuntimeException {
     public ConnectException(String message) {

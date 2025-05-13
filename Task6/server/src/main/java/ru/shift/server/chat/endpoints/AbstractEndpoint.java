@@ -2,11 +2,11 @@ package ru.shift.server.chat.endpoints;
 
 import lombok.extern.slf4j.Slf4j;
 import ru.shift.network.MessageType;
+import ru.shift.network.exception.ConnectException;
 import ru.shift.network.message.ClientMessage;
 import ru.shift.network.message.ServerMessage;
 import ru.shift.server.chat.session.SessionManager;
 import ru.shift.server.chat.session.UserSession;
-import ru.shift.server.expections.ConnectException;
 import ru.shift.server.expections.MessageException;
 
 @Slf4j

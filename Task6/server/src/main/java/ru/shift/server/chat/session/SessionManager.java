@@ -1,8 +1,8 @@
 package ru.shift.server.chat.session;
 
 import lombok.extern.slf4j.Slf4j;
+import ru.shift.network.exception.ConnectException;
 import ru.shift.network.message.ServerMessage;
-import ru.shift.server.expections.ConnectException;
 import ru.shift.server.expections.UserAlreadyExists;
 
 import java.io.IOException;

@@ -4,11 +4,12 @@ import lombok.extern.slf4j.Slf4j;
 import ru.shift.client.event.Event;
 import ru.shift.client.event.Observer;
 import ru.shift.client.event.Publisher;
-import ru.shift.client.exceptions.ConnectException;
-import ru.shift.client.exceptions.JsonException;
 import ru.shift.client.model.event.Message;
 import ru.shift.client.model.session.UserSession;
+import ru.shift.network.exception.ConnectException;
+import ru.shift.network.exception.JsonException;
 import ru.shift.network.message.ClientMessage;
+import ru.shift.network.message.ServerMessage;
 
 import java.io.IOException;
 import java.net.Socket;
@@ -28,7 +29,7 @@ public enum UserConnect implements Publisher {
     public void connect(String host, int port) throws IOException {
         log.info("Попытка подключения к серверу {}:{}", host, port);
         try {
-            userSession = new UserSession(new Socket(host, port));
+            userSession = new UserSession(new Socket(host, port), ServerMessage.class);
             userSession.setServerAddress(host + port);
         } catch (IOException e) {
             log.error("Ошибка подключения: {}", e.getMessage(), e);

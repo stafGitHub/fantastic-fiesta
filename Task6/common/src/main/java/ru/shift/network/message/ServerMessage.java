@@ -20,7 +20,7 @@ import java.time.LocalDate;
         @JsonSubTypes.Type(value = UsersMessage.class, name = "GET_USERS")
 })
 @Getter
-public abstract class ServerMessage implements Serializable {
+public abstract class ServerMessage implements Serializable,Message {
     private final LocalDate dispatchDate;
 
     protected ServerMessage(LocalDate dispatchDate) {

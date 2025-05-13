@@ -3,10 +3,11 @@ package ru.shift.server.chat;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import ru.shift.network.MessageType;
+import ru.shift.network.exception.ConnectException;
+import ru.shift.network.exception.JsonException;
+import ru.shift.network.message.ClientMessage;
 import ru.shift.server.chat.endpoints.factory.EndpointsFactory;
 import ru.shift.server.chat.session.UserSession;
-import ru.shift.server.expections.ConnectException;
-import ru.shift.server.expections.JsonException;
 import ru.shift.server.expections.MessageException;
 
 import java.io.IOException;
@@ -26,7 +27,7 @@ public class ServerChat {
             log.info("Сервер создан {}:{}", serverSocket.getLocalSocketAddress(), serverSocket.getLocalPort());
             while (true) {
                 Socket clienSocket = serverSocket.accept();
-                pool.submit(() -> requestProcessing(new UserSession(clienSocket)));
+                pool.submit(() -> requestProcessing(new UserSession(clienSocket, ClientMessage.class)));
             }
 
         } catch (IOException e) {
