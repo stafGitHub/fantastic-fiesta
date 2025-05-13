@@ -1,18 +1,11 @@
 package ru.shift.server.chat.endpoints;
 
 
-import ru.shift.network.MessageType;
 import ru.shift.network.message.ClientMessage;
-import ru.shift.server.chat.session.Manager;
-import ru.shift.server.chat.session.SessionManager;
 import ru.shift.server.chat.session.UserSession;
 import ru.shift.server.expections.MessageException;
 
 public interface Endpoint {
-    Manager sessionManager = new SessionManager();
-
     void process(UserSession session, ClientMessage message) throws MessageException;
-
-    MessageType getProtocol();
 
 }

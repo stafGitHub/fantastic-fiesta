@@ -15,11 +15,6 @@ public class SessionManager implements Manager {
     private final ConcurrentHashMap<String, UserSession> users = new ConcurrentHashMap<>();
 
     @Override
-    public boolean userExists(String username) {
-        return users.containsKey(username);
-    }
-
-    @Override
     public void addUser(UserSession session) throws UserAlreadyExists {
         var userSession = users.putIfAbsent(session.getUserName(), session);
         if (userSession != null) {

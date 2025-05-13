@@ -7,7 +7,6 @@ import ru.shift.server.expections.UserAlreadyExists;
 import java.util.List;
 
 public interface Manager {
-    boolean userExists(String username);
 
     void addUser(UserSession userSession) throws UserAlreadyExists;
 
