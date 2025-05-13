@@ -10,6 +10,8 @@ import ru.shift.server.chat.session.SessionManager;
 import ru.shift.server.chat.session.UserSession;
 import ru.shift.server.expections.MessageException;
 
+import java.time.LocalDate;
+
 @Slf4j
 public class LogoutEndpoint extends AbstractEndpoint<SystemMessage> {
     public LogoutEndpoint(MessageType messageType,
@@ -22,7 +24,12 @@ public class LogoutEndpoint extends AbstractEndpoint<SystemMessage> {
         if (session.getUserName() != null) {
             sessionManager.removeUser(session.getUserName());
             log.info("Пользователь: {} - удалён", session.getUserName());
-            sessionManager.broadcastMessage(new SystemMessage(SystemMessageStatus.LOGOUT, session.getUserName()));
+
+            sessionManager.broadcastMessage(
+                    new SystemMessage(LocalDate.now(),
+                            SystemMessageStatus.LOGOUT,
+                            session.getUserName())
+            );
         }
 
         return null;

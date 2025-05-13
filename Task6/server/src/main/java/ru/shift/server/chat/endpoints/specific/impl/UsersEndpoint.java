@@ -10,6 +10,8 @@ import ru.shift.server.chat.session.SessionManager;
 import ru.shift.server.chat.session.UserSession;
 import ru.shift.server.expections.MessageException;
 
+import java.time.LocalDate;
+
 @Slf4j
 public class UsersEndpoint extends AbstractEndpoint<UsersMessage> {
     public UsersEndpoint(MessageType messageType,
@@ -19,7 +21,7 @@ public class UsersEndpoint extends AbstractEndpoint<UsersMessage> {
 
     @Override
     protected UsersMessage processMessage(UserSession session, ClientMessage message) throws MessageException {
-        return new UsersMessage(sessionManager.getAllUsers());
+        return new UsersMessage(LocalDate.now(), sessionManager.getAllUsers());
     }
 
 }

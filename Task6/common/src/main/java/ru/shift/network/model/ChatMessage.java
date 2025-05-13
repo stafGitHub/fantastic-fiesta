@@ -1,26 +1,23 @@
 package ru.shift.network.model;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import ru.shift.network.MessageType;
+import lombok.Getter;
 import ru.shift.network.message.ServerMessage;
 
 import java.time.LocalDate;
 
-public record ChatMessage(@JsonProperty("message") String message,
-                          @JsonProperty("departureDate") LocalDate departureDate,
-                          @JsonProperty("sender") String sender) implements ServerMessage {
+@Getter
+public class ChatMessage extends ServerMessage {
+    private final String message;
+    private final String sender;
 
-    public ChatMessage(String body, String sender) {
-        this(body, LocalDate.now(), sender);
-    }
-
-    @Override
-    public MessageType getMessageStatus() {
-        return MessageType.CHAT_MESSAGE;
-    }
-
-    @Override
-    public LocalDate getMessageDate() {
-        return departureDate;
+    @JsonCreator
+    public ChatMessage(@JsonProperty("dispatchDate") LocalDate dispatchDate,
+                       @JsonProperty("message") String message,
+                       @JsonProperty("sender") String sender) {
+        super(dispatchDate);
+        this.message = message;
+        this.sender = sender;
     }
 }

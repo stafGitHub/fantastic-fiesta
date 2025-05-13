@@ -13,6 +13,8 @@ import ru.shift.server.chat.session.UserSession;
 import ru.shift.server.expections.MessageException;
 import ru.shift.server.expections.UserAlreadyExists;
 
+import java.time.LocalDate;
+
 @Slf4j
 public class AuthEndpoint extends AbstractEndpoint<LoginMessageSuccess> {
 
@@ -28,14 +30,18 @@ public class AuthEndpoint extends AbstractEndpoint<LoginMessageSuccess> {
         try {
             sessionManager.addUser(session);
         } catch (UserAlreadyExists e) {
-            sendMessage(session, new LoginMessageError(e.getMessage()));
+            sendMessage(session, new LoginMessageError(LocalDate.now(), e.getMessage()));
             throw new MessageException(e.getMessage());
         }
 
         log.info("{} подключился", session.getUserName());
-        sessionManager.broadcastMessage(new SystemMessage(SystemMessageStatus.LOGIN, session.getUserName()));
+        sessionManager.broadcastMessage(
+                new SystemMessage(LocalDate.now(),
+                        SystemMessageStatus.LOGIN,
+                        session.getUserName())
+        );
 
-        return new LoginMessageSuccess();
+        return new LoginMessageSuccess(LocalDate.now());
     }
 
 }

@@ -24,8 +24,8 @@ public class ChatMessageEndpoint extends AbstractEndpoint<ChatMessage> {
     protected ChatMessage processMessage(UserSession session, ClientMessage message) throws MessageException {
         log.info("Message received: {}", message.body());
         sessionManager.broadcastMessage(new ChatMessage(
-                message.body(),
                 LocalDate.now(),
+                message.body(),
                 session.getUserName()
         ));
 

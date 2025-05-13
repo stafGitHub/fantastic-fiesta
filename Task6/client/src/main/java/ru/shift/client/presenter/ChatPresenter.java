@@ -29,27 +29,27 @@ public class ChatPresenter extends Observer implements Presenter {
 
             if (serverMessage instanceof ChatMessage chatMessage) {
                 log.info("Получено сообщение: {}", chatMessage);
-                chatView.addMessage(chatMessage.departureDate().toString() + "-" + chatMessage.sender() + ": " + chatMessage.message());
+                chatView.addMessage(chatMessage.getDispatchDate().toString() + "-" + chatMessage.getSender() + ": " + chatMessage.getMessage());
             }
 
             if (serverMessage instanceof UsersMessage usersMessage) {
                 log.info("Получен список пользователей: {}", usersMessage);
-                chatView.addUser(usersMessage.users());
+                chatView.addUser(usersMessage.getUsers());
             }
 
             if (serverMessage instanceof SystemMessage systemMessage) {
                 log.info("Получено системное сообщение: {}", systemMessage);
-                var systemMessageStatus = systemMessage.systemMessageStatus();
-                chatView.addMessage(systemMessage.systemMessageStatus().name() + systemMessage.sender());
+                var systemMessageStatus = systemMessage.getMessageStatus();
+                chatView.addMessage(systemMessage.getMessageStatus().name() + systemMessage.getSender());
 
                 switch (systemMessageStatus) {
                     case LOGIN -> {
-                        chatView.addUser(systemMessage.sender());
-                        log.info("Добавлен пользователь: {}", systemMessage.sender());
+                        chatView.addUser(systemMessage.getSender());
+                        log.info("Добавлен пользователь: {}", systemMessage.getSender());
                     }
                     case LOGOUT -> {
-                        chatView.removeUser(systemMessage.sender());
-                        log.info("Пользователь удалён: {}", systemMessage.sender());
+                        chatView.removeUser(systemMessage.getSender());
+                        log.info("Пользователь удалён: {}", systemMessage.getSender());
                     }
                 }
             }

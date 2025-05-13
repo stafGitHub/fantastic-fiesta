@@ -1,12 +1,13 @@
 <configuration>
-<appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
-    <target>System.out</target>
-    <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
-        <pattern>%green(%d{HH:mm:ss}) %highlight(%5level) %highlight([%thread] %logger -) %highlight(%msg%n)</pattern>
-    </encoder>
-</appender>
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <target>System.out</target>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>%green(%d{HH:mm:ss}) %highlight(%5level) %highlight([%thread] %logger -) %highlight(%msg%n)
+            </pattern>
+        </encoder>
+    </appender>
 
-<root level="${log.level:-INFO}">
-    <appender-ref ref="CONSOLE" />
-</root>
+    <root level="${log.level:-INFO}">
+        <appender-ref ref="CONSOLE"/>
+    </root>
 </configuration>
