@@ -15,7 +15,7 @@ import java.io.Serializable;
         @JsonSubTypes.Type(value = LoginMessageError.class, name = "LOGIN_ERROR"),
         @JsonSubTypes.Type(value = SendMessage.class, name = "SEND_MESSAGE"),
         @JsonSubTypes.Type(value = SystemMessage.class, name = "SYSTEM_MESSAGE"),
-        @JsonSubTypes.Type(value = UsersMessage.class, name = "UserMessage")
+        @JsonSubTypes.Type(value = UsersMessage.class, name = "USER_MESSAGE")
 })
 public interface ServerMessage extends Serializable {
 }
