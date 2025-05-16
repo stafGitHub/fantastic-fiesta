@@ -4,11 +4,14 @@ import ru.shift.client.presenter.Presenter;
 import ru.shift.client.view.generative.Chat;
 
 import javax.swing.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.List;
 
 public class ChatView extends Chat {
     public ChatView() {
         super();
+        initEnterListener();
     }
 
     public void addUser(List<String> users) {
@@ -47,11 +50,12 @@ public class ChatView extends Chat {
         listUsers.setModel(model);
     }
 
-
     public void addActionListener(Presenter presenter) {
         pushButton.addActionListener(e -> {
-            presenter.onButtonClick();
-            messageField.setText("");
+            if (!getMessages().trim().isEmpty()) {
+                presenter.onButtonClick();
+                messageField.setText("");
+            }
         });
     }
 
@@ -64,5 +68,14 @@ public class ChatView extends Chat {
         return messageField.getText();
     }
 
-
+    private void initEnterListener() {
+        messageField.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER && !getMessages().trim().isEmpty()) {
+                    pushButton.doClick();
+                }
+            }
+        });
+    }
 }
