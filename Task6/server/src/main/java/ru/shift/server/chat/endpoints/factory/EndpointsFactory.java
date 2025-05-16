@@ -1,6 +1,6 @@
 package ru.shift.server.chat.endpoints.factory;
 
-import ru.shift.network.MessageType;
+import ru.shift.network.model.MessageType;
 import ru.shift.server.chat.endpoints.AbstractEndpoint;
 import ru.shift.server.chat.endpoints.Endpoint;
 import ru.shift.server.chat.session.SessionManager;
@@ -10,7 +10,7 @@ import java.util.ServiceLoader;
 
 import static java.util.stream.Collectors.toMap;
 
-public interface EndpointsFactory<T extends AbstractEndpoint<?>> {
+public interface EndpointsFactory<T extends AbstractEndpoint> {
     SessionManager sessionManager = new SessionManager();
 
     MessageType getMessageType();

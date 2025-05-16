@@ -7,14 +7,13 @@ import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import ru.shift.network.exception.ConnectException;
 import ru.shift.network.exception.JsonException;
-import ru.shift.network.message.Message;
 
 import java.io.*;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
 
 @Slf4j
-public abstract class AbstractUserSession<R extends Message, W extends Message> implements AutoCloseable {
+public abstract class AbstractUserSession<R, W> implements AutoCloseable {
     private final Class<R> responseType;
     @Getter
     protected final Socket socket;
@@ -42,7 +41,7 @@ public abstract class AbstractUserSession<R extends Message, W extends Message> 
         reader.close();
     }
 
-    public R getMessage() throws ConnectException, JsonException {
+    public R readMessageFromTheInternet() throws ConnectException, JsonException {
         try {
             return objectMapper.readValue(reader.readLine(), responseType);
         } catch (JsonProcessingException e) {

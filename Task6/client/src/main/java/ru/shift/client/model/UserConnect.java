@@ -13,8 +13,8 @@ import ru.shift.network.message.ServerMessage;
 
 import java.io.IOException;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -24,13 +24,12 @@ public enum UserConnect implements Publisher {
 
     private UserSession userSession;
     private final ExecutorService executor = Executors.newSingleThreadExecutor();
-    private final List<Observer> observers = new CopyOnWriteArrayList<>();
+    private final List<Observer> observers = new ArrayList<>();
 
-    public void connect(String host, int port) throws IOException , ConnectException {
+    public void connect(String host, int port) throws IOException, ConnectException {
         log.info("Попытка подключения к серверу {}:{}", host, port);
         try {
             userSession = new UserSession(new Socket(host, port), ServerMessage.class);
-            userSession.setServerAddress(host + port);
         } catch (IOException | ConnectException e) {
             log.error("Ошибка подключения: {}", e.getMessage(), e);
             throw e;
@@ -42,20 +41,14 @@ public enum UserConnect implements Publisher {
         executor.submit(() -> {
             while (!Thread.currentThread().isInterrupted()) {
                 try {
-                    var message = userSession.getMessage();
-
-                    if (message == null) {
-                        break;
-                    }
-
+                    var message = userSession.readMessageFromTheInternet();
                     log.info("Обработка сообщения: {}", message);
                     notifyListeners(new Message(message));
                 } catch (JsonException e) {
                     log.warn("Ошибка обработки сообщения: {}", e.getMessage(), e);
                 } catch (ConnectException e) {
-                    //TODO : сделать переподключение
                     log.warn(e.getMessage(), e);
-                    System.exit(1);
+                    System.exit(0);
                 }
             }
         });
@@ -80,7 +73,7 @@ public enum UserConnect implements Publisher {
         log.info("Отправка сообщения на сервер: {}", message);
         try {
             userSession.sendMessage(message);
-        }catch (ConnectException e) {
+        } catch (ConnectException e) {
             log.error(e.getMessage(), e);
             shutdown();
         }

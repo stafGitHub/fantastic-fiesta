@@ -2,7 +2,7 @@ package ru.shift.server.chat.endpoints.specific.impl;
 
 
 import lombok.extern.slf4j.Slf4j;
-import ru.shift.network.MessageType;
+import ru.shift.network.exception.ConnectException;
 import ru.shift.network.message.ClientMessage;
 import ru.shift.network.model.UsersMessage;
 import ru.shift.server.chat.endpoints.AbstractEndpoint;
@@ -12,15 +12,14 @@ import ru.shift.server.chat.session.UserSession;
 import java.time.LocalDate;
 
 @Slf4j
-public class UsersEndpoint extends AbstractEndpoint<UsersMessage> {
-    public UsersEndpoint(MessageType messageType,
-                         SessionManager sessionManager) {
-        super(messageType, sessionManager);
+public class UsersEndpoint extends AbstractEndpoint {
+    public UsersEndpoint(SessionManager sessionManager) {
+        super(sessionManager);
     }
 
     @Override
-    protected UsersMessage processMessage(UserSession session, ClientMessage message) {
-        return new UsersMessage(LocalDate.now(), sessionManager.getAllUsers());
+    protected void processMessage(UserSession session, ClientMessage message) throws ConnectException {
+        sendMessage(session,new UsersMessage(LocalDate.now(), sessionManager.getAllUsers()));
     }
 
 }

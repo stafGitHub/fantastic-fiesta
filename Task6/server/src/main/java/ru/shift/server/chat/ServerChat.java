@@ -2,7 +2,7 @@ package ru.shift.server.chat;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import ru.shift.network.MessageType;
+import ru.shift.network.model.MessageType;
 import ru.shift.network.exception.ConnectException;
 import ru.shift.network.exception.JsonException;
 import ru.shift.network.message.ClientMessage;
@@ -43,7 +43,7 @@ public class ServerChat {
     private void requestProcessing(UserSession session) {
         try (session) {
             while (!session.getSocket().isClosed()) {
-                var message = session.getMessage();
+                var message = session.readMessageFromTheInternet();
                 var protocol = message.messageType();
                 var endpoint = EndpointsFactory.getEndpointByMessageType(protocol);
                 endpoint.process(session, message);

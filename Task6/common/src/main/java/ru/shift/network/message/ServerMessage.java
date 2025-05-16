@@ -10,7 +10,6 @@ import java.time.LocalDate;
 
 @JsonTypeInfo(
         use = JsonTypeInfo.Id.NAME,
-        include = JsonTypeInfo.As.PROPERTY,
         property = "type")
 @JsonSubTypes({
         @JsonSubTypes.Type(value = LoginMessageSuccess.class, name = "LOGIN_SUCCESS"),
@@ -20,7 +19,7 @@ import java.time.LocalDate;
         @JsonSubTypes.Type(value = UsersMessage.class, name = "GET_USERS")
 })
 @Getter
-public abstract class ServerMessage implements Serializable,Message {
+public abstract class ServerMessage implements Serializable {
     private final LocalDate dispatchDate;
 
     protected ServerMessage(LocalDate dispatchDate) {

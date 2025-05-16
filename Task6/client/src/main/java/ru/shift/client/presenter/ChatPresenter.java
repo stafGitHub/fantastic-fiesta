@@ -5,7 +5,7 @@ import ru.shift.client.event.Event;
 import ru.shift.client.event.Observer;
 import ru.shift.client.model.event.Message;
 import ru.shift.client.view.concrete.ChatView;
-import ru.shift.network.MessageType;
+import ru.shift.network.model.MessageType;
 import ru.shift.network.message.ClientMessage;
 import ru.shift.network.message.ServerMessage;
 import ru.shift.network.model.ChatMessage;

@@ -37,15 +37,10 @@ public class SessionManager implements Manager {
     public void broadcastMessage(ServerMessage message) {
         users.forEach((username, session) -> {
             try {
-                if (session.getSocket().isConnected()) {
-                    session.sendMessage(message);
-                } else {
-                    users.remove(username);
-                    log.warn("Удаленна неиспользуемая сессия: {}", username);
-                }
+                session.sendMessage(message);
             } catch (ConnectException e) {
                 users.remove(username);
-                log.warn("Пользователь отключился во время отправки сообщения : {}", e.getMessage());
+                log.warn("Удаленна неиспользуемая сессия: {}", username);
             }
         });
     }

@@ -3,7 +3,6 @@ package ru.shift.network.model;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
-import ru.shift.network.SystemMessageStatus;
 import ru.shift.network.message.ServerMessage;
 
 import java.time.LocalDate;

@@ -1,8 +1,7 @@
 package ru.shift.server.chat.endpoints.specific.impl;
 
 import lombok.extern.slf4j.Slf4j;
-import ru.shift.network.MessageType;
-import ru.shift.network.SystemMessageStatus;
+import ru.shift.network.model.SystemMessageStatus;
 import ru.shift.network.exception.ConnectException;
 import ru.shift.network.message.ClientMessage;
 import ru.shift.network.model.LoginMessageError;
@@ -16,22 +15,24 @@ import ru.shift.server.expections.UserAlreadyExists;
 import java.time.LocalDate;
 
 @Slf4j
-public class AuthEndpoint extends AbstractEndpoint<LoginMessageSuccess> {
+public class AuthEndpoint extends AbstractEndpoint {
 
-    public AuthEndpoint(MessageType messageType,
-                        SessionManager sessionManager) {
-        super(messageType, sessionManager);
+    public AuthEndpoint(SessionManager sessionManager) {
+        super(sessionManager);
     }
 
     @Override
-    protected LoginMessageSuccess processMessage(UserSession session, ClientMessage message) throws ConnectException {
+    protected void processMessage(UserSession session, ClientMessage message) throws ConnectException {
         session.setUserName(message.body());
 
         try {
             sessionManager.addUser(session);
         } catch (UserAlreadyExists e) {
             sendMessage(session, new LoginMessageError(LocalDate.now(), e.getMessage()));
+            return;
         }
+
+        sendMessage(session,new LoginMessageSuccess(LocalDate.now()));
 
         log.info("{} подключился", session.getUserName());
         sessionManager.broadcastMessage(
@@ -40,7 +41,6 @@ public class AuthEndpoint extends AbstractEndpoint<LoginMessageSuccess> {
                         session.getUserName())
         );
 
-        return new LoginMessageSuccess(LocalDate.now());
     }
 
 }

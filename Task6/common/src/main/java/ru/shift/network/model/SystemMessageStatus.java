@@ -1,4 +1,4 @@
-package ru.shift.network;
+package ru.shift.network.model;
 
 public enum SystemMessageStatus {
     LOGIN,
