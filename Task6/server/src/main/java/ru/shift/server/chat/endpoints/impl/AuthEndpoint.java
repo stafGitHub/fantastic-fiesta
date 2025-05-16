@@ -19,18 +19,28 @@ public class AuthEndpoint extends AbstractEndpoint {
         try {
             sessionManager.addUser(session);
         } catch (UserAlreadyExists e) {
-            sendMessage(session, new LoginMessageError(LocalDate.now(), e.getMessage()));
+
+            var loginMessageError = new LoginMessageError();
+            loginMessageError.setDispatchDate(LocalDate.now());
+            loginMessageError.setException(e.getMessage());
+
+            sendMessage(session, loginMessageError);
             return;
         }
 
-        sendMessage(session, new LoginMessageSuccess(LocalDate.now()));
+        var loginMessageSuccess = new LoginMessageSuccess();
+        loginMessageSuccess.setDispatchDate(LocalDate.now());
+
+        sendMessage(session, loginMessageSuccess);
 
         log.info("{} подключился", session.getUserName());
-        sessionManager.broadcastMessage(
-                new SystemMessage(LocalDate.now(),
-                        SystemMessageStatus.LOGIN,
-                        session.getUserName())
-        );
+
+        var systemMessage = new SystemMessage();
+        systemMessage.setDispatchDate(LocalDate.now());
+        systemMessage.setMessageStatus(SystemMessageStatus.LOGIN);
+        systemMessage.setSender(session.getUserName());
+
+        sessionManager.broadcastMessage(systemMessage);
 
     }
 

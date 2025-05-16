@@ -15,7 +15,12 @@ import java.time.LocalDate;
 public class UsersEndpoint extends AbstractEndpoint {
     @Override
     protected void processMessage(UserSession session, ClientMessage message) throws ConnectException {
-        sendMessage(session, new UsersMessage(LocalDate.now(), sessionManager.getAllUsers()));
+
+        var usersMessage = new UsersMessage();
+        usersMessage.setDispatchDate(LocalDate.now());
+        usersMessage.setUsers(sessionManager.getAllUsers());
+
+        sendMessage(session, usersMessage);
     }
 
     @Override

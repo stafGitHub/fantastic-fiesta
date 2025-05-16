@@ -1,6 +1,5 @@
 package ru.shift.server.chat.endpoints;
 
-import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import ru.shift.network.exception.ConnectException;
 import ru.shift.network.message.ClientMessage;
@@ -13,7 +12,7 @@ public abstract class AbstractEndpoint implements Endpoint {
     /***
      * Менеджер сессий, устанавливается {@link EndpointsDispatcher}
      */
-    protected SessionManager sessionManager ;
+    protected SessionManager sessionManager;
 
     protected abstract void processMessage(UserSession session, ClientMessage message) throws ConnectException;
 
@@ -30,10 +29,12 @@ public abstract class AbstractEndpoint implements Endpoint {
     }
 
     /**
-     *<strong>Важно:<strong> не вызывайте метод вручную, метод предназначен, для {@link EndpointsDispatcher}
+     * <strong>Важно:<strong> не вызывайте метод вручную, метод предназначен, для {@link EndpointsDispatcher}
      */
-    @Deprecated
     public void setSessionManager(SessionManager sessionManager) {
+        if (this.sessionManager != null) {
+            throw new IllegalStateException("SessionManager уже установлен");
+        }
         this.sessionManager = sessionManager;
     }
 

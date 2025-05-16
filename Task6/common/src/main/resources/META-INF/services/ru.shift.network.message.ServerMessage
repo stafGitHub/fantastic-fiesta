@@ -1,0 +1,5 @@
+ru.shift.network.model.SystemMessage
+ru.shift.network.model.ChatMessage
+ru.shift.network.model.LoginMessageError
+ru.shift.network.model.LoginMessageSuccess
+ru.shift.network.model.UsersMessage

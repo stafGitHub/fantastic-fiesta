@@ -6,8 +6,8 @@ import ru.shift.client.event.Observer;
 import ru.shift.client.event.Publisher;
 import ru.shift.client.model.UserConnect;
 import ru.shift.client.presenter.event.NextWindow;
-import ru.shift.network.model.MessageType;
 import ru.shift.network.message.ClientMessage;
+import ru.shift.network.model.MessageType;
 
 import javax.swing.*;
 import java.awt.event.WindowAdapter;

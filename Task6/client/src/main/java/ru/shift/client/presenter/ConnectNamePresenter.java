@@ -7,10 +7,10 @@ import ru.shift.client.event.Publisher;
 import ru.shift.client.model.event.Message;
 import ru.shift.client.presenter.event.NextWindow;
 import ru.shift.client.view.concrete.ConnectNameView;
-import ru.shift.network.model.MessageType;
 import ru.shift.network.message.ClientMessage;
 import ru.shift.network.model.LoginMessageError;
 import ru.shift.network.model.LoginMessageSuccess;
+import ru.shift.network.model.MessageType;
 
 import java.util.ArrayList;
 import java.util.List;

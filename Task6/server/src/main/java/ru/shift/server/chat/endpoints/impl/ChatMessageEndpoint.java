@@ -14,11 +14,13 @@ public class ChatMessageEndpoint extends AbstractEndpoint {
     @Override
     protected void processMessage(UserSession session, ClientMessage message) {
         log.info("Message received: {}", message.body());
-        sessionManager.broadcastMessage(new ChatMessage(
-                LocalDate.now(),
-                message.body(),
-                session.getUserName()
-        ));
+
+        var chatMessage = new ChatMessage();
+        chatMessage.setDispatchDate(LocalDate.now());
+        chatMessage.setMessage(message.body());
+        chatMessage.setSender(session.getUserName());
+
+        sessionManager.broadcastMessage(chatMessage);
     }
 
     @Override
