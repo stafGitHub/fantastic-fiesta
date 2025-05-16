@@ -13,9 +13,9 @@ public class ChatMessage extends ServerMessage {
     private final String sender;
 
     @JsonCreator
-    public ChatMessage(@JsonProperty("dispatchDate") LocalDate dispatchDate,
-                       @JsonProperty("message") String message,
-                       @JsonProperty("sender") String sender) {
+    public ChatMessage(@JsonProperty() LocalDate dispatchDate,
+                       @JsonProperty() String message,
+                       @JsonProperty() String sender) {
         super(dispatchDate);
         this.message = message;
         this.sender = sender;

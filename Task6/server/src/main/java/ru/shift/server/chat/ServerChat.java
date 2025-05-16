@@ -2,11 +2,11 @@ package ru.shift.server.chat;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import ru.shift.network.model.MessageType;
 import ru.shift.network.exception.ConnectException;
 import ru.shift.network.exception.JsonException;
 import ru.shift.network.message.ClientMessage;
-import ru.shift.server.chat.endpoints.factory.EndpointsFactory;
+import ru.shift.network.model.MessageType;
+import ru.shift.server.chat.endpoints.EndpointsDispatcher;
 import ru.shift.server.chat.session.UserSession;
 
 import java.io.IOException;
@@ -31,7 +31,7 @@ public class ServerChat {
                     try {
                         requestProcessing(new UserSession(clienSocket, ClientMessage.class));
                     } catch (ConnectException e) {
-                        log.warn("Пользователь отключился: {}", e.getMessage(),e);
+                        log.warn("Пользователь отключился: {}", e.getMessage(), e);
                     }
                 });
             }
@@ -45,15 +45,15 @@ public class ServerChat {
             while (!session.getSocket().isClosed()) {
                 var message = session.readMessageFromTheInternet();
                 var protocol = message.messageType();
-                var endpoint = EndpointsFactory.getEndpointByMessageType(protocol);
+                var endpoint = EndpointsDispatcher.getEndpointByMessageType(protocol);
                 endpoint.process(session, message);
             }
         } catch (ConnectException | JsonException e) {
             log.warn(e.getMessage(), e);
 
             try {
-                EndpointsFactory.getEndpointByMessageType(MessageType.LOGOUT).process(session, null);
-            } catch (ConnectException exception){
+                EndpointsDispatcher.getEndpointByMessageType(MessageType.LOGOUT).process(session, null);
+            } catch (ConnectException exception) {
                 log.warn(exception.getMessage(), exception);
             }
 

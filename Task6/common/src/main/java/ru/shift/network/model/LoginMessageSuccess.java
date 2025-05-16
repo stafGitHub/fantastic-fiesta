@@ -9,7 +9,7 @@ import java.time.LocalDate;
 
 public class LoginMessageSuccess extends ServerMessage {
     @JsonCreator
-    public LoginMessageSuccess(@JsonProperty("dispatchDate") LocalDate dispatchDate) {
+    public LoginMessageSuccess(@JsonProperty() LocalDate dispatchDate) {
         super(dispatchDate);
     }
 }

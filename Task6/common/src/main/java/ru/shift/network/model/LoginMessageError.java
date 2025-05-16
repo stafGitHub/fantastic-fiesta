@@ -13,8 +13,8 @@ public class LoginMessageError extends ServerMessage {
     private final String exception;
 
     @JsonCreator
-    public LoginMessageError(@JsonProperty("dispatchDate") LocalDate dispatchDate,
-                             @JsonProperty("exception") String exception) {
+    public LoginMessageError(@JsonProperty() LocalDate dispatchDate,
+                             @JsonProperty() String exception) {
         super(dispatchDate);
         this.exception = exception;
     }

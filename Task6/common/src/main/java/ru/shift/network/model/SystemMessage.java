@@ -13,9 +13,9 @@ public class SystemMessage extends ServerMessage {
     private final String sender;
 
     @JsonCreator
-    public SystemMessage(@JsonProperty("dispatchDate") LocalDate dispatchDate,
-                         @JsonProperty("messageStatus") SystemMessageStatus messageStatus,
-                         @JsonProperty("sender") String sender) {
+    public SystemMessage(@JsonProperty() LocalDate dispatchDate,
+                         @JsonProperty() SystemMessageStatus messageStatus,
+                         @JsonProperty() String sender) {
         super(dispatchDate);
         this.messageStatus = messageStatus;
         this.sender = sender;

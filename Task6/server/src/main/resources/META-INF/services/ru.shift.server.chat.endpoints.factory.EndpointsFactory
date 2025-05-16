@@ -1,4 +1,0 @@
-ru.shift.server.chat.endpoints.factory.specific.AuthEndpointFactory
-ru.shift.server.chat.endpoints.factory.specific.ChatMessageEndpointFactory
-ru.shift.server.chat.endpoints.factory.specific.LogoutEndpointFactory
-ru.shift.server.chat.endpoints.factory.specific.UsersEndpointFactory

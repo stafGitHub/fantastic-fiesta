@@ -14,8 +14,8 @@ public class UsersMessage extends ServerMessage {
     private final List<String> users;
 
     @JsonCreator
-    public UsersMessage(@JsonProperty("dispatchDate") LocalDate dispatchDate,
-                        @JsonProperty("users") List<String> users) {
+    public UsersMessage(@JsonProperty() LocalDate dispatchDate,
+                        @JsonProperty() List<String> users) {
         super(dispatchDate);
         this.users = users;
     }
