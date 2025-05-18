@@ -16,7 +16,7 @@ public class SessionManager implements Manager {
 
     @Override
     public synchronized void addUser(UserSession session) throws UserAlreadyExists {
-        if (users.contains(session.getUserName())) {
+        if (users.containsKey(session.getUserName())) {
             throw new UserAlreadyExists("Пользователь " + session.getUserName() + "уже существует");
         } else {
             users.put(session.getUserName(), session);
