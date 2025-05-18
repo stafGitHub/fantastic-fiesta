@@ -28,5 +28,4 @@ public interface Mapper {
     static ObjectMapper getMapper() {
         return jsonMapper;
     }
-
 }

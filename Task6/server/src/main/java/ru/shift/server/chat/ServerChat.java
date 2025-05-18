@@ -8,10 +8,13 @@ import ru.shift.network.message.ClientMessage;
 import ru.shift.network.model.MessageType;
 import ru.shift.server.chat.endpoints.EndpointsDispatcher;
 import ru.shift.server.chat.session.UserSession;
+import ru.shift.server.expections.ConfigurationException;
 
 import java.io.IOException;
+import java.net.BindException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.SocketException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -21,12 +24,11 @@ public class ServerChat {
     private final Integer port;
     private final ExecutorService pool = Executors.newCachedThreadPool();
 
-    public void start() {
+    public void start() throws ConfigurationException {
         try (ServerSocket serverSocket = new ServerSocket(port)) {
             log.info("Сервер создан {}:{}", serverSocket.getLocalSocketAddress(), serverSocket.getLocalPort());
             while (true) {
                 Socket clienSocket = serverSocket.accept();
-
                 pool.submit(() -> {
                     try {
                         requestProcessing(new UserSession(clienSocket, ClientMessage.class));
@@ -35,7 +37,13 @@ public class ServerChat {
                     }
                 });
             }
+        } catch (BindException e) {
+            throw new ConfigurationException("Не удалось занять порт: " + port + " " + e.getMessage());
+        } catch (SocketException e) {
+            log.warn("Ошибка подключения: {}", e.getMessage(), e);
         } catch (IOException e) {
+            throw new ConfigurationException(e.getMessage());
+        } finally {
             pool.shutdown();
         }
     }

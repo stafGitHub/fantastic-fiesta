@@ -20,7 +20,13 @@ public class Server {
         }
 
         var serverChat = new ServerChat(configuration.port());
-        serverChat.start();
+
+        try {
+            serverChat.start();
+        }catch (ConfigurationException e) {
+            log.warn("Ошибка при запуске сервера: {}",e.getMessage());
+            System.exit(0);
+        }
 
     }
 }

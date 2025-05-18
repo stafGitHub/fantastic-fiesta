@@ -13,7 +13,7 @@ public class ConfigurationLoader {
     private ConfigurationLoader() {
     }
 
-    public static Configuration getConfiguration(String fileName) {
+    public static Configuration getConfiguration(String fileName) throws ConfigurationException {
         var properties = loadProperties(fileName);
         return new Configuration(getPropertyValue(properties, ConfigurationKeys.PORT.getKey()));
     }
