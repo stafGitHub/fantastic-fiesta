@@ -14,7 +14,6 @@ import java.io.IOException;
 import java.net.BindException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.net.SocketException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -28,19 +27,21 @@ public class ServerChat {
         try (ServerSocket serverSocket = new ServerSocket(port)) {
             log.info("Сервер создан {}:{}", serverSocket.getLocalSocketAddress(), serverSocket.getLocalPort());
             while (true) {
-                Socket clienSocket = serverSocket.accept();
-                pool.submit(() -> {
-                    try {
-                        requestProcessing(new UserSession(clienSocket, ClientMessage.class));
-                    } catch (ConnectException e) {
-                        log.warn("Пользователь отключился: {}", e.getMessage(), e);
-                    }
-                });
+                try {
+                    Socket clienSocket = serverSocket.accept();
+                    pool.submit(() -> {
+                        try {
+                            requestProcessing(new UserSession(clienSocket, ClientMessage.class));
+                        } catch (ConnectException e) {
+                            log.warn("Пользователь отключился: {}", e.getMessage(), e);
+                        }
+                    });
+                }catch (IOException e) {
+                    log.warn("Ошибка подключения: {}", e.getMessage(), e);
+                }
             }
         } catch (BindException e) {
             throw new ConfigurationException("Не удалось занять порт: " + port + " " + e.getMessage());
-        } catch (SocketException e) {
-            log.warn("Ошибка подключения: {}", e.getMessage(), e);
         } catch (IOException e) {
             throw new ConfigurationException(e.getMessage());
         } finally {
