@@ -1,14 +1,22 @@
 package ru.shift.network.model;
 
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
 import ru.shift.network.message.ServerMessage;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Getter
-@Setter
 public class UsersMessage extends ServerMessage {
-    private List<String> users;
+    private final List<String> users;
+
+    @Builder
+    @JsonCreator
+    public UsersMessage(LocalDate dispatchDate, List<String> users) {
+        super(dispatchDate);
+        this.users = users;
+    }
 }

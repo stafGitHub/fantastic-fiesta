@@ -22,7 +22,7 @@ subprojects {
         implementation 'com.fasterxml.jackson.core:jackson-databind:2.15.2'
         implementation 'com.fasterxml.jackson.core:jackson-annotations:2.15.2'
         implementation 'com.fasterxml.jackson.core:jackson-core:2.15.2'
-
+        implementation 'com.fasterxml.jackson.module:jackson-module-parameter-names:2.15.0'
         implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.15.2'
 
         testImplementation platform('org.junit:junit-bom:5.10.0')
@@ -33,6 +33,12 @@ subprojects {
 
     test {
         useJUnitPlatform()
+    }
+
+    tasks.withType(JavaCompile).tap {
+        configureEach {
+            options.compilerArgs += '-parameters'
+        }
     }
 
 }

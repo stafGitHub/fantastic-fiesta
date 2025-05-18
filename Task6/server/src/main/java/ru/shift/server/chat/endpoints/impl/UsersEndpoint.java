@@ -16,9 +16,10 @@ public class UsersEndpoint extends AbstractEndpoint {
     @Override
     protected void processMessage(UserSession session, ClientMessage message) throws ConnectException {
 
-        var usersMessage = new UsersMessage();
-        usersMessage.setDispatchDate(LocalDate.now());
-        usersMessage.setUsers(sessionManager.getAllUsers());
+        var usersMessage = UsersMessage.builder()
+                .dispatchDate(LocalDate.now())
+                .users(sessionManager.getAllUsers())
+                .build();
 
         sendMessage(session, usersMessage);
     }

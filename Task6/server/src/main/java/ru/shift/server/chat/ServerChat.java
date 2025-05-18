@@ -37,7 +37,7 @@ public class ServerChat {
                             log.warn("Пользователь отключился: {}", e.getMessage(), e);
                         }
                     });
-                }catch (IOException e) {
+                } catch (IOException e) {
                     log.warn("Ошибка подключения: {}", e.getMessage(), e);
                 }
             }

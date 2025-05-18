@@ -18,10 +18,11 @@ public class LogoutEndpoint extends AbstractEndpoint {
             sessionManager.removeUser(session.getUserName());
             log.info("Пользователь: {} - удалён", session.getUserName());
 
-            var systemMessage = new SystemMessage();
-            systemMessage.setDispatchDate(LocalDate.now());
-            systemMessage.setMessageStatus(SystemMessageStatus.LOGOUT);
-            systemMessage.setSender(session.getUserName());
+            var systemMessage = SystemMessage.builder()
+                    .dispatchDate(LocalDate.now())
+                    .messageStatus(SystemMessageStatus.LOGOUT)
+                    .sender(session.getUserName())
+                    .build();
 
             sessionManager.broadcastMessage(systemMessage);
         }

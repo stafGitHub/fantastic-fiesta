@@ -20,7 +20,7 @@ public abstract class AbstractUserSession<R, W> implements AutoCloseable {
     protected final Socket socket;
     protected final PrintWriter writer;
     protected final BufferedReader reader;
-    protected final ObjectMapper objectMapper = Mapper.getMapper();
+    protected final ObjectMapper objectMapper = Mapper.getJsonMapper();
 
     protected AbstractUserSession(Socket socket, Class<R> responseType) throws ConnectException {
         this.responseType = responseType;

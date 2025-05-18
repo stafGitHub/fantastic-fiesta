@@ -1,12 +1,21 @@
 package ru.shift.network.model;
 
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
 import ru.shift.network.message.ServerMessage;
 
+import java.time.LocalDate;
+
 @Getter
-@Setter
 public class LoginMessageError extends ServerMessage {
-    private String exception;
+    private final String exception;
+
+    @Builder
+    @JsonCreator
+    public LoginMessageError(LocalDate dispatchDate, String exception) {
+        super(dispatchDate);
+        this.exception = exception;
+    }
 }
