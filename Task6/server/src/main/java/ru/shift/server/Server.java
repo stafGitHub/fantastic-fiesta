@@ -3,6 +3,7 @@ package ru.shift.server;
 
 import lombok.extern.slf4j.Slf4j;
 import ru.shift.server.chat.ServerChat;
+import ru.shift.server.chat.endpoints.EndpointsDispatcher;
 import ru.shift.server.configuration.Configuration;
 import ru.shift.server.configuration.ConfigurationLoader;
 import ru.shift.server.expections.ConfigurationException;
@@ -11,6 +12,7 @@ import ru.shift.server.expections.ConfigurationException;
 public class Server {
     public static void main(String[] args) {
         Configuration configuration = null;
+        var endpointsDispatcher = new EndpointsDispatcher();
 
         try {
             configuration = ConfigurationLoader.getConfiguration("application.properties");
@@ -19,12 +21,12 @@ public class Server {
             System.exit(0);
         }
 
-        var serverChat = new ServerChat(configuration.port());
+        var serverChat = new ServerChat(configuration.port(), endpointsDispatcher);
 
         try {
             serverChat.start();
-        }catch (ConfigurationException e) {
-            log.warn("Ошибка при запуске сервера: {}",e.getMessage());
+        } catch (ConfigurationException e) {
+            log.warn("Ошибка при запуске сервера: {}", e.getMessage());
             System.exit(0);
         }
 

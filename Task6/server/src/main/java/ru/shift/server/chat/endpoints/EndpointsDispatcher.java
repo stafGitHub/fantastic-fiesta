@@ -8,10 +8,10 @@ import java.util.ServiceLoader;
 
 import static java.util.stream.Collectors.toMap;
 
-public interface EndpointsDispatcher {
-    SessionManager sessionManager = new SessionManager();
+public class EndpointsDispatcher {
+    private final SessionManager sessionManager = new SessionManager();
 
-    Map<MessageType, Endpoint> endpoints = ServiceLoader.load(AbstractEndpoint.class).stream()
+    private final Map<MessageType, Endpoint> endpoints = ServiceLoader.load(AbstractEndpoint.class).stream()
             .map(ServiceLoader.Provider::get)
             .collect(toMap(
                     Endpoint::getMessageType,
@@ -21,7 +21,7 @@ public interface EndpointsDispatcher {
                     }
             ));
 
-    static Endpoint getEndpointByMessageType(MessageType protocol) {
+    public Endpoint getEndpointByMessageType(MessageType protocol) {
         return endpoints.get(protocol);
     }
 }

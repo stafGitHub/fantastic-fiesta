@@ -20,8 +20,9 @@ import java.util.concurrent.Executors;
 @Slf4j
 @RequiredArgsConstructor
 public class ServerChat {
-    private final Integer port;
+    private final int port;
     private final ExecutorService pool = Executors.newCachedThreadPool();
+    private final EndpointsDispatcher dispatcher;
 
     public void start() throws ConfigurationException {
         try (ServerSocket serverSocket = new ServerSocket(port)) {
@@ -54,14 +55,14 @@ public class ServerChat {
             while (!session.getSocket().isClosed()) {
                 var message = session.readMessageFromTheInternet();
                 var protocol = message.messageType();
-                var endpoint = EndpointsDispatcher.getEndpointByMessageType(protocol);
+                var endpoint = dispatcher.getEndpointByMessageType(protocol);
                 endpoint.process(session, message);
             }
         } catch (ConnectException | JsonException e) {
             log.warn(e.getMessage(), e);
 
             try {
-                EndpointsDispatcher.getEndpointByMessageType(MessageType.LOGOUT).process(session, null);
+                dispatcher.getEndpointByMessageType(MessageType.LOGOUT).process(session, null);
             } catch (ConnectException exception) {
                 log.warn(exception.getMessage(), exception);
             }

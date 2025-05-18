@@ -15,10 +15,11 @@ public class SessionManager implements Manager {
     private final ConcurrentHashMap<String, UserSession> users = new ConcurrentHashMap<>();
 
     @Override
-    public void addUser(UserSession session) throws UserAlreadyExists {
-        var userSession = users.putIfAbsent(session.getUserName(), session);
-        if (userSession != null) {
+    public synchronized void addUser(UserSession session) throws UserAlreadyExists {
+        if (!users.contains(session.getUserName())) {
             throw new UserAlreadyExists("Пользователь " + session.getUserName() + "уже существует");
+        }else {
+            users.put(session.getUserName(), session);
         }
     }
 

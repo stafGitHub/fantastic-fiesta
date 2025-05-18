@@ -10,7 +10,7 @@ import java.util.regex.Pattern;
 
 public class ConnectView extends Connect {
     private static final Pattern ADDRESS_PATTERN =
-            Pattern.compile("^(localhost|\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}):\\d{1,5}$");
+            Pattern.compile("(\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}):\\d{1,5}$");
 
     public ConnectView() {
         super();
