@@ -1,0 +1,68 @@
+JFDML JFormDesigner: "8.2.4.0.393" Java: "21.0.5" encoding: "UTF-8"
+
+new FormModel {
+	contentType: "form/swing"
+	root: new FormRoot {
+		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class java.awt.BorderLayout ) ) {
+			name: "this"
+			"minimumSize": new java.awt.Dimension( 800, 500 )
+			"preferredSize": new java.awt.Dimension( 800, 500 )
+			add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.BorderLayout ) ) {
+				name: "dialogPane"
+				add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class javax.swing.BoxLayout ) ) {
+					name: "Users"
+					"minimumSize": sfield com.jformdesigner.model.FormObject NULL_VALUE
+					"preferredSize": new java.awt.Dimension( 200, 88 )
+					"border": new javax.swing.border.TitledBorder( "Пользователи" )
+					"foreground": new java.awt.Color( 0, 0, 0, 255 )
+					add( new FormContainer( "javax.swing.JScrollPane", new FormLayoutManager( class javax.swing.JScrollPane ) ) {
+						name: "ScrolPanel"
+						add( new FormComponent( "javax.swing.JList" ) {
+							name: "listUsers"
+							"preferredSize": new java.awt.Dimension( 150, 1000 )
+							"layoutOrientation": 1
+						} )
+					} )
+				}, new FormLayoutConstraints( class java.lang.String ) {
+					"value": "Before"
+				} )
+				add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class javax.swing.BoxLayout ) {
+					"axis": 1
+				} ) {
+					name: "Chat"
+					"border": new javax.swing.border.TitledBorder( "Чат" )
+					"minimumSize": new java.awt.Dimension( 910, 30 )
+					"maximumSize": new java.awt.Dimension( 2147483647, 30 )
+					add( new FormContainer( "javax.swing.JScrollPane", new FormLayoutManager( class javax.swing.JScrollPane ) ) {
+						name: "textPane"
+						add( new FormComponent( "javax.swing.JTextPane" ) {
+							name: "ChatPane"
+						} )
+					} )
+					add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class javax.swing.BoxLayout ) ) {
+						name: "Message"
+						"preferredSize": new java.awt.Dimension( 900, 31 )
+						"minimumSize": new java.awt.Dimension( 900, 31 )
+						"maximumSize": new java.awt.Dimension( 2147483647, 30 )
+						add( new FormComponent( "javax.swing.JTextField" ) {
+							name: "messageField"
+							"preferredSize": new java.awt.Dimension( 200, 31 )
+							"minimumSize": new java.awt.Dimension( 900, 31 )
+						} )
+						add( new FormComponent( "javax.swing.JButton" ) {
+							name: "PushButton"
+							"text": "push"
+						} )
+					} )
+				}, new FormLayoutConstraints( class java.lang.String ) {
+					"value": "Center"
+				} )
+			}, new FormLayoutConstraints( class java.lang.String ) {
+				"value": "Center"
+			} )
+		}, new FormLayoutConstraints( null ) {
+			"location": new java.awt.Point( 5, 0 )
+			"size": new java.awt.Dimension( 795, 800 )
+		} )
+	}
+}

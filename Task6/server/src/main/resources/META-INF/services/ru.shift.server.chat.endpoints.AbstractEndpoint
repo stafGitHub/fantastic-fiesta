@@ -1,0 +1,4 @@
+ru.shift.server.chat.endpoints.impl.AuthEndpoint
+ru.shift.server.chat.endpoints.impl.ChatMessageEndpoint
+ru.shift.server.chat.endpoints.impl.LogoutEndpoint
+ru.shift.server.chat.endpoints.impl.UsersEndpoint
